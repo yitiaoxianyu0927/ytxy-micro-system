@@ -4,7 +4,7 @@
 
 const path = require('path');
 
-const buildPackageName = "webpack-pro-A";
+const buildPackageName = "ytxy-micro-system";
 
 module.exports = {
   buildPackageName,

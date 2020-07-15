@@ -5,33 +5,34 @@ Vue.use(Router)
 
 
 const routersConfig=[
-       
-    {
-        path: '/',
-        redirect: '/login',
 
-    },
+    
     {
         path: '/login',
         name: 'login',
         component:()=>import('@/views/login')
-    },
-    {
-        path: '/layout',
-        name: 'layout',
-        component:()=>import('@/views/layout/layout'),
-
-    },
+    }
   
 ]
+
+export const mainRouter = {
+        
+    path: '/',
+    name: '/layout',
+    component:()=>import('@/views/layout'),
+    
+}
 
 
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
-  // mode:"history",
+  mode:"history",
   routes: routersConfig
 })
 
+
+export const constantRouterMap = routersConfig;
+export const asyncRouterMap = [];
 
 
 

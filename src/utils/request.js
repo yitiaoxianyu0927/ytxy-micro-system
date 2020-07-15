@@ -105,6 +105,7 @@ service.interceptors.response.use(
     //封装请求是否失败，如果失败弹出错误请提示；
     const result = response.data;
 
+
     if(RequestUtils.is_show_message){
 
       //正常返回数据

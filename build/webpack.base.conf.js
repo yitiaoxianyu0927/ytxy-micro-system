@@ -22,13 +22,11 @@ const HappyPack = require('happypack');
 module.exports = {
 
     
-    entry:{
-        app: ["@babel/polyfill", "./src/main.js"]
-    },
+    entry: ["@babel/polyfill", "./src/main.js"],
     output:{
 
         //输出文件名
-        filename: '[name]/build.js', //'build.js',//
+        filename: 'js/build_[hash:8].js', //'build.js',//
         //__dirname当前目录绝对路径
         path:config.build.assetsRoot, // path.resolve( __dirname , 'dist/'+baseUrl )//
         publicPath: process.env.NODE_ENV == 'production' ? 
@@ -111,7 +109,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                test: /\.(woff2?|eot|ttf|otf|svg|woff)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
@@ -164,7 +162,8 @@ module.exports = {
         }),
         
         new MiniCssExtractPlugin({
-            filename:'[name]/index.css'//
+            filename:'css/index_[hash:8].css',//
+            publicPath:config.build.assetsPublicPath
         }),
       
         new copyWebpackPlugin([{

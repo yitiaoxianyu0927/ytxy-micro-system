@@ -1,5 +1,8 @@
-const test = require('./test/index.js')
+const test = require('./test/index.js');
+const permission = require('./permission/index.js');
+
 
 module.exports = {
-  ...test
+  ...test,
+  ...permission
 }

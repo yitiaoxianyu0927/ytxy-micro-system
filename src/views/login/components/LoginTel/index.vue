@@ -1,7 +1,9 @@
 <template>
-    <div>   
-        布局页面 
-    </div>
+   <div class="box-100">
+   
+   
+   
+   </div>
 </template>
 
 
@@ -11,14 +13,15 @@
 
         data(){
 
-            return {
+           return {
 
 
 
-            } 
+           } 
 
         },
         methods:{
+
 
 
 
@@ -27,7 +30,7 @@
 
 
             
-        }
+        }  
 
 
     }
@@ -35,7 +38,8 @@
 </script>
 
 
-<style>
+<style lang="less">
+
 
 
 </style>
