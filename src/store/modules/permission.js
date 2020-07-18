@@ -38,6 +38,7 @@ permission = {
   state: {
     routers: constantRouterMap,
     addRouters: [],
+    dbRouters:[]
     
   },
   mutations: {
@@ -45,6 +46,10 @@ permission = {
 
 
 
+    },
+    SET_DBROUTERS: (state, dbRouters ) => {
+
+      state.dbRouters = dbRouters;
     }
   },
   actions: {
@@ -60,6 +65,8 @@ permission = {
         // accessedRouters = filterAsyncRouter(asyncRouterMap,rights);
         //console.log("accessedRouters",accessedRouters);
         //commit('SET_ROUTERS', accessedRouters)
+
+        commit('SET_DBROUTERS', rights)
 
         formatMenuConfig();
         

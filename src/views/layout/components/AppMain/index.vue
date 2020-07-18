@@ -2,7 +2,7 @@
     <div class="box-100 app-main">
 
   
-        <!-- <el-tabs v-model="activeTabName">
+        <el-tabs v-model="activeTabName">
             <el-tab-pane 
                 v-for="item in tagsList"
                 :key="item.path"
@@ -28,19 +28,23 @@
 
                 <transition name="main" mode="out-in">
                     <template v-if="item.meta.type == 'micro'">
-                        <div :id="item.meta.id" class="box-100 pad-20">
+                        <!-- <div :id="item.meta.id" class="box-100 pad-20">
                            <h3>微前端施工中。。。</h3>
-                        </div>
+                        </div> -->
+                        <div id="micro" class="box-100 pad-20">
+                            <h3>微前端施工中。。。</h3>
+                        </div> 
                     </template>
                 </transition>
 
+
             </el-tab-pane>
         </el-tabs>
-           -->
+          
 
-        <div id="micro" class="box-100 pad-20">
+        <!-- <div id="micro" class="box-100 pad-20">
             <h3>微前端施工中。。。</h3>
-        </div>  
+        </div>  -->
         
 
         
@@ -54,7 +58,7 @@
     import { getToken } from "@/utils/auth.js"
      // 微前端
     //import startQiankun from '@/micro/index.js'
-   
+    import { loadMicroApp } from 'qiankun';
 
     export default{
  
@@ -94,6 +98,32 @@
             queryRouterConfig(){
 
                 this.activeTabName = this.$route.path
+            },
+
+            queryMicroPro(){
+
+
+                setTimeout(()=>{
+
+                    this.$nextTick(() => {
+
+                        console.log(document.querySelector("#micro"))
+
+                        this.microApp = loadMicroApp(
+                            { 
+                                name: 'doc', 
+                                entry: '//localhost:10200', 
+                                container: '#micro', 
+                                props: { name: 'qiankun' } 
+                            
+                            },
+                        );
+
+                        
+
+                    })
+
+                },10000)
             }
 
         },
@@ -107,12 +137,24 @@
             //     }) 
             // }, 1000);
 
+            //this.queryMicroPro()
+
+        },
+        update(){
+
+            //this.microApp.update({ name: 'kuitos' });
         },
         watch:{
 
             $route() {
          
                 this.queryRouterConfig();
+
+
+                // if(this.$route.meta.type == "micro") {
+
+                //     this.queryMicroPro()
+                // }
             
             } 
         } 

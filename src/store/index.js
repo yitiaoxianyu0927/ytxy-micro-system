@@ -3,15 +3,13 @@ import Vuex from 'vuex'
 
 import app from './modules/app.js'
 import user from './modules/user.js'
+import menu from './modules/menu.js'
 import permission from './modules/permission.js'
 import tagsView from './modules/tagsView.js'
 
 import getters from './getters'
 
 Vue.use(Vuex)
-
-
-
 
 const store = new Vuex.Store({
 
@@ -25,6 +23,7 @@ const store = new Vuex.Store({
         
        app, 
        user,
+       menu,
        permission,
        tagsView 
     },

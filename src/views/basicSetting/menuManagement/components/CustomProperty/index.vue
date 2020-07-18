@@ -1,0 +1,328 @@
+<template>
+   <div class="box-100 custom-property">
+
+        <div v-if="!property.uid"> 说明 </div>
+
+        <el-form   
+            
+            v-if="property.uid"
+            :inline="true" :model="form" ref="form" 
+            class="demo-form-inline" size="small" 
+            label-width="80px" label-position="left"
+        
+        >
+                <el-row>  
+                
+                    <el-col :span="12" >
+                        <el-form-item label="菜单类型" prop="menuType">
+                            <el-select v-model="form.menuType.value" placeholder="请选择"  >
+                                <el-option 
+                                    v-for="item in form.menuType.option"
+                                    :key="item.value"
+                                    :value="item.value"
+                                    :label="item.name"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>  
+
+                <el-row>
+                    
+                    <el-col :span="12" >
+                        <el-form-item label="菜单名称" prop="menuName">
+                            <el-input  v-model="form.menuName" placeholder="请输入菜单名称" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="12" >
+                        <el-form-item label="菜单ID" prop="menuId">
+                            <el-input  v-model="form.menuId" placeholder="请输入菜单ID" clearable></el-input> 
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>   
+
+                <el-row>  
+                
+                    <el-col :span="12" >
+                        <el-form-item label="显示环境" prop="env">
+                            <el-select v-model="form.env.value" placeholder="请选择"  >
+                                <el-option 
+                                    v-for="item in form.env.option"
+                                    :key="item.value"
+                                    :value="item.value"
+                                    :label="item.name"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="12" >
+                        <el-checkbox v-model="form.hidden">隐藏</el-checkbox>
+                        <el-tag class="tag-contact">{{form.contact ? '关联' : '不关联'}}</el-tag>
+                    </el-col>    
+
+                </el-row> 
+
+                <el-row>  
+                
+                    <el-col :span="12" >
+                        <el-form-item label="菜单图标" prop="icon">
+                            <el-input v-model="form.icon" placeholder="请选择" readonly />
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="12" >
+                        <el-form-item label="菜单模块" prop="module" v-if="form.menuType.value == 'iframe'">
+                            <el-select v-model="form.module.value" placeholder="请选择"  >
+                                <el-option 
+                                    v-for="item in form.module.option"
+                                    :key="item.value"
+                                    :value="item.value"
+                                    :label="item.name"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="12" >
+                        <el-form-item label="项目模块" prop="module" v-if="form.menuType.value == 'micro'">
+                            <el-select v-model="form.project.value" placeholder="请选择"  >
+                                <el-option 
+                                    v-for="item in form.project.option"
+                                    :key="item.value"
+                                    :value="item.value"
+                                    :label="item.name"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="24" >
+                        <el-form-item label="菜单路径" prop="url">
+                            <el-input v-model="form.url" placeholder="请选择" style="width:450px;" />
+                        </el-form-item>
+                    </el-col>
+
+                </el-row> 
+
+                <el-row>
+            
+                    <el-button type="primary" size="mini" @click="save">保存属性</el-button>
+                    <el-button type="primary" size="mini" @click="syncData">同步数据库</el-button>
+                    <el-button type="primary" size="mini" @click="displaySql">查看sql</el-button>
+
+                </el-row>
+
+
+        </el-form>           
+
+        
+        
+   </div>
+</template>
+
+
+<script>
+   
+    export default{
+
+        data(){
+
+            return {
+
+                form:{
+
+                    menuType:{
+
+                        value:"router",
+                        option:[{
+                            name:"路由",value:"router"
+                        },{
+                            name:"iframe",value:"iframe"
+                        },{
+                            name:"微前端",value:"micro"
+                        }]
+                    },
+                    menuName:"",
+                    menuId:"",
+                    env:{
+
+                        value:"",
+                        option:[{
+                            name:"pro/dev",value:""
+                        },{
+                            name:"dev",value:"development"
+                        }]
+                    },
+                    hidden:false,
+                    icon:"",
+                    module:{
+                        value:"",
+                        option:[]
+                    },
+                    project:{
+                        value:"",
+                        option:[]
+                    },
+                    url:"",
+                    contact:false
+
+                },
+                uid:""
+
+            }
+
+        },
+
+        props:{
+
+            property:{
+
+                type:Object,
+                default:()=>{
+
+                } 
+
+            }
+        },
+        methods:{
+           
+            save(){
+
+                let type = this.form.menuType.value;
+                let id = this.form.menuId;
+                let env = this.form.env.value;
+                let componentUrl = this.form.url;
+                let icon = this.form.icon;
+                let title = this.form.menuName;
+                let moduleName = this.form.module.value;
+                let url = this.form.url
+                let projectName = this.form.project.value;
+                let routerPath = this.form.url;
+                let contact = this.form.contact;
+                let uid = this.uid;
+
+
+                this.$emit("save",{
+                    
+                    uid,
+                    type,
+                    id,
+                    env,
+                    contact,
+                    icon , title,
+                    meta:{  icon , title  },
+                    
+                    //router
+                    componentUrl: type == 'router' ? componentUrl : null,
+                    //iframe
+                    url: type == 'iframe' ? url : null,
+                    moduleName,
+                    //micro
+                    routerPath: type == 'micro' ? url : null,
+                    projectName  
+                    
+                })
+
+            },
+            syncData(){
+
+
+            },
+            renderOption(){
+
+                let { 
+                    uid,
+                    componentUrl,env = "",id,title,type,icon, contact,
+                    moduleName,url,
+                    projectName,routerPath
+                
+                }  =  this.property;
+
+
+                this.form.url = type == 'router' ? componentUrl : url;
+                this.form.env.value = env;
+                this.form.menuId = id;
+                this.form.menuName = title;
+                this.form.module.value = moduleName;
+                this.form.menuType.value = type;
+                this.form.icon = icon;
+                this.form.contact = contact;
+                this.uid = uid;
+                
+            },
+            renderDictList(){
+
+                let moduleList = [];
+                let projectList = [];
+
+                Object.keys(CORE_CONFIG).forEach(key => {
+
+                    key.startsWith("FRAME_") ? moduleList.push({
+                        name:key,value:CORE_CONFIG[key]
+                    }) : ""
+
+                    key.startsWith("PROJECT_") ? projectList.push({
+                        name:key,value:CORE_CONFIG[key]
+                    }) : ""
+                    
+                });
+
+                this.form.module.option = moduleList;
+                
+                this.form.project.option = projectList;
+
+
+            },
+            displaySql(){
+
+                this.$emit("displaySql","")
+            }
+
+
+        },
+        mounted(){
+             
+            this.renderDictList(); 
+
+        },
+
+        watch:{
+
+            property:{
+
+                handler(val,oldVal){
+
+                    this.renderOption();
+
+                },
+                deep:true
+            }
+        }
+
+    }
+
+</script>
+
+
+
+<style lang="less" scoped>
+
+    .custom-property{
+
+
+        overflow:auto;
+        padding:10px 20px;
+
+        .tag-contact{
+
+            margin-left:20px;
+        }
+
+
+    }
+
+</style>

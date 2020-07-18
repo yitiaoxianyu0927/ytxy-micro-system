@@ -5,6 +5,7 @@ const meunConfig = [
         id:"home",
         env:"development",
         componentUrl:"/home",
+        title:"工作台",
         meta:{ icon:"el-icon-menu",title:"工作台",cache:true }
     },
     {

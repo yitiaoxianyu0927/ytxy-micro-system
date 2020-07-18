@@ -1,65 +1,86 @@
 import router,{ mainRouter } from "@/router";
 //import menuConfig from "@/config/menu/index.js";
+import { cloneDeep } from "lodash";
 import store from "@/store"
 
 const mainRouterName = "layout";
 
 export function formatMenuConfig(){  /// 配置菜单路径
 
-    const menuConfig = require("@/config/menu/index.js")
+    const menuConfig = cloneDeep(require("@/config/menu/index.js"));
 
     console.log("---- formatMenuConfig ----",menuConfig);
 
     let routers = [];  ///全部路由
 
-    renderRouterConfig(menuConfig,routers);
     
     filterMenuRouterConfig(menuConfig); 
+
 }
 
 
-function renderRouterConfig(menuConfig = [] , routers = []){
+function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
+    
+    console.log(menuConfig)
 
     for(let [i,v] of menuConfig.entries()){
+
         
-        if(v.type == "router"){
+        let option = {
+
+            router(){
+
+                if(v.componentUrl){
+
+                    try{
+
+                        const component = requireComponent(v.componentUrl);
+
+                        if(component){
+
+                            let meta =  Object.assign(v.meta,v);
+
+                            routers.push({ path:"/"+v.id , name: v.id , component , ...meta   });
+                        
+                        }
+
+                    } catch (e) {}
+
+                }
+
+                v.hasComponet = v.componentUrl ? true : false;
 
 
-            if(v.componentUrl){
 
-                try{
+            },
+            iframe(){
 
-                    const component = requireComponent(v.componentUrl);
+                let meta =  Object.assign(v.meta,v);
 
-                    if(component){
+                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , ...meta });
 
-                        let meta =  Object.assign(v.meta,v);
+            },
+            micro(){
 
-                        routers.push({ path:"/"+v.id , name: v.id , component , ...meta   });
-                    
-                    }
+                let meta =  Object.assign(v.meta,v);
 
-                } catch (e) {}
-
+                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , ...meta });
             }
+             
 
-            if(v.children){
-
-                renderRouterConfig(v.children,routers);
-            }
-
-        }else if(v.type == "iframe"){
-
-            let meta =  Object.assign(v.meta,v);
-
-            routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , ...meta });
-        
-        }else if(v.type == "micro"){
-
-            let meta =  Object.assign(v.meta,v);
-
-            routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , ...meta });
         }
+
+        if(v.contact  || v.env == 'development'){
+        
+            option[v.type]() ;
+
+            v.children ? renderRouterConfig(v.children,routers) : null;
+
+        }
+        
+       
+
+        
 
     } 
 
@@ -96,7 +117,39 @@ function addMainRouter(config){
 
 function filterMenuRouterConfig(menuConfig = []){
 
-    store.state.permission.routers = menuConfig;
+   
+    let  dbRouters = store.getters.permission_dbRouters; ///数据库菜单信息
+    
+    let fn = (data) => {
+
+			let tree = [];
+	
+			for(let [i,v] of data.entries()){
+
+
+                v.children ? v.children = fn(v.children) : null;
+
+                let contact = dbRouters.filter(item => 
+                    (item.right_id.startsWith("/") ? item.right_id.substring(1) : item.right_id ) == (v.id.startsWith("/") ? v.id.substring(1) : v.id )
+                )
+
+                contact.length == 0 ? v.contact = false : v.contact = true;
+
+                tree.push(v)
+
+			} 
+
+			return tree;
+
+	}
+
+	
+
+    store.state.permission.routers = fn(menuConfig);
+
+    
+    renderRouterConfig(menuConfig,[]);
+ 
 
 }
 

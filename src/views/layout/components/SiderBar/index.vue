@@ -9,11 +9,7 @@
                 <div class="title" v-if="!isCollapse" >ZZNODE-UI</div>
             <!-- </transition>     -->
             <div class="hamburger">
-                <i  
-                    class="el-icon-s-unfold" 
-                    @click="toggleSideBar"
-                ></i>
-                <!-- <svg-icon :icon-class="'hamburger'"/> -->
+                <Hamburger/>
             </div>
             
         </div>       
@@ -84,7 +80,8 @@
         },
         components:{
 
-            SiderBarItem:()=>import("./SiderBarItem.vue")
+            SiderBarItem:()=>import("./SiderBarItem.vue"),
+            Hamburger:()=>import("../Hamburger")
         },
         methods:{
 
@@ -98,10 +95,7 @@
 
 
             },
-            toggleSideBar(){
-
-                this.$store.dispatch("toggleSideBar");
-            }
+            
 
         },
         mounted(){
@@ -147,6 +141,14 @@
                 font-size: 20px;
                 padding-right:4px; 
                 cursor:pointer;
+                width:40px;
+                &>div{
+
+                    top:50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    position:absolute;
+                }
             }
         }
         

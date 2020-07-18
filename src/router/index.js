@@ -26,7 +26,7 @@ export const mainRouter = {
 
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
-  mode:"history",
+  //mode:"history",
   routes: routersConfig
 })
 

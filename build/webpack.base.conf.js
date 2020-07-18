@@ -109,8 +109,17 @@ module.exports = {
                 }
             },
             {
+                test: /\.svg$/,
+                loader: 'svg-sprite-loader',
+                include: [path.resolve('src/assets/svg')],
+                options: {
+                symbolId: 'icon-[name]'
+                }
+            },
+            {
                 test: /\.(woff2?|eot|ttf|otf|svg|woff)(\?.*)?$/,
                 loader: 'url-loader',
+                exclude: [path.resolve('src/assets/svg')],
                 options: {
                     limit: 10000,
                     name:'assets/fonts/[name]_[hash:8].[ext]',

@@ -13,6 +13,7 @@ const getters = {
   districts: state => state.user.districts,
   setting: state => state.user.setting,
   permission_routers: state => state.permission.routers,
+  permission_dbRouters: state => state.permission.dbRouters,
   addRouters: state => state.permission.addRouters,
   baseMenuId:state => state.tagsView.baseMenuId,
   errorLogs: state => state.errorLog.logs,

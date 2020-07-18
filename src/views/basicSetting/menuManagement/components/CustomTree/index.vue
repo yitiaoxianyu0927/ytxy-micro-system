@@ -2,8 +2,10 @@
     <div class="custom-tree">
       <el-tree
           :data="treeData"
-          node-key="id"
+          node-key="uid"
           default-expand-all
+          ref="custom-tree"
+          :expand-on-click-node="false"
           @node-drag-start="handleDragStart"
           @node-drag-enter="handleDragEnter"
           @node-drag-leave="handleDragLeave"
@@ -14,15 +16,17 @@
           :allow-drop="allowDrop"
           :allow-drag="allowDrag"
           :props="defaultProps"
+          @node-click="handleNodeClick"
       >
-          <span class="custom-tree-node" slot-scope="{ node, data }" @mouseover="hoverLabel = node.label" @mouseout="hoverLabel = ''">
-              <span class="tree-label">{{ node.label }}</span>
+          <span class="custom-tree-node" slot-scope="{ node, data }" >
+              <span class="tree-label">{{ data.meta.title }}</span>
               <span>
                 <i class="el-icon-circle-plus" @click.prevent.stop="() => append(data)"></i>
                 <i class="el-icon-error" @click.prevent.stop="() => remove(node, data)"></i>
               </span>
           </span>
       </el-tree>
+
     </div>
 </template>
 
@@ -75,7 +79,8 @@
         const newChild = { 
              
           type:"router",
-          id:getUUID(),
+          uid:getUUID(),
+          id:"",
           env:"development",
           meta:{ title:"新菜单1",Cache:true },
 
@@ -94,7 +99,10 @@
         const index = children.findIndex(d => d.id === data.id);
         children.splice(index, 1);
       },
-
+      handleNodeClick(...args){
+         console.log("node-click",...args)
+        this.$emit("node-click",...args);
+      },
       handleDragStart(node, ev) {
         console.log('drag start', node);
       },
@@ -126,7 +134,9 @@
       queryTreeData(){
 
         this.$emit("change",this.treeData)
-      }
+      },
+      
+      
     }
   };
 </script>

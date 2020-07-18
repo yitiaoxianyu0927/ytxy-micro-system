@@ -23,3 +23,128 @@ export function getUUID() {
 
 }
 
+/**
+ * 改变树节点方法
+ * @param treeData 树形数据
+ * @param updateOption 修改的配置
+ * @param findkey 查找的key
+ * @param findval 查找的值
+*/
+
+export function updateTreeChild(treeData,updateOption,findkey,findval){  
+
+
+	let fn = (data) => {
+
+			let tree = [];
+	
+			for(let [i,v] of data.entries()){
+
+
+					if(v.children){
+
+							v.children =  fn(v.children);
+
+							
+					}
+
+					
+					if(v[findkey] == findval){
+
+							v = updateOption; 
+								
+					}
+
+					tree.push(v)
+			} 
+
+			return tree;
+
+	}
+
+	
+
+	return fn(treeData);
+
+}
+
+
+
+export function addTreeOptionForAll(treeData,option){   ///所有树添加属性
+
+
+	let fn = (data) => {
+
+			let tree = [];
+	
+			for(let [i,v] of data.entries()){
+
+
+					if(v.children){
+
+							v.children =  fn(v.children);
+
+							
+					}
+
+					option.uid ? option.uid = getUUID() : null;
+     
+					v = Object.assign(v,option);
+
+					tree.push(v)
+			} 
+
+			return tree;
+
+	}
+
+	
+
+	return fn(treeData);
+
+}
+
+
+
+/**
+ * 树降维
+ * @param treeData 树形数据
+ * @param key 遍历的key
+ * @param parentKey 父级key名称
+*/
+
+
+export function TreeToFlat(treeData,key = "id",parentKey = "parentId"){   
+
+    let treeList = [];
+
+	let fn = (data,parentVal = "") => {
+
+			let tree = [];
+	
+			for(let [i,v] of data.entries()){
+
+				
+				if(v.children){
+
+					fn(v.children,v[key]);
+                    
+						
+				}
+
+                v[parentKey] = parentVal;
+
+				treeList.push(v);
+
+					
+			} 
+
+			return tree;
+
+	}
+
+	fn(treeData)
+
+	return treeList;
+
+}
