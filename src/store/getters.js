@@ -15,6 +15,7 @@ const getters = {
   permission_routers: state => state.permission.routers,
   permission_dbRouters: state => state.permission.dbRouters,
   addRouters: state => state.permission.addRouters,
+  allMenuRouter: state => state.permission.allMenuRouter,
   baseMenuId:state => state.tagsView.baseMenuId,
   errorLogs: state => state.errorLog.logs,
   

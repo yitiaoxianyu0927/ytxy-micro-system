@@ -84,7 +84,7 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
 
     } 
 
-    console.log("routers",routers)
+    //console.log("routers",routers)
 
     if(routers.length > 0){
 
@@ -95,6 +95,7 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
         store.state.tagsView.baseMenuId = routers[0].id;
 
         store.commit("SET_FISRT_TAG",routers[0]);
+        store.commit("SET_ALL_MENU_ROUTER",routers);
     }
 
     
@@ -104,7 +105,7 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
         mainRouter
     ])
     
-    console.log("router",router)
+    //console.log("router",router)
 
 }
 

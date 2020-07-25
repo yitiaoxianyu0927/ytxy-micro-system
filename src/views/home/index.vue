@@ -1,52 +1,72 @@
 <template>
-    <div ref="home-container" class="pad-20 home-container">
-       
-        <div class="welcome-container">
+    <div class="box-100">
+        <div ref="home-container" class="pad-20 home-container" v-show="!dragPanelShow">
+        
+            <div class="welcome-container">
+                
+                <div>Hi，欢迎使用ZZNODE-UI !</div>
+                <div>轻松创建、部署和管理你的前端产品，提升研发效率、降低业务成本。</div>
             
-            <div>Hi，欢迎使用ZZNODE-UI !</div>
-            <div>轻松创建、部署和管理你的前端产品，提升研发效率、降低业务成本。</div>
-           
+            </div>
+
+            <el-row :gutter="20" class="display-container">
+                
+                <el-col :span="14" >
+
+                    <div 
+                       v-for="item in displayLeftList"
+                       :class="[item.class,'display-wapper']"
+                       :key="item.id"
+                    >
+                       <components
+                            
+                            :is="item.id"
+
+                       ></components>
+                    </div>
+                    
+                   
+                    
+                </el-col>     
+
+                <el-col :span="10" >
+                    
+                    <div 
+                       v-for="item in displayRightList"
+                       :class="[item.class,'display-wapper']"
+                       :key="item.id"
+                    >
+                       <components
+                            
+                            :is="item.id"
+
+                       ></components>
+                    </div>
+                    
+                </el-col>     
+                
+
+            </el-row>    
+
+        
+            <div 
+                class="func-container" 
+                :style="{ right : funcRight + 'px' }"
+            >
+                
+                <div class="el-icon-star-off"></div>
+                <div class="el-icon-magic-stick"></div>
+                <div class="el-icon-setting" @click="dragPanelShow = true"></div>
+                <div class="el-icon-arrow-up"></div>
+
+            </div>    
+
+
         </div>
-
-        <el-row :gutter="20" class="display-container">
-             
-            <el-col :span="14" >
-                
-                <div class="opm-wapper display-wapper"></div>
-
-                <div class="bdm-wapper display-wapper"></div>
-
-                <div class="flow-wapper display-wapper"></div>
-                  
-            </el-col>     
-
-            <el-col :span="10" >
-                
-                <div class="collect-wapper display-wapper"></div>
-
-                <div class="notice-wapper display-wapper"></div>
-
-                <div class="nco-wapper display-wapper"></div>
-                  
-            </el-col>     
-            
-
-        </el-row>    
-
-       
-        <div 
-            class="func-container" 
-            :style="{ right : funcRight + 'px' }"
-        >
-            
-            <div class="el-icon-star-off"></div>
-            <div class="el-icon-magic-stick"></div>
-            <div class="el-icon-setting"></div>
-            <div class="el-icon-arrow-up"></div>
-
-        </div>    
-
-    </div>
+        <transition name="el-fade-in"> 
+            <drag-panel v-if="dragPanelShow" @close="closeDragPanel"/>
+        </transition>
+    </div>    
 </template>
 
 
@@ -58,14 +78,34 @@
 
             return {
 
-                funcRight:0
+                funcRight:0,
+                dragPanelShow:false
 
             }
         
         },
         computed:{
+            
+            displayLeftList(){
 
+                return this.$store.state.dragLayout.displayDragLeftList
+            },
+            displayRightList(){
+
+                return this.$store.state.dragLayout.displayDragRightList
+            }
          
+        },
+        components:{
+
+            OpmTask:()=>import("./components/OpmTask"),
+            BdmCondition:()=>import("./components/BdmCondition"),
+            FlowOver:()=>import("./components/FlowOver"),
+            HistoryRecord:()=>import("./components/HistoryRecord"),
+            HistoryNotice:()=>import("./components/HistoryNotice"),
+            NcoStatus:()=>import("./components/NcoStatus"),
+
+            DragPanel:()=>import("./components/DragPanel")
         },
         methods:{
 
@@ -80,12 +120,17 @@
                     this.funcRight = box.offsetWidth - innerBox.clientWidth + 20;
                 })
 
+            },
+            closeDragPanel(){
+
+                this.dragPanelShow = false;
             }
 
         },
         mounted(){
 
             this.queryFuncPostion();
+
 
             window.addEventListener("resize",()=>{ 
                 
@@ -106,10 +151,12 @@
     .home-container{
 
         background-color:#f1f3f9;
+        min-height:100%;
+        position: relative;
 
         .welcome-container{
 
-            height:120px;
+            height:140px;
             background-color:#247fff;
             border-radius: 6px;
             display:flex;
@@ -124,7 +171,7 @@
             div:nth-child(1){
 
                 font-size:18px;
-                margin-bottom   :20px;
+                margin-bottom:30px;
             }
 
         }
@@ -143,32 +190,32 @@
             
             .opm-wapper{
 
-                height:110px;
+                height:130px;
             }
 
             .bdm-wapper{
 
-                height:220px;
+                height:300px;
             }
 
             .flow-wapper{
 
-                height:170px;
+                height:220px;
             }
 
             .collect-wapper{
 
-                height:150px;
+                height:170px;
             }
 
             .notice-wapper{
 
-                height:170px;
+                height:210px;
             }
 
             .nco-wapper{
 
-                height:180px;
+                height:270px;
             }
 
         }

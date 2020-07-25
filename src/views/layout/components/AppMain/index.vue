@@ -20,6 +20,7 @@
                 <transition name="main" mode="out-in">
                     <template v-if="item.meta.type == 'iframe'">
                         <iframe 
+                            ref="iframe"
                             :src="queryIframeUrl(item)"
                             v-show="activeTabName == item.path"
                         ></iframe>
@@ -124,6 +125,11 @@
                     })
 
                 },10000)
+            },
+
+            queryIframeLoad(){
+
+
             }
 
         },
@@ -155,6 +161,11 @@
 
                 //     this.queryMicroPro()
                 // }
+
+                if(this.$route.meta.type == "iframe") {
+
+                    this.queryIframeLoad()
+                }
             
             } 
         } 

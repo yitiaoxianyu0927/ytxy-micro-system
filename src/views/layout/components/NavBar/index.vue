@@ -1,7 +1,10 @@
 <template>
     <div class="box-100 nav-bar">
-        <div class="search-bar">
-           <el-input v-model="menuName" placeholder="全局搜索" suffix-icon="el-icon-search" size="small"> </el-input>
+        <!-- <div class="search-container">
+           <search-bar/>
+        </div> -->
+        <div class="search-container">
+           <search-bar/>
         </div>
         <div class="dropdown-bar">
             <i class="icon-user"></i> 
@@ -41,6 +44,10 @@
 
             ...mapGetters(["name"])
         },
+        components:{
+
+            SearchBar:()=>import("../SearchBar")
+        },
         methods:{
 
             setting(){
@@ -59,7 +66,6 @@
         mounted(){
 
 
-
         } 
 
     }
@@ -74,29 +80,6 @@
 
         //box-shadow: 0px 3px 6px 0px  rgba(0, 0, 0, 0.1);
         
-
-        .search-bar{
-
-            position:absolute;
-            width:300px;
-            height:50px;
-            line-height:50px;
-            padding-left:20px;
-
-            /deep/.el-input{
-
-                input{
-
-                    border-radius:20px;
-                }
-
-                .el-input__icon{
-
-                    padding-right:4px;
-                    color:#409eff;
-                }
-            }
-        }
 
 
         .dropdown-bar{

@@ -6,7 +6,9 @@
 
 //const WEB_SERVER_BASE_URL = 'http://188.103.142.161:8080';  //现场地址
 
-const WEB_SERVER_BASE_URL = 'http://10.4.1.72:8080';  //现场地址
+//const WEB_SERVER_BASE_URL = 'http://10.4.1.72:8080';  //现场地址
+
+const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //现场地址
 
 
 var CORE_CONFIG = { 
@@ -22,8 +24,12 @@ var CORE_CONFIG = {
   GIS_MAP_URL:"/map",  //地图地址
   OTHER_MODULE:'http://188.103.142.161:8085/topo-web-ui', //其他模块地址
   PUBLIC_EXP_MAX_NUM:50000,//导出全部数据量上限常量
-  PUBLIC_VERSION_ID:'1.0.0.20170101'
+  PUBLIC_VERSION_ID:'1.0.0.20170101',
 
+  ///模块配置
+
+  FRAME_TCOAMP_BDM: "http://59.46.22.93:47282/tcoamp-web-ui-bdm-v2",
+  PROJECT_SOTN:"http://10.4.1.26:8085/ui"
 }
 
 // function geturl(name) {

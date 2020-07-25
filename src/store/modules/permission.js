@@ -38,18 +38,21 @@ permission = {
   state: {
     routers: constantRouterMap,
     addRouters: [],
-    dbRouters:[]
-    
+    dbRouters:[],
+    allMenuRouter:[] ////数组状态
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-
 
 
     },
     SET_DBROUTERS: (state, dbRouters ) => {
 
       state.dbRouters = dbRouters;
+    },
+    SET_ALL_MENU_ROUTER: (state, allMenuRouter) => {
+
+      state.allMenuRouter = allMenuRouter;
     }
   },
   actions: {

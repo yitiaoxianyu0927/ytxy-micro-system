@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import app from './modules/app.js'
+import dragLayout from './modules/dragLayout.js'
 import user from './modules/user.js'
 import menu from './modules/menu.js'
 import permission from './modules/permission.js'
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
     modules: {
         
        app, 
+       dragLayout,
        user,
        menu,
        permission,
