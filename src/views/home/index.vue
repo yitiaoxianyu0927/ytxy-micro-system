@@ -55,7 +55,7 @@
             >
                 
                 <div class="el-icon-star-off"></div>
-                <div class="el-icon-magic-stick"></div>
+                <div class="el-icon-magic-stick" @click="ThemePanelShow = true"></div>
                 <div class="el-icon-setting" @click="dragPanelShow = true"></div>
                 <div class="el-icon-arrow-up"></div>
 
@@ -63,9 +63,18 @@
 
 
         </div>
+
+        <!-- 选择主题 -->
+        <transition name="el-fade-in"> 
+            <theme-panel v-if="ThemePanelShow" @close="closeThemePanel"/>
+        </transition>
+    
+
+        <!-- 自定义布局 -->
         <transition name="el-fade-in"> 
             <drag-panel v-if="dragPanelShow" @close="closeDragPanel"/>
         </transition>
+    
     </div>    
 </template>
 
@@ -79,7 +88,8 @@
             return {
 
                 funcRight:0,
-                dragPanelShow:false
+                dragPanelShow:false,
+                ThemePanelShow:false
 
             }
         
@@ -105,7 +115,8 @@
             HistoryNotice:()=>import("./components/HistoryNotice"),
             NcoStatus:()=>import("./components/NcoStatus"),
 
-            DragPanel:()=>import("./components/DragPanel")
+            DragPanel:()=>import("./components/DragPanel"),
+            ThemePanel:()=>import("./components/ThemePanel")
         },
         methods:{
 
@@ -124,6 +135,10 @@
             closeDragPanel(){
 
                 this.dragPanelShow = false;
+            },
+            closeThemePanel(){
+
+               this.ThemePanelShow = false;
             }
 
         },
