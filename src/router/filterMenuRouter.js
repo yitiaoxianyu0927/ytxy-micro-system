@@ -157,5 +157,8 @@ function filterMenuRouterConfig(menuConfig = []){
 
 function requireComponent(componentUrl){
 
-    return require(`@/views${componentUrl}/index.vue`).default;
+ return     process.env.NODE_ENV == "development" ?
+ 
+            require(`@/views${componentUrl}/index.vue`).default:
+            resolve => require([`@/views${componentUrl}/index.vue`], resolve)
 }

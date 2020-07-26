@@ -85,6 +85,7 @@
         .dropdown-bar{
 
             position:absolute;
+            top:0px;
             right:0px;
             height:50px;
             line-height:50px;

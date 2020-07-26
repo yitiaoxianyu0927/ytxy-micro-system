@@ -26,7 +26,7 @@ module.exports = {
     output:{
 
         //输出文件名
-        filename: 'js/build_[hash:8].js', //'build.js',//
+        filename: 'js/[name]_[hash:8].js', //'build.js',//
         //__dirname当前目录绝对路径
         path:config.build.assetsRoot, // path.resolve( __dirname , 'dist/'+baseUrl )//
         publicPath: process.env.NODE_ENV == 'production' ? 
@@ -172,6 +172,7 @@ module.exports = {
         
         new MiniCssExtractPlugin({
             filename:'css/index_[hash:8].css',//
+            //chunkFilename: "css/index_[id].css",
             publicPath:config.build.assetsPublicPath
         }),
       
