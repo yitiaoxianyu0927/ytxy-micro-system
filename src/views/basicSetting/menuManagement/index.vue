@@ -17,7 +17,12 @@
 
             <div class="custom-property">
 
-                <custom-property :property="nodeProperty" @save="saveProperty" @displaySql="displaySql"/> 
+                <custom-property 
+                    :property="nodeProperty" 
+                    @save="saveProperty" 
+                    @displaySql="displaySql"
+                    @exportConfigFile="exportConfigFile"
+                ></custom-property> 
                
             </div>
         
@@ -71,24 +76,37 @@
            
             ...mapGetters([
                 "permission_routers"
-            ])
+            ]),
+            systemName(){
+
+                return this.$store.state.projectConfig.projectName;
+
+            }
 
         },
         methods:{
 
             renderTree(){
 
+                //console.log(this.systemName)
+
+                let systemName = this.systemName;
+
                 //const menuConfig = require("@/config/menu/index.js");
 
-                this.treeData = addTreeOptionForAll(
-                   cloneDeep(this.permission_routers),
-                   { uid : "func" }
-                );
+                this.treeData = [{
+                    root:true,
+                    children:addTreeOptionForAll(   //每个添加uuid
+                        cloneDeep(this.permission_routers),
+                        { uid : "func" }
+                    ),
+                    meta:{
+                        title:systemName
+                    },
+                    uid:getUUID()
+                }]
 
-                this.orgTreeData = addTreeOptionForAll(
-                   cloneDeep(this.permission_routers),
-                   { uid : "func" }
-                );
+                this.orgTreeData = cloneDeep( this.treeData );
 
                 console.log("treeData",this.treeData);   
 
@@ -98,6 +116,7 @@
                 //console.log(data);
 
                 let {
+                    root,   ///是否根目录
                     uid,
                     componentUrl,env,id,meta,type,contact,
                     moduleName,url,
@@ -108,6 +127,7 @@
                 let { icon = "" , cache , title } = meta;
 
                 this.nodeProperty = {
+                    root,
                     uid,
                     componentUrl,env,id,title,type,icon,contact,
                     moduleName,url,
@@ -126,13 +146,10 @@
                 this.treeData = updateTreeChild(treeData , option , "uid" , option.uid);
 
                 
-
-                this.exportMenuConfig();  
-
             },
             exportMenuConfig(){
 
-                let treeData = this.treeData;
+                let treeData = this.treeData[0].children;
 
                 let fn = (data) => {
 
@@ -143,9 +160,8 @@
 
                             if(v.children){
 
-                                    v.children =  fn(v.children);
-
-                                    
+                                v.children =  fn(v.children);
+  
                             }
                             
                             let { icon ,title , cache } = v.meta;
@@ -167,9 +183,9 @@
 
                 let blob = new Blob([`
 
-                   const meunConfig = ${JSON.stringify(_treeData)} ;
+                   const menuConfig = ${JSON.stringify(_treeData)} ;
 
-                   module.exports = meunConfig;
+                   module.exports = menuConfig;
                 
                 `], {type: "text/plain;charset=utf-8"});
                 
@@ -182,6 +198,10 @@
                 let oldData = TreeToFlat(this.orgTreeData);
                 
                 console.log(newData,oldData)
+            },
+            exportConfigFile(){
+
+                this.exportMenuConfig();  
             }
         },
         mounted(){

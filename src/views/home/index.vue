@@ -65,7 +65,8 @@
         </div>
 
         <!-- 选择主题 -->
-        <transition name="el-fade-in"> 
+        <!-- <transition name="el-fade-in">  -->
+        <transition name="main" mode="out-in">
             <theme-panel v-if="ThemePanelShow" @close="closeThemePanel"/>
         </transition>
     
@@ -267,6 +268,14 @@
 
         }
         
+    }
+
+    .main-enter,.main-leave-to {
+        opacity: 0;
+        transform: translateX(200px)
+    }
+    .main-enter-active,.main-leave-active {
+        transition: all 0.5s ease-in-out
     }
 
 

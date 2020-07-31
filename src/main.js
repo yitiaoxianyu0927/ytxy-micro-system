@@ -20,7 +20,7 @@ import './router/beforeRouter.js'
 // import startQiankun from './micro/index.js'
 // startQiankun();
 
-Vue.prototype.$eventBus = new Vue()
+//Vue.prototype.$eventBus = new Vue()
 
 // 接口
 import RequestUtils from "@/utils/request.js";

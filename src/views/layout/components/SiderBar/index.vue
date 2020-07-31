@@ -3,42 +3,44 @@
         class="box-100 sider-bar"
         :class="[isCollapse?'close-sidebar':'']"
     >
-
-        <div class="logo-container">
-            <!-- <transition name="el-fade-in">      -->
-                <div class="title" v-if="!isCollapse" >ZZNODE-UI</div>
-            <!-- </transition>     -->
-            <div class="hamburger">
-                <Hamburger/>
-            </div>
-            
-        </div>       
-        <el-menu
-
-            :default-active="$route.path"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            :collapse="isCollapse"
-            :collapse-transition="false"
-            @select="handleSelect"
-        >
-            <sider-bar-item v-for="item in permission_routers" :key="item.id" :item="item"/>
-             
-             
-            <!-- <template
+       
+        <!-- <el-scrollbar> -->
+            <div class="logo-container">
+                <!-- <transition name="el-fade-in">      -->
+                    <div class="title" v-if="!isCollapse" >ZZNODE-UI</div>
+                <!-- </transition>     -->
+                <div class="hamburger">
+                    <Hamburger/>
+                </div>
                 
-                v-for="item in appsMains"
-            
-            > 
-                <router-link :to="item.path">
-                    <el-menu-item :index="item.path" >
-                        {{item.children[0].meta.title}}
-                    </el-menu-item>
-                </router-link> 
-            </template> -->
+            </div>       
+            <el-menu
 
-        </el-menu>
+                :default-active="$route.path"
+                class="el-menu-vertical-demo"
+                @open="handleOpen"
+                @close="handleClose"
+                :collapse="isCollapse"
+                :collapse-transition="false"
+                @select="handleSelect"
+            >
+                <sider-bar-item v-for="item in permission_routers" :key="item.id" :item="item"/>
+                
+                
+                <!-- <template
+                    
+                    v-for="item in appsMains"
+                
+                > 
+                    <router-link :to="item.path">
+                        <el-menu-item :index="item.path" >
+                            {{item.children[0].meta.title}}
+                        </el-menu-item>
+                    </router-link> 
+                </template> -->
+
+            </el-menu>
+        <!-- </el-scrollbar> -->
 
     </div>
 </template>
@@ -159,6 +161,25 @@
 
         }
 
+        .el-scrollbar{
+
+            height: 100%;
+            /deep/.el-scrollbar__wrap{
+
+                overflow-x: hidden;
+                .el-scrollbar__view{
+
+                    height: 100%;
+
+                    .drag-list{
+
+                        min-height: 100%;
+                        overflow: auto;
+                    }
+                }
+            }
+        }
+
     }
 
 
@@ -184,7 +205,8 @@
 
             display: none;
         }
-
+         
+         
 
     }
     

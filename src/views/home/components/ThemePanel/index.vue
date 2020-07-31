@@ -9,8 +9,11 @@
                 v-for="item in themeList"    
                 @click="queryTheme(item.theme)"
             >
-               <div class="theme-pic" ></div>
-               <div class="theme-name">{{item.name}}</div>
+                <div 
+                    class="theme-pic" 
+                    :style="{'background-image':'url('+require('@/assets/image/theme/'+item.theme+'.png')+')'}"
+                ></div>
+                <div class="theme-name">{{item.name}}</div>
             </div>
         </div>
     </div>
@@ -109,7 +112,10 @@
 
                     width:100%;
                     height:50px;
-                    background-color:#000;
+                    //background-color:#000;
+                    background-size:100% 100%;
+                    background-repeat:no-repeat; 
+                    
                     border-radius:4px;
                     margin-bottom:6px;
                 }
@@ -125,6 +131,10 @@
                 margin-left:20px;
             }
         }
+
+        
     }
+
+    
 
 </style>

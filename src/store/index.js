@@ -7,6 +7,7 @@ import user from './modules/user.js'
 import menu from './modules/menu.js'
 import permission from './modules/permission.js'
 import tagsView from './modules/tagsView.js'
+import projectConfig from './modules/projectConfig.js'
 
 import getters from './getters'
 
@@ -27,7 +28,8 @@ const store = new Vuex.Store({
        user,
        menu,
        permission,
-       tagsView 
+       tagsView,
+       projectConfig 
     },
     getters
 

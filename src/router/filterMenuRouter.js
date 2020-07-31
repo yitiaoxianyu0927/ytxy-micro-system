@@ -9,7 +9,7 @@ export function formatMenuConfig(){  /// 配置菜单路径
 
     const menuConfig = cloneDeep(require("@/config/menu/index.js"));
 
-    console.log("---- formatMenuConfig ----",menuConfig);
+    //console.log("---- formatMenuConfig ----",menuConfig);
 
     let routers = [];  ///全部路由
 
@@ -21,7 +21,7 @@ export function formatMenuConfig(){  /// 配置菜单路径
 
 function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
     
-    console.log(menuConfig)
+    //console.log(menuConfig)
 
     for(let [i,v] of menuConfig.entries()){
 
@@ -38,9 +38,11 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
 
                         if(component){
 
-                            let meta =  Object.assign(v.meta,v);
+                            let _v = {...v};    delete _v.meta;
 
-                            routers.push({ path:"/"+v.id , name: v.id , component , ...meta   });
+                            let meta =  Object.assign(v.meta,_v);
+
+                            routers.push({ path:"/"+v.id , name: v.id , component , meta   });
                         
                         }
 
@@ -55,16 +57,20 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
             },
             iframe(){
 
-                let meta =  Object.assign(v.meta,v);
+                let _v = {...v};    delete _v.meta;
 
-                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , ...meta });
+                let meta =  Object.assign(v.meta,_v);
+
+                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , meta });
 
             },
             micro(){
 
-                let meta =  Object.assign(v.meta,v);
+                let _v = {...v};    delete _v.meta; 
 
-                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , ...meta });
+                let meta =  Object.assign(v.meta,_v);
+
+                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , meta });
             }
              
 
@@ -84,36 +90,45 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
 
     } 
 
-    //console.log("routers",routers)
+   
 
+}
+
+
+function addMainRouter(routers){
+
+    
     if(routers.length > 0){
 
-        mainRouter.children = routers;
+        let _routers = routers.map(item => {
 
-        mainRouter.redirect = routers[0].path;
+            delete item.children;
 
-        store.state.tagsView.baseMenuId = routers[0].id;
+            return item;  
+             
+        })
 
-        store.commit("SET_FISRT_TAG",routers[0]);
-        store.commit("SET_ALL_MENU_ROUTER",routers);
+        mainRouter.children = _routers;
+
+        mainRouter.redirect = _routers[0].path;
+
+        store.state.tagsView.baseMenuId = _routers[0].meta.id;
+
+        console.log(_routers)
+
+        store.commit("SET_FISRT_TAG",_routers[0]);
+        store.commit("SET_ALL_MENU_ROUTER",_routers);
     }
 
     
     // 把主体路由过滤出来加进去
 
+    //console.log("mainRouter",mainRouter)
+
     router.addRoutes([   
         mainRouter
     ])
     
-    //console.log("router",router)
-
-}
-
-
-function addMainRouter(config){
-
-    
-
 }
 
 function filterMenuRouterConfig(menuConfig = []){
@@ -148,8 +163,14 @@ function filterMenuRouterConfig(menuConfig = []){
 
     store.state.permission.routers = fn(menuConfig);
 
+
+    let routersConfig = [];
+
     
-    renderRouterConfig(menuConfig,[]);
+    renderRouterConfig(menuConfig,routersConfig);
+
+
+    addMainRouter(routersConfig);
  
 
 }
@@ -159,6 +180,6 @@ function requireComponent(componentUrl){
 
  return     process.env.NODE_ENV == "development" ?
  
-            require(`@/views${componentUrl}/index.vue`).default:
-            resolve => require([`@/views${componentUrl}/index.vue`], resolve)
+                require(`@/views${componentUrl}/index.vue`).default:
+                resolve => require([`@/views${componentUrl}/index.vue`], resolve)
 }

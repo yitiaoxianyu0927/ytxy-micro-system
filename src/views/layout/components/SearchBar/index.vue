@@ -77,7 +77,7 @@ export default{
     
     mounted(){
 
-       console.log(this.allMenuRouter) 
+       //console.log(this.allMenuRouter) 
 
     }
 }
@@ -86,7 +86,7 @@ export default{
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 
     .search-bar{
 

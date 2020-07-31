@@ -1,11 +1,11 @@
 <template>
    <div class="box-100 custom-property">
 
-        <div v-if="!property.uid"> 说明 </div>
+        <div v-if="!property.uid || property.root "> 说明 </div>
 
         <el-form   
             
-            v-if="property.uid"
+            v-else
             :inline="true" :model="form" ref="form" 
             class="demo-form-inline" size="small" 
             label-width="80px" label-position="left"
@@ -61,7 +61,7 @@
 
                     <el-col :span="12" >
                         <el-checkbox v-model="form.hidden">隐藏</el-checkbox>
-                        <el-tag class="tag-contact">{{form.contact ? '关联' : '不关联'}}</el-tag>
+                        <el-tag class="tag-contact" :type="form.contact ? 'success' : 'danger'">{{form.contact ? '关联数据库' : '未关联数据库'}}</el-tag>
                     </el-col>    
 
                 </el-row> 
@@ -70,7 +70,7 @@
                 
                     <el-col :span="12" >
                         <el-form-item label="菜单图标" prop="icon">
-                            <el-input v-model="form.icon" placeholder="请选择" readonly />
+                            <el-input v-model="form.icon" placeholder="请选择" readonly  @focus="openDialog"/>
                         </el-form-item>
                     </el-col>
 
@@ -111,6 +111,7 @@
                 <el-row>
             
                     <el-button type="primary" size="mini" @click="save">保存属性</el-button>
+                    <el-button type="primary" size="mini" @click="exportConfigFile">导出配置文件</el-button>
                     <el-button type="primary" size="mini" @click="syncData">同步数据库</el-button>
                     <el-button type="primary" size="mini" @click="displaySql">查看sql</el-button>
 
@@ -119,13 +120,25 @@
 
         </el-form>           
 
-        
+        <el-dialog title="图标库" :visible.sync="dialogVisible" custom-class="dialog-1366" :append-to-body="true">
+            <div class="">
+                <iconsGroup
+                    
+                    :mode="'selectIcon'"
+                    :tab-hidden="['svg-icon']"
+                    @select="handleSelectIcon"
+
+                ></iconsGroup>
+            </div>
+        </el-dialog>
         
    </div>
 </template>
 
 
 <script>
+
+    
    
     export default{
 
@@ -171,12 +184,16 @@
                     contact:false
 
                 },
-                uid:""
+                uid:"",
+                dialogVisible:false
 
             }
 
         },
+        components:{
 
+            iconsGroup:()=>import("@/views/basicSetting/iconsGroup")
+        },
         props:{
 
             property:{
@@ -262,11 +279,11 @@
                 Object.keys(CORE_CONFIG).forEach(key => {
 
                     key.startsWith("FRAME_") ? moduleList.push({
-                        name:key,value:CORE_CONFIG[key]
+                        name:key,value:key
                     }) : ""
 
                     key.startsWith("PROJECT_") ? projectList.push({
-                        name:key,value:CORE_CONFIG[key]
+                        name:key,value:key
                     }) : ""
                     
                 });
@@ -280,6 +297,24 @@
             displaySql(){
 
                 this.$emit("displaySql","")
+            },
+            exportConfigFile(){
+
+                this.$emit("exportConfigFile","")
+            },
+            handleSelectIcon(option){
+
+                let { className } = option
+
+                this.form.icon = className;
+
+                this.dialogVisible = false;
+            },
+            openDialog(){
+
+                console.log(12)
+
+                this.dialogVisible = true
             }
 
 
@@ -323,6 +358,22 @@
         }
 
 
+    }
+
+    /deep/ .icon-panel{
+
+        width:300px;
+        height:200px;
+
+        .el-scrollbar{
+
+            height:100%;
+            /deep/.el-scrollbar__wrap{
+
+                overflow-x: hidden;
+            
+            }
+        }
     }
 
 </style>

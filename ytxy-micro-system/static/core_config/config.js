@@ -28,7 +28,7 @@ var CORE_CONFIG = {
 
   ///模块配置
 
-  FRAME_TCOAMP_BDM: "http://188.103.142.161:8082/tcoamp-web-ui-bdm-v2",
+  FRAME_TCOAMP_BDM: "http://59.46.22.93:47282/tcoamp-web-ui-bdm-v2",
   PROJECT_SOTN:"http://10.4.1.26:8085/ui"
 }
 

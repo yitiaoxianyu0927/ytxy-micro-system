@@ -2,7 +2,7 @@
     <div class="box-100 app-main">
 
   
-        <el-tabs v-model="activeTabName">
+        <el-tabs v-model="activeTabName"  class="appMain-tab">
             <el-tab-pane 
                 v-for="item in tagsList"
                 :key="item.path"
@@ -183,34 +183,36 @@
         //background-color:#f1f3f9;
         overflow:auto;
 
-        /deep/ .el-tabs{
+        /deep/ .appMain-tab{
 
             width: 100%;
             height: 100%;
             position: relative;
 
             
-            .el-tabs__header{
+            &>.el-tabs__header{
 
                display: none;
 
             }
 
-            .el-tabs__content{
+            &>.el-tabs__content{
 
-               width: 100%;
-               height: 100%;
-               position: relative;
+                width: 100%;
+                height: 100%;
+                position: relative;
 
-            }
-
-            .el-tab-pane{
+                .el-tab-pane{
                
-               width: 100%;
-               height: 100%;
-               position: relative;
-               overflow: auto;
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    overflow: auto;
+                }
+
             }
+
+            
 
             iframe{
 
