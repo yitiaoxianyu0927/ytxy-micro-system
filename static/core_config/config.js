@@ -1,34 +1,28 @@
 
-//--------------------------系统核心配置文件，常量,部署时配置----------------------------
+//--------------------------配置文件----------------------------
 
-//var WEB_SERVER_BASE_URL = 'http://localhost:8080'; //本地测试地址
-//const WEB_SERVER_BASE_URL = 'http://188.103.142.161:8082';  //现场地址
-
-//const WEB_SERVER_BASE_URL = 'http://188.103.142.161:8080';  //现场地址
-
-//const WEB_SERVER_BASE_URL = 'http://10.4.1.72:8080';  //现场地址
-
-const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //现场地址
-
+const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //本地mock服务
 
 var CORE_CONFIG = { 
   //公共配置项
-  PROVINCE:'zjyd',//枚举值：jlyd lnyd sdyd hnyd zjyd scyd
-  IS_ALWAYS_SERVER:true,  //是否始终从server端上读取数据，如果为true，始终从BASE_API的地址上读取测试数据
-  IS_ALWAYS_MOCK:false,  //是否始终从mock上读取数据，如果为true，始终从MOCK_API的地址上读取测试数据 匹配优先级最高
-  MOCK_API: 'http://59.46.22.93:47300/mock/5bdea2d98107910879608b77/tcoamp',//easy-mock 沈阳公网地址 http://59.46.22.93:47300/ 私网地址：http://10.4.2.8:7300/mock/
+  PROVINCE:'ln',//省份
+  IS_ALWAYS_SERVER:true,  //是否始终从server端上读取数据
+  IS_ALWAYS_MOCK:false,  //是否始终从mock上读取数据
+  MOCK_API: 'xxxx',//easy-mock 沈阳公网地址 http://59.46.22.93:47300/ 私网地址：http://10.4.2.8:7300/mock/
   BASE_API: WEB_SERVER_BASE_URL + '/tcoamp-web',//web后台服务URL
   
   WS_WEB_SERVER_BASE_API: 'ws://188.103.142.161:9090',//websocket地址
   WEB_RES_BASE_URL: WEB_SERVER_BASE_URL + '/tcoamp-web-res',//静态资源服务器
   GIS_MAP_URL:"/map",  //地图地址
-  OTHER_MODULE:'http://188.103.142.161:8085/topo-web-ui', //其他模块地址
+  OTHER_MODULE:'http://xxxx/topo-web-ui', //其他模块地址
   PUBLIC_EXP_MAX_NUM:50000,//导出全部数据量上限常量
   PUBLIC_VERSION_ID:'1.0.0.20170101',
 
-  ///模块配置
+  ///iframe模块配置 FRAME_xxx
 
-  FRAME_TCOAMP_BDM: "http://188.103.142.161:8082/tcoamp-web-ui-bdm-v2",
+  FRAME_URL: "https://www.baidu.com/",
+
+  ///微前端模块配置 PROJECT_xxx
   PROJECT_SOTN:"http://10.4.1.26:8085/ui"
 }
 

@@ -1,9 +1,9 @@
 <template>
     <div class="box-100 nav-bar">
-        <!-- <div class="search-container">
-           <search-bar/>
-        </div> -->
-        <div class="search-container">
+        <div class="refreshPage-container">
+           <refresh-page/>
+        </div>
+        <div class="searchbar-container">
            <search-bar/>
         </div>
         <div class="dropdown-bar">
@@ -11,11 +11,15 @@
             <el-dropdown trigger="click">
                 <span class="user-name" >{{name}}</span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item icon="el-icon-setting" >
-                        <span @click="setting">设置</span>
+                    <el-dropdown-item >
+                        <div @click="logout">
+                            <i class="el-icon-news"></i>登出
+                        </div>
                     </el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-news" >
-                        <span @click="logout">登出</span>
+                    <el-dropdown-item >
+                        <div @click="menuManagement">
+                            <i class="icon-file-text2" />菜单管理
+                        </div>
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -46,7 +50,8 @@
         },
         components:{
 
-            SearchBar:()=>import("../SearchBar")
+            SearchBar:()=>import("../SearchBar"),
+            RefreshPage:()=>import("../RefreshPage")
         },
         methods:{
 
@@ -60,6 +65,10 @@
                 this.$store.dispatch("LogOut").then(res => {
                     location.reload();
                 })
+            },
+            menuManagement(){
+
+                this.$router.push({path:"/menuManagement"})
             }
 
         },
@@ -80,6 +89,21 @@
 
         //box-shadow: 0px 3px 6px 0px  rgba(0, 0, 0, 0.1);
         
+        .refreshPage-container{
+
+            width:40px;
+            height:50px;
+            float:left;
+            margin:0 10px;
+        }
+
+        .searchbar-container{
+
+            width:300px;
+            height:50px;
+            float:left;
+
+        }
 
 
         .dropdown-bar{

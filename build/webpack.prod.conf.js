@@ -126,10 +126,18 @@ const prodConfig = {
             commons: {
                 name: 'chunk-commons',
                 test: resolve('src/components'), // 可自定义拓展你的规则
-                minChunks: 3, // 最小公用次数
+                minChunks: 1, // 最小公用次数
                 priority: 5,
                 reuseExistingChunk: true
-            }
+            },
+            layout: {
+                name: 'chunk-layout',
+                test: resolve('src/views/layout'), // 可自定义拓展你的规则
+                minChunks: 1, // 最小公用次数
+                priority: 5,
+                reuseExistingChunk: true
+            },
+            
           }
         },
     },    

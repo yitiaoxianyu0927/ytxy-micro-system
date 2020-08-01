@@ -1,5 +1,5 @@
 <template>
-   <div class="box-100 icons-group pad-20">
+   <div class="icons-group pad-20">
 
         <div class="search-bar">
            <el-input v-model="iconName" placeholder="请输入图标名称" prefix-icon="el-icon-search"/>
@@ -111,24 +111,24 @@
             tabHidden:{
                 
                 type:Array,
-                default:[]
+                default:() => []
             }
         },
         computed:{
 
             icomoonGroup(){
                 
-                return icomoonIcons.filter(item => item.indexOf(this.iconName) >= 0);
+                return icomoonIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 50);
 
             },
             svgGroup(){
                 
-                return svgIcons.filter(item => item.indexOf(this.iconName) >= 0);
+                return svgIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 50);
 
             },
             elementGroup(){
                 
-                return elementIcons.filter(item => item.indexOf(this.iconName) >= 0);
+                return elementIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 50);
 
             }
         },
@@ -194,6 +194,9 @@
 <style lang="less" scoped>
 
     .icons-group{
+
+        min-height:100%;
+        position:relative;
 
         .el-tabs{
 

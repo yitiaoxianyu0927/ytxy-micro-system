@@ -44,6 +44,8 @@ export default {
       const $targetLeft = $target.offsetLeft
       const $targetWidth = $target.offsetWidth
 
+      console.log($container,$containerWidth,$targetLeft,$targetWidth)
+
       if ($targetLeft < -this.left) {
         // tag in the left
         this.left = -$targetLeft + padding

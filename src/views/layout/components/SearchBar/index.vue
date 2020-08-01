@@ -41,7 +41,9 @@ export default{
         ]),
         menuList(){
 
-            return this.allMenuRouter.map(item => {
+            return this.allMenuRouter
+            .filter(item => !(item._children && item._children.length > 0) )
+            .map(item => {
 
                 let arr = {};
                 
@@ -94,7 +96,7 @@ export default{
         width:300px;
         height:50px;
         line-height:50px;
-        padding-left:20px;
+        //padding-left:20px;
 
         /deep/.el-input{
 

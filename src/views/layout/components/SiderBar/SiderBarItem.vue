@@ -1,8 +1,8 @@
 <template>
 
-    <div v-if="!item.hidden && (item.contact || item.env == 'development' ) " class="menu-wrapper">
+    <div v-if="NoHidden(item)" class="menu-wrapper">
 
-        <template v-if="!item.children">
+        <template v-if="!item.children || item.children == 0">
             
 
             <!-- 本地路由 接入 -->
@@ -73,7 +73,12 @@
                 <el-submenu :index="toPath(item.id)">
                     
                     <template slot="title">
-                        <item  :icon="item.meta.icon" :title="item.meta.title" />
+                        <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
+                        <i 
+                            v-if="item.meta.icon" 
+                            :class="[item.meta.icon]" 
+                        ></i>
+                        <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
                     </template>
 
                     <sider-bar-item v-for="v in item.children" :key="v.id" :item="v"/> 
@@ -123,6 +128,18 @@
                 
                 console.log(title,el)
 
+            },
+            NoHidden(item){
+
+                //hidden 隐藏
+                //contact 隐藏
+                //hidden 隐藏
+
+                let mode = process.env.NODE_ENV;
+                
+                 
+                return !item.hidden && (item.contact || ( item.env == 'development' && mode == 'development') ); 
+                
             }
         }
 
@@ -154,7 +171,18 @@
             display:block;
             box-sizing:border-box;
             width:100%;
+
+            
         } 
+
+        i[class^="icon-"]{
+            margin-right: 5px;
+            width: 24px;
+            text-align: center;
+            font-size: 16px;
+            display:inline-block;
+            vertical-align: middle;
+        }
         
     }
 

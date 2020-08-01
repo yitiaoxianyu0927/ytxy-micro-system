@@ -130,6 +130,8 @@
                     let innerBox = this.$refs["home-container"]
 
                     this.funcRight = box.offsetWidth - innerBox.clientWidth + 20;
+
+                    console.log(this.funcRight)
                 })
 
             },

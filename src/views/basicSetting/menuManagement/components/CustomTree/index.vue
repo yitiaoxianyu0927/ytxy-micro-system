@@ -3,7 +3,8 @@
       <el-tree
           :data="treeData"
           node-key="uid"
-          default-expand-all
+         
+          :default-expanded-keys="firstLeaf"
           ref="custom-tree"
           :expand-on-click-node="false"
           @node-drag-start="handleDragStart"
@@ -13,11 +14,14 @@
           @node-drag-end="handleDragEnd"
           @node-drop="handleDrop"
           draggable
+          highlight-current
           :allow-drop="allowDrop"
           :allow-drag="allowDrag"
           :props="defaultProps"
           @node-click="handleNodeClick"
       >
+        <!-- default-expand-all -->
+       <!-- :default-expanded-keys="firstLeaf" -->
           <span class="custom-tree-node" slot-scope="{ node, data }" >
               <span class="tree-label">{{ data.meta.title }}</span>
               <span>
@@ -26,7 +30,6 @@
               </span>
           </span>
       </el-tree>
-
     </div>
 </template>
 
@@ -69,6 +72,11 @@
 
         })
 
+      },
+      firstLeaf:{
+
+        type:Array,
+        default:()=>[]
       }
 
     },
@@ -81,7 +89,7 @@
           type:"router",
           uid:getUUID(),
           id:"",
-          env:"development",
+          env:"",
           meta:{ title:"新菜单1",Cache:true },
 
         };
@@ -91,6 +99,16 @@
         }
 
         data.children.push(newChild);
+
+        this.$nextTick(()=>{
+
+            this.$refs["custom-tree"].setCurrentKey(newChild.uid)
+
+            this.$emit("node-click",newChild);
+        })
+
+
+        
       },
 
       remove(node, data) {
@@ -100,36 +118,37 @@
         children.splice(index, 1);
       },
       handleNodeClick(...args){
-         console.log("node-click",...args)
+        console.log("node-click",...args)
         this.$emit("node-click",...args);
       },
       handleDragStart(node, ev) {
-        console.log('drag start', node);
+        //console.log('drag start', node);
       },
       handleDragEnter(draggingNode, dropNode, ev) {
-        console.log('tree drag enter: ', dropNode.label);
+        //console.log('tree drag enter: ', dropNode.label);
       },
       handleDragLeave(draggingNode, dropNode, ev) {
-        console.log('tree drag leave: ', dropNode.label);
+        //console.log('tree drag leave: ', dropNode.label);
       },
       handleDragOver(draggingNode, dropNode, ev) {
-        console.log('tree drag over: ', dropNode.label);
+        //console.log('tree drag over: ', dropNode.label);
       },
       handleDragEnd(draggingNode, dropNode, dropType, ev) {
-        console.log('tree drag end: ', dropNode && dropNode.label, dropType);
+        //console.log('tree drag end: ', dropNode && dropNode.label, dropType);
       },
       handleDrop(draggingNode, dropNode, dropType, ev) {
-        console.log('tree drop: ', dropNode.label, dropType);
+        //console.log('tree drop: ', dropNode.label, dropType);
       },
       allowDrop(draggingNode, dropNode, type) {
-        if (dropNode.data.label === '二级 3-1') {
-          return type !== 'inner';
-        } else {
-          return true;
-        }
+        // if (dropNode.data.label === '二级 3-1') {
+        //   return type !== 'inner';
+        // } else {
+        //   return true;
+        // }
+         return true;
       },
       allowDrag(draggingNode) {
-        return draggingNode.data.label.indexOf('三级 3-2-2') === -1;
+        return true //draggingNode.data.label.indexOf('三级 3-2-2') === -1;
       },
       queryTreeData(){
 

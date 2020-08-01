@@ -5,8 +5,10 @@
             <custom-tree  
                 
                 :treeData="treeData"
-                :defaultProps="defaultProps" 
+                :defaultProps="defaultProps"
+                :firstLeaf="firstLeaf"
                 @node-click="nodeClick"
+                @addNode="addNode"
                 ref="custom-tree"
                 
             ></custom-tree>
@@ -27,7 +29,6 @@
             </div>
         
         </div> 
-        
         
     </div>
 </template> 
@@ -62,7 +63,9 @@
 
                 },
 
-                nodeProperty:{} // 单节点属性
+                nodeProperty:{}, // 单节点属性
+
+                curNodeId:null //当前节点id
 
             }
 
@@ -81,6 +84,10 @@
 
                 return this.$store.state.projectConfig.projectName;
 
+            },
+            firstLeaf(){
+
+                return this.treeData.length > 0 ? [this.treeData[0].uid] : []
             }
 
         },
@@ -120,18 +127,25 @@
                     uid,
                     componentUrl,env,id,meta,type,contact,
                     moduleName,url,
-                    projectName,routerPath
+                    projectName,routerPath,
+                    children = [],
+                    hidden = false
                     
                 } = data;
 
                 let { icon = "" , cache , title } = meta;
+
+
 
                 this.nodeProperty = {
                     root,
                     uid,
                     componentUrl,env,id,title,type,icon,contact,
                     moduleName,url,
-                    projectName,routerPath
+                    projectName,routerPath,
+                    children,
+                    hidden,
+                    env
                 }
                 //Object.assign({},data);
                 //this.$set("nodeProperty",Object.assign({},data))
@@ -139,9 +153,17 @@
             },
             saveProperty(option){
 
-                let id = option.id;
+                let { uid , id } = option;
+
+                if(TreeToFlat(this.treeData).some(item => item.id == id && item.uid !=uid )){
+
+                    this.$message.warning("页面ID冲突请修改")
+
+                    return;
+                }
 
                 let treeData = this.treeData;
+                
                 
                 this.treeData = updateTreeChild(treeData , option , "uid" , option.uid);
 
@@ -202,6 +224,12 @@
             exportConfigFile(){
 
                 this.exportMenuConfig();  
+            },
+            addNode(option){
+
+                console.log("addNode",option)
+
+                this.curNodeId = option.uid;
             }
         },
         mounted(){

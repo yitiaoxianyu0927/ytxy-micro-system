@@ -4,8 +4,8 @@ const tagsView = {
 
     tagsList:[],
     baseMenuId:null,   ///菜单基础Path
-    closeAfterPath:""  ///关闭后路径
-
+    closeAfterPath:"",  ///关闭后路径
+    refreshPage:false
   },
   mutations: {
 
@@ -44,12 +44,23 @@ const tagsView = {
 
       state.closeAfterPath = closeAfterPath;
 
-      console.log(state.tagsList)
       
       state.tagsList = tagsList.filter(item => item.path != view.path);
 
-      console.log(state.tagsList,closeAfterPath)
 
+    },
+    OTHER_CLOSE_TAG(state,view){
+
+      state.tagsList = state.tagsList.filter(item => item.path == view.path || item.path == "/"+state.baseMenuId);
+
+    },
+    OTHER_ALL_TAG(state){
+
+      state.tagsList = state.tagsList.slice(0,1);
+    },
+    REFRESH_PAGE(state,view){
+
+      state.refreshPage = view;
     }
 
   },
@@ -69,6 +80,33 @@ const tagsView = {
         resolve(state.closeAfterPath);
         
       })
+
+    },
+    otherCloseTag({ state , commit },view) {
+
+      return new Promise((resolve,reject) => {
+
+        commit('OTHER_CLOSE_TAG', view); 
+
+        resolve([...state.tagsList]);
+
+      })  
+
+    },
+    otherAllTag({ state , commit }){
+
+      return new Promise((resolve,reject) => {
+          
+        commit('OTHER_ALL_TAG');
+
+        resolve([...state.tagsList]);
+        
+      })
+
+    },
+    refreshPage({ state , commit },view){
+
+      commit("REFRESH_PAGE",view)
 
     }
 

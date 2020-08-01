@@ -6,6 +6,8 @@
             :style="{
                 width: isCollapse ? '64px' : '200px'
             }"    
+
+            
         >
            
             <div class="siderbar-container">
@@ -72,7 +74,11 @@
         },
         methods:{
 
+            handleDrag(e){
 
+                //console.log(e)  
+
+            }
 
         },
         mounted(){

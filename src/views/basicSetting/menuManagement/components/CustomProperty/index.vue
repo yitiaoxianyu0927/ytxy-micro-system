@@ -70,7 +70,7 @@
                 
                     <el-col :span="12" >
                         <el-form-item label="菜单图标" prop="icon">
-                            <el-input v-model="form.icon" placeholder="请选择" readonly  @focus="openDialog"/>
+                            <el-input v-model="form.icon" placeholder="请选择"   @focus="openDialog" clearable/>
                         </el-form-item>
                     </el-col>
 
@@ -102,7 +102,7 @@
 
                     <el-col :span="24" >
                         <el-form-item label="菜单路径" prop="url">
-                            <el-input v-model="form.url" placeholder="请选择" style="width:450px;" />
+                            <el-input v-model="form.url" placeholder="请选择" style="width:450px;" :readonly="form.children.length > 0"/>
                         </el-form-item>
                     </el-col>
 
@@ -181,11 +181,13 @@
                         option:[]
                     },
                     url:"",
-                    contact:false
+                    contact:false,
+                    children:[]
 
                 },
                 uid:"",
-                dialogVisible:false
+                dialogVisible:false,
+                
 
             }
 
@@ -221,6 +223,9 @@
                 let routerPath = this.form.url;
                 let contact = this.form.contact;
                 let uid = this.uid;
+                let hidden = this.form.hidden;
+
+                let { children } = this.property;
 
 
                 this.$emit("save",{
@@ -240,7 +245,10 @@
                     moduleName,
                     //micro
                     routerPath: type == 'micro' ? url : null,
-                    projectName  
+                    projectName,
+
+                    children,
+                    hidden
                     
                 })
 
@@ -255,12 +263,17 @@
                     uid,
                     componentUrl,env = "",id,title,type,icon, contact,
                     moduleName,url,
-                    projectName,routerPath
-                
+                    projectName,routerPath,
+                    hidden,
+                    children
+                 
                 }  =  this.property;
 
 
+
                 this.form.url = type == 'router' ? componentUrl : url;
+                this.form.children = this.property.children;
+                this.form.url = this.form.children.length > 0 ? "" : this.form.url;
                 this.form.env.value = env;
                 this.form.menuId = id;
                 this.form.menuName = title;
@@ -268,7 +281,9 @@
                 this.form.menuType.value = type;
                 this.form.icon = icon;
                 this.form.contact = contact;
+                this.form.hidden = hidden;
                 this.uid = uid;
+
                 
             },
             renderDictList(){
@@ -312,7 +327,6 @@
             },
             openDialog(){
 
-                console.log(12)
 
                 this.dialogVisible = true
             }

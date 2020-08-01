@@ -1,43 +1,45 @@
 <template>
     <div class="box-100 app-main">
 
-  
         <el-tabs v-model="activeTabName"  class="appMain-tab">
             <el-tab-pane 
                 v-for="item in tagsList"
                 :key="item.path"
                 :label="item.meta.title" 
                 :name="item.path"
-            >
-                <transition name="main" mode="out-in">
-                    <template v-if="item.meta.type == 'router'">
-                        <keep-alive> 
-                            <router-view />
-                        </keep-alive>
-                    </template>  
-                </transition>
                 
-                <transition name="main" mode="out-in">
-                    <template v-if="item.meta.type == 'iframe'">
-                        <iframe 
-                            ref="iframe"
-                            :src="queryIframeUrl(item)"
-                            v-show="activeTabName == item.path"
-                        ></iframe>
-                    </template>
-                </transition>
+            >
+               
+                <template v-if="!refreshPage || ($route.path != item.path)">
+                    <transition name="main" mode="out-in">
+                        <template v-if="item.meta.type == 'router'">
+                            <keep-alive> 
+                                <router-view />
+                            </keep-alive>
+                        </template>  
+                    </transition>
+                    
+                    <transition name="main" mode="out-in">
+                        <template v-if="item.meta.type == 'iframe'">
+                            <iframe 
+                                ref="iframe"
+                                :src="queryIframeUrl(item)"
+                                v-show="activeTabName == item.path"
+                            ></iframe>
+                        </template>
+                    </transition>
 
-                <transition name="main" mode="out-in">
-                    <template v-if="item.meta.type == 'micro'">
-                        <!-- <div :id="item.meta.id" class="box-100 pad-20">
-                           <h3>微前端施工中。。。</h3>
-                        </div> -->
-                        <div id="micro" class="box-100 pad-20">
+                    <transition name="main" mode="out-in">
+                        <template v-if="item.meta.type == 'micro'">
+                            <!-- <div :id="item.meta.id" class="box-100 pad-20">
                             <h3>微前端施工中。。。</h3>
-                        </div> 
-                    </template>
-                </transition>
-
+                            </div> -->
+                            <div id="micro" class="box-100 pad-20">
+                                <h3>微前端施工中。。。</h3>
+                            </div> 
+                        </template>
+                    </transition>
+                </template>
 
             </el-tab-pane>
         </el-tabs>
@@ -80,9 +82,16 @@
 
             ...mapGetters([
                "tagsList"     
-            ])
+            ]),
+            refreshPage(){
+
+               console.log(12123,this.$store)
+
+                return this.$store.state.tagsView.refreshPage;
+            }
 
         },
+        
         methods:{
 
 
@@ -130,6 +139,16 @@
             queryIframeLoad(){
 
 
+            },
+            renderCurPage(val){
+
+                if(val){
+
+                    this.$nextTick(()=>{
+
+                        this.$store.dispatch("refreshPage",false);
+                    })
+                }
             }
 
         },
@@ -167,6 +186,15 @@
                     this.queryIframeLoad()
                 }
             
+            },
+            refreshPage:{
+
+                handler(val,oldVal){
+
+                    this.renderCurPage(val);
+                }
+
+                
             } 
         } 
 

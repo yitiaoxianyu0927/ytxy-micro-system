@@ -13,7 +13,7 @@
 
         <div class="other-tags">
             
-            <!-- <scroll-pane ref="scrollPane" class="tags-view-wrapper"> -->
+            <scroll-pane ref="scrollPane" class="tags-view-wrapper">
                 <router-link
                     v-for="tag in Array.from(tagsList.slice(1))"
                     :key="tag.path" 
@@ -27,9 +27,27 @@
                     {{ tag.title }}
                     <span class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"/>
                 </router-link>
-            <!-- </scroll-pane> -->
+            </scroll-pane>
         </div>  
         
+        <div class="func-tags">
+            <el-dropdown>
+                
+                <i class="el-icon-arrow-down" />
+                
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item >
+                        <div @click="closeTag">关闭当前标签页</div>
+                    </el-dropdown-item>
+                    <el-dropdown-item >
+                        <div @click="otherCloseTag">关闭其他标签页</div>
+                    </el-dropdown-item>
+                    <el-dropdown-item >
+                        <div @click="otherAllTag">关闭全部标签页</div>
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>    
+        </div>
     </div>
 </template>
 
@@ -103,8 +121,46 @@
 
 
             },
-            moveToCurrentTag(){
+            closeTag(){
 
+
+                let path = this.$route.path;
+
+                let view = this.tagsList.filter(item => item.path == path)[0];
+                 
+                this.closeSelectedTag(view);
+
+            },
+            otherCloseTag(){
+
+                this.$store.dispatch('otherCloseTag', {
+                    path:this.$route.path
+                }).then(()=>{
+
+                    this.moveToCurrentTag()
+                })
+
+            },
+            otherAllTag(){
+                
+                this.$store.dispatch('otherAllTag').then(() => {
+
+                    this.$route.path == "/" + this.baseMenuId  ?  null : this.$router.push("/"+this.baseMenuId)
+                   
+                })
+
+            },
+            moveToCurrentTag(){
+                
+                const tags = this.$refs.tag
+                this.$nextTick(() => {
+                    for (const tag of tags) {
+                        if (tag.to.path === this.$route.path) {
+                            this.$refs.scrollPane.moveToTarget(tag.$el)
+                            break
+                        }
+                    }
+                })
 
             }
 
@@ -120,7 +176,7 @@
          
                 this.addTag();
                 this.moveToCurrentTag();
-            
+                
             } 
         }
 
@@ -133,12 +189,19 @@
 <style lang="less" scoped>
 
     @firstTagWidth:40px;
-
+    @endTagWidth:40px;
+    
     .tag-view{
 
-       //padding:3px 20px; 
-       font-size: 0px;
-       overflow: hidden;
+        //padding:3px 20px; 
+        font-size: 0px;
+        overflow: hidden;
+
+        .tags-view-wrapper {
+
+            background: #fff;
+            height: 36px;
+        }
       
         .tag-item{
 
@@ -148,8 +211,9 @@
             color: #666;
             padding: 0 15px;
             cursor: pointer;
-            display: block;
-            float: left;
+            display: inline-block;
+            position: relative;
+            // float: left;
             font-size:14px;
             //margin-right: 10px;
             //border:1px solid #d8dce5;
@@ -167,11 +231,41 @@
             text-align: center;
             padding: 0px !important;
             font-size:14px;
+            float:left;
+            
         }
 
         .other-tags{
 
-            width:calc(100% - @firstTagWidth);
+            width:calc(100% - @firstTagWidth - @endTagWidth);
+            float:left;
+            height:100%;
+            overflow:hidden;
+        }
+
+        .func-tags{
+
+            width:@endTagWidth;
+            height:36px;
+            float:right;
+            font-size:18px;
+            line-height:36px;
+            text-align:center;
+            border-left:1px solid  #f6f6f6;
+
+            /deep/ .el-dropdown{
+
+                width:100%;
+                height:100%;
+            }
+        }
+
+        .func-tags:hover{
+
+            background: rgb(243,243,243);
+            color:#247fff;
+            border-bottom: 2px solid #247fff;
+
         }
 
         .active{

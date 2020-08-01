@@ -102,11 +102,18 @@ function addMainRouter(routers){
 
         let _routers = routers.map(item => {
 
+            item._children = item.children;
+
             delete item.children;
 
             return item;  
              
         })
+
+        if(process.env.NODE_ENV == "production"){//生产环境
+
+           _routers = _routers.filter(item => item.env != 'development' && item.meta.env != 'development');
+        }
 
         mainRouter.children = _routers;
 
@@ -114,7 +121,7 @@ function addMainRouter(routers){
 
         store.state.tagsView.baseMenuId = _routers[0].meta.id;
 
-        console.log(_routers)
+        
 
         store.commit("SET_FISRT_TAG",_routers[0]);
         store.commit("SET_ALL_MENU_ROUTER",_routers);

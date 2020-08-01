@@ -14,32 +14,39 @@
                 </div>
                 
             </div>       
-            <el-menu
+            <div class="menu-container">
+                <div class="menu-scroller-container">
+                    <el-scrollbar>
+                        <el-menu
 
-                :default-active="$route.path"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose"
-                :collapse="isCollapse"
-                :collapse-transition="false"
-                @select="handleSelect"
-            >
-                <sider-bar-item v-for="item in permission_routers" :key="item.id" :item="item"/>
-                
-                
-                <!-- <template
-                    
-                    v-for="item in appsMains"
-                
-                > 
-                    <router-link :to="item.path">
-                        <el-menu-item :index="item.path" >
-                            {{item.children[0].meta.title}}
-                        </el-menu-item>
-                    </router-link> 
-                </template> -->
+                            :default-active="$route.path"
+                            class="el-menu-vertical-demo"
+                            @open="handleOpen"
+                            @close="handleClose"
+                            :collapse="isCollapse"
+                            :collapse-transition="false"
+                            @select="handleSelect"
+                            
+                        >
+                            <sider-bar-item v-for="item in permission_routers" :key="item.id" :item="item"/>
+                            
+                            
+                            <!-- <template
+                                
+                                v-for="item in appsMains"
+                            
+                            > 
+                                <router-link :to="item.path">
+                                    <el-menu-item :index="item.path" >
+                                        {{item.children[0].meta.title}}
+                                    </el-menu-item>
+                                </router-link> 
+                            </template> -->
 
-            </el-menu>
+                        </el-menu>
+                    </el-scrollbar>
+                </div>    
+            </div>
         <!-- </el-scrollbar> -->
 
     </div>
@@ -151,6 +158,19 @@
                     transform: translate(-50%,-50%);
                     position:absolute;
                 }
+            }
+        }
+
+        .menu-container{
+
+            height:calc(100% - 50px);
+            overflow:hidden; 
+            .menu-scroller-container{
+
+               height:100% ;
+               width:calc(100% + 40px);
+               padding-right:40px;
+            //    overflow:auto;
             }
         }
         
