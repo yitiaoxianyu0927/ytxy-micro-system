@@ -3,8 +3,7 @@
       <el-tree
           :data="treeData"
           node-key="uid"
-         
-          :default-expanded-keys="firstLeaf"
+          :default-expanded-keys="defaultExpandedKeys"
           ref="custom-tree"
           :expand-on-click-node="false"
           @node-drag-start="handleDragStart"
@@ -13,6 +12,8 @@
           @node-drag-over="handleDragOver"
           @node-drag-end="handleDragEnd"
           @node-drop="handleDrop"
+          @node-expand="handleExpand"
+          @node-collapse="handleClose"
           draggable
           highlight-current
           :allow-drop="allowDrop"
@@ -24,9 +25,9 @@
        <!-- :default-expanded-keys="firstLeaf" -->
           <span class="custom-tree-node" slot-scope="{ node, data }" >
               <span class="tree-label">{{ data.meta.title }}</span>
-              <span>
-                <i class="el-icon-circle-plus" @click.prevent.stop="() => append(data)"></i>
-                <i class="el-icon-error" @click.prevent.stop="() => remove(node, data)"></i>
+              <span class="tree-func">
+                <i class="el-icon-plus" @click.prevent.stop="() => append(data)"></i>
+                <i class="el-icon-minus" @click.prevent.stop="() => remove(node, data)"></i>
               </span>
           </span>
       </el-tree>
@@ -44,7 +45,8 @@
       return {
 
         data: [],
-        hoverLabel:""
+        hoverLabel:"",
+        expandLeaf:[]
       
       };
     },
@@ -77,6 +79,14 @@
 
         type:Array,
         default:()=>[]
+      }
+
+    },
+    computed:{
+
+      defaultExpandedKeys(){
+
+        return this.firstLeaf.concat(this.expandLeaf)
       }
 
     },
@@ -150,11 +160,21 @@
       allowDrag(draggingNode) {
         return true //draggingNode.data.label.indexOf('三级 3-2-2') === -1;
       },
+      handleExpand(data ,Node){
+        this.expandLeaf.push(data.uid)
+      },
+      handleClose(data ,Node){
+        this.expandLeaf = this.expandLeaf.filter(item => item.uid == data.uid)
+      },
       queryTreeData(){
 
         this.$emit("change",this.treeData)
       },
-      
+      updateKeyChildren(id,option){
+
+        this.$refs["custom-tree"].updateKeyChildren(id,option)
+        
+      }
       
     }
   };
@@ -172,26 +192,46 @@
       flex: 1;
       flex-direction: row;
       justify-content: space-between;
+
+      .tree-func{
+
+          .el-icon-circle-plus{
+
+            color: rgb(57,218,90);
+            margin-left: 10px;
+
+          } 
+          .el-icon-error{
+
+            color: rgb(255,129,56); 
           
-      /deep/.el-icon-circle-plus{
+          }
 
-        color: rgb(57,218,90);
-        margin-left: 10px;
+          i{
 
-      } 
-      .el-icon-error{
+            border: 1px solid rgb(206,206,206);
+            padding:1px;
+            font-size:10px;
+          }
 
-        color: rgb(255,129,56); 
-      
       }
-      
+
+       
+    }
+
+    /deep/.is-current{
+
+        &>.el-tree-node__content{
+
+          .tree-label{
+
+            color:#409eff;
+          }  
+
+        }
     }
     
   } 
 
-  .tree-label{
-
-
-  }
 
 </style>

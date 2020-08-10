@@ -1,7 +1,10 @@
-import router,{ mainRouter } from "@/router";
+import router,{ mainRouter , iframeExtRouter } from "@/router";
 //import menuConfig from "@/config/menu/index.js";
 import { cloneDeep } from "lodash";
 import store from "@/store"
+
+import startQiankun from '@/micro/index.js'
+
 
 const mainRouterName = "layout";
 
@@ -76,7 +79,7 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
 
         }
 
-        if(v.contact  || v.env == 'development'){
+        if(v.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE  || v.env == 'development'){
         
             option[v.type]() ;
 
@@ -115,7 +118,7 @@ function addMainRouter(routers){
            _routers = _routers.filter(item => item.env != 'development' && item.meta.env != 'development');
         }
 
-        mainRouter.children = _routers;
+        mainRouter.children = [ ..._routers];
 
         mainRouter.redirect = _routers[0].path;
 
@@ -135,6 +138,9 @@ function addMainRouter(routers){
     router.addRoutes([   
         mainRouter
     ])
+
+    //startQiankun();
+    
     
 }
 

@@ -11,6 +11,9 @@
             label-width="80px" label-position="left"
         
         >
+            <div class="title">菜单管理</div>
+
+
                 <el-row>  
                 
                     <el-col :span="12" >
@@ -108,12 +111,12 @@
 
                 </el-row> 
 
-                <el-row>
+                <el-row class="button-group">
             
                     <el-button type="primary" size="mini" @click="save">保存属性</el-button>
                     <el-button type="primary" size="mini" @click="exportConfigFile">导出配置文件</el-button>
-                    <el-button type="primary" size="mini" @click="syncData">同步数据库</el-button>
-                    <el-button type="primary" size="mini" @click="displaySql">查看sql</el-button>
+                    <el-button type="primary" size="mini" disabled @click="syncData">同步数据库</el-button>
+                    <el-button type="primary" size="mini" disabled @click="displaySql">查看sql</el-button>
 
                 </el-row>
 
@@ -369,6 +372,37 @@
         .tag-contact{
 
             margin-left:20px;
+        }
+
+        .title{
+           
+            height:30px;
+            margin-bottom: 20px;
+            position: relative;
+            &::before{
+
+                content: "";
+                position: absolute;
+                bottom:0px;
+                width: calc(100% + 12px);
+                height: 1px;
+                background-color: rgb(219,219,219);
+                transform: translateX(-6px);
+            }
+            
+        }
+
+        .button-group{
+
+            position: absolute;
+            right:10px;
+            bottom:10px;
+
+        }
+
+        .demo-form-inline{
+
+            height:100%;
         }
 
 

@@ -17,7 +17,6 @@
 
         <div class="right-container">
 
-            <div class="custom-property">
 
                 <custom-property 
                     :property="nodeProperty" 
@@ -26,7 +25,6 @@
                     @exportConfigFile="exportConfigFile"
                 ></custom-property> 
                
-            </div>
         
         </div> 
         
@@ -115,7 +113,7 @@
 
                 this.orgTreeData = cloneDeep( this.treeData );
 
-                console.log("treeData",this.treeData);   
+                //console.log("treeData",this.treeData);   
 
             },
             nodeClick(data,node){
@@ -155,6 +153,13 @@
 
                 let { uid , id } = option;
 
+                if(!id){
+
+                    this.$message.warning("页面ID不能为空")
+
+                    return;
+                }
+
                 if(TreeToFlat(this.treeData).some(item => item.id == id && item.uid !=uid )){
 
                     this.$message.warning("页面ID冲突请修改")
@@ -166,7 +171,7 @@
                 
                 
                 this.treeData = updateTreeChild(treeData , option , "uid" , option.uid);
-
+                //this.$refs["custom-tree"].updateKeyChildren(option.uid,option)
                 
             },
             exportMenuConfig(){
@@ -227,7 +232,7 @@
             },
             addNode(option){
 
-                console.log("addNode",option)
+                //console.log("addNode",option)
 
                 this.curNodeId = option.uid;
             }
@@ -266,7 +271,7 @@
             margin-left:20px;
             border:1px solid rgba(0,0,0,0.1);
             padding: 10px;
-            min-height: 100%;
+            height: 100%;
         }
 
     }

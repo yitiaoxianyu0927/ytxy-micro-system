@@ -1,7 +1,6 @@
-@bgColor:#141414;
+@bgColor:#282828;
 @themeColor: #409eff;
 @fontColor: #fff;
-
 
 #app[theme = 'dark']{
 
@@ -55,6 +54,14 @@
 
         background-color:@bgColor;
 
+        .refresh-page{
+
+            i{
+                color:#fff;
+            }
+           
+        }
+
     }
 
     .search-bar{
@@ -77,6 +84,19 @@
         .tag-first-item{
 
             color:@themeColor;
+        }
+
+        .tags-view-wrapper{
+
+            background-color:@bgColor;
+               
+        }
+        .func-tags{
+             
+            border-color:@themeColor;
+            i{
+               color:@fontColor; 
+            }
         }
     }
 

@@ -20,7 +20,7 @@
                     ref="tag"
                     :to="tag"
                     tag="div"
-                    v-if="!tag.type"
+                    v-if="tag.meta.type"
                     class="tag-item"
                     :class="isActive(tag.path)?'active':''"
                     @contextmenu.prevent.native="openMenu(tag,$event)">
@@ -103,7 +103,7 @@
                 if (!route) {
                     return false
                 }
-            
+
                 this.$store.dispatch('addTag', route)
 
             },
@@ -151,6 +151,8 @@
 
             },
             moveToCurrentTag(){
+
+                if(this.$route.path == "/" + this.baseMenuId) return;
                 
                 const tags = this.$refs.tag
                 this.$nextTick(() => {
@@ -173,7 +175,7 @@
         watch: {
 
             $route() {
-         
+
                 this.addTag();
                 this.moveToCurrentTag();
                 

@@ -9,7 +9,7 @@
                 <!-- <transition name="el-fade-in">      -->
                     <div class="title" v-if="!isCollapse" >ZZNODE-UI</div>
                 <!-- </transition>     -->
-                <div class="hamburger">
+                <div class="hamburger-container">
                     <Hamburger/>
                 </div>
                 
@@ -141,7 +141,7 @@
                 cursor:pointer;
             }
 
-            .hamburger{
+            .hamburger-container{
               
                 position: relative;
                 height:50px;
@@ -165,6 +165,7 @@
 
             height:calc(100% - 50px);
             overflow:hidden; 
+            padding-bottom:20px;
             .menu-scroller-container{
 
                height:100% ;
@@ -210,7 +211,7 @@
 
             width:64px;
             
-            .hamburger{
+            .hamburger-container{
 
                 position: absolute;
                 padding-right: 0px;

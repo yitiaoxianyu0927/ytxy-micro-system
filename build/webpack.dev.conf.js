@@ -54,7 +54,7 @@ const devConfig = {
             target: 'http://188.103.142.161:8082',
             pathRewrite: {'^/map' : ''}
           }
-        }
+        },
         // before: (app) => {
 
         //   console.log("app",app);

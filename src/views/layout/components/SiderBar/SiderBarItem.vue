@@ -5,12 +5,13 @@
         <template v-if="!item.children || item.children == 0">
             
 
-            <!-- 本地路由 接入 -->
-
-            <template 
-                v-if="item.type == 'router'"
-            >
-                <!-- <el-tooltip class="item" effect="dark" :content="item.meta.title" placement="right" popper-class="menu-tooltip"> -->
+            
+            <text-over-tip :title="item.meta.title" :domName="'.menu-title'" :popper-class="'menu-tooltip'">
+               
+                <!-- 本地路由 接入 -->
+                <template 
+                    v-if="item.type == 'router'"
+                >
                     <router-link  :to="toPath(item.id)" tag="div">
                         <el-menu-item :index="toPath(item.id)">
                             <i 
@@ -23,67 +24,76 @@
                             
                         </el-menu-item>
                     </router-link>
-                <!-- </el-tooltip> -->
-            </template>
-            
-            <!-- iframe 接入 -->
-            
-            <template 
-                v-if="item.type == 'iframe'"
-            >
-                <router-link  :to="toPath(item.id)" tag="div">
                     
-                    <el-menu-item :index="toPath(item.id)">
-                        <i 
-                            v-if="item.meta.icon" 
-                            :class="[item.meta.icon]" 
-                        ></i>
-                        <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
-                        <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
-                    </el-menu-item>
-                   
-                </router-link>
-        
-            </template>
-
-
-            <!-- 微前端  接入-->
-
-            <template 
-                v-if="item.type == 'micro'"
-            >
-             
-                <router-link  :to="toPath(item.id)" tag="div">
-                    <el-menu-item :index="toPath(item.id)">
-                        <i 
-                            v-if="item.meta.icon" 
-                            :class="[item.meta.icon]" 
-                        ></i>
-                        <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
-                        <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
-                    </el-menu-item>
-                </router-link>
+                </template>
                 
-            </template>
+                <!-- iframe 接入 -->
+                
+                <template 
+                    v-if="item.type == 'iframe'"
+                >
+                    <router-link  :to="toPath(item.id)" tag="div">
+
+                        
+                            <el-menu-item :index="toPath(item.id)">
+                                <i 
+                                    v-if="item.meta.icon" 
+                                    :class="[item.meta.icon]" 
+                                ></i>
+                                <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
+                                <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
+                            </el-menu-item>
+
+                    </router-link>
             
+                </template>
+
+
+                <!-- 微前端  接入-->
+
+                <template 
+                    v-if="item.type == 'micro'"
+                >
+                
+                    <router-link  :to="toPath(item.id)" tag="div">
+                        <el-menu-item :index="toPath(item.id)">
+                            <i 
+                                v-if="item.meta.icon" 
+                                :class="[item.meta.icon]" 
+                            ></i>
+                            <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
+                            <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
+                        </el-menu-item>
+                    </router-link>
+                    
+                </template>
+            
+            </text-over-tip>
 
         </template>
 
         <template v-else>
-                <el-submenu :index="toPath(item.id)">
-                    
-                    <template slot="title">
-                        <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
-                        <i 
-                            v-if="item.meta.icon" 
-                            :class="[item.meta.icon]" 
-                        ></i>
-                        <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
-                    </template>
 
-                    <sider-bar-item v-for="v in item.children" :key="v.id" :item="v"/> 
-                    
-                </el-submenu>
+            <el-submenu :index="toPath(item.id)">
+                
+                <text-over-tip slot="title" :title="item.meta.title" :domName="'.menu-title'" :popperClass="'el-submenu-tooltip'">
+                <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
+                    <template>
+                        <span :title="item.meta.title" class="menu-title">
+                            <i 
+                                v-if="item.meta.icon" 
+                                :class="[item.meta.icon]" 
+                            ></i>
+                            {{item.meta.title}}
+                        </span>
+                    </template>    
+                </text-over-tip>
+
+                <sider-bar-item v-for="v in item.children" :key="v.id" :item="v"/> 
+                
+            </el-submenu>
+
+
         </template>    
 
     </div>
@@ -114,7 +124,8 @@
         },
         components: { 
         
-            Item:()=>import("./Item.vue") 
+            Item:()=>import("./Item.vue"),
+            TextOverTip:()=> import("@/components/TextOverTip")
             
         },
         methods:{
@@ -138,8 +149,10 @@
                 let mode = process.env.NODE_ENV;
                 
                  
-                return !item.hidden && (item.contact || ( item.env == 'development' && mode == 'development') ); 
+                return !item.hidden && ((item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) || ( item.env == 'development' && mode == 'development') ); 
                 
+                  
+
             }
         }
 
@@ -150,7 +163,7 @@
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 
     .menu-wrapper{
 
@@ -171,8 +184,10 @@
             display:block;
             box-sizing:border-box;
             width:100%;
+            .menu-title{
 
-            
+                width:100%;
+            }
         } 
 
         i[class^="icon-"]{
@@ -186,9 +201,23 @@
         
     }
 
+
+</style>
+
+
+<style lang="less" >
+
+    
     .menu-tooltip{
 
-        transform: translateX(30px);
+        transform: translateX(10px);
     }
+
+
+    .el-submenu-tooltip{
+
+        transform: translateX(52px);
+    }
+
 
 </style>

@@ -158,10 +158,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             template:path.resolve( __dirname,"../index.html"),
             inject: true,
+            favicon: path.resolve( __dirname,"../favicon.ico"),
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
-                removeAttributeQuotes: true
+                removeAttributeQuotes: true,
+                
             }
         }),
         new VueLoaderPlugin(),

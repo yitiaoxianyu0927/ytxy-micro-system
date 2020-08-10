@@ -6,19 +6,23 @@
         <div class="searchbar-container">
            <search-bar/>
         </div>
+        <div class="guide-container">
+           <guide/>
+        </div>
         <div class="dropdown-bar">
             <i class="icon-user"></i> 
             <el-dropdown trigger="click">
                 <span class="user-name" >{{name}}</span>
                 <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-if="mode == 'development'">
+                        <div @click="menuManagement">
+                            <i class="icon-file-text2" />菜单管理
+                        </div>
+                    </el-dropdown-item>
+                    
                     <el-dropdown-item >
                         <div @click="logout">
                             <i class="el-icon-news"></i>登出
-                        </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item >
-                        <div @click="menuManagement">
-                            <i class="icon-file-text2" />菜单管理
                         </div>
                     </el-dropdown-item>
                 </el-dropdown-menu>
@@ -46,12 +50,17 @@
         },
         computed:{
 
-            ...mapGetters(["name"])
+            ...mapGetters(["name"]),
+            mode(){
+
+                return process.env.NODE_ENV;
+            }
         },
         components:{
 
             SearchBar:()=>import("../SearchBar"),
-            RefreshPage:()=>import("../RefreshPage")
+            RefreshPage:()=>import("../RefreshPage"),
+            Guide:()=>import("../Guide")
         },
         methods:{
 
@@ -103,6 +112,14 @@
             height:50px;
             float:left;
 
+        }
+
+        .guide-container{
+
+            width:40px;
+            height:50px;
+            position:absolute;
+            right:140px;
         }
 
 

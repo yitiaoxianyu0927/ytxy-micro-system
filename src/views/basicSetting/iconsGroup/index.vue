@@ -118,17 +118,17 @@
 
             icomoonGroup(){
                 
-                return icomoonIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 50);
+                return icomoonIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 100);
 
             },
             svgGroup(){
                 
-                return svgIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 50);
+                return svgIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 100);
 
             },
             elementGroup(){
                 
-                return elementIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 50);
+                return elementIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 100);
 
             }
         },

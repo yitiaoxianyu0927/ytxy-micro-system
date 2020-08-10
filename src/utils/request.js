@@ -373,6 +373,7 @@ RequestUtils.requestServerFileUpLoad = function(url,data = {}){
         message: '上传失败!',
         duration: 3 * 1000
       })
+      reject(error);
     })
   });
 }

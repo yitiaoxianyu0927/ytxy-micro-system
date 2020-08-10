@@ -52,6 +52,7 @@
             <div 
                 class="func-container" 
                 :style="{ right : funcRight + 'px' }"
+                ref="func-container"
             >
                 
                 <div class="el-icon-star-off"></div>
@@ -131,6 +132,9 @@
 
                     this.funcRight = box.offsetWidth - innerBox.clientWidth + 20;
 
+                    this.funcRight > 37 ? this.funcRight = 37 : this.funcRight;
+
+
                     console.log(this.funcRight)
                 })
 
@@ -155,6 +159,15 @@
                 this.queryFuncPostion();
                 
             })
+
+        },
+        watch:{
+
+            $route(){
+
+               this.queryFuncPostion();
+
+            }
 
         } 
 
@@ -244,6 +257,7 @@
             width:50px;
             top:340px;
             padding:0 5px;
+            //display:none;
 
             &>div{
 

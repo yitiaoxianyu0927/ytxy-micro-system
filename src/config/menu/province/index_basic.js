@@ -41,9 +41,9 @@ const meunConfig = [
     {
         type:"iframe",  ///类型iframe
         id:"faultOriginReason",
-        moduleName:"FRAME_TCOAMP_BDM",
-        url:"/page/fault/faultOriginReason/index.html",
-        meta:{ icon:"el-icon-s-flag",title:"跨专业故障场景分析",cache:true },
+        moduleName:"FRAME_HTTP",
+        url:"/page/single-spa-vue/index.html",
+        meta:{ icon:"el-icon-s-flag",title:"外链页面",cache:true },
     },
     {
      

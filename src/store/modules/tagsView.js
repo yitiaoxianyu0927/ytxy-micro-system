@@ -26,6 +26,17 @@ const tagsView = {
       );
 
     },
+    ADD_EXT_TAG(state,view){
+
+      if(state.tagsList.some(item => item.path === view.path) > 0) return;
+
+      state.tagsList.push(
+        Object.assign({}, view, {
+          title: view.meta.title || 'no-name'
+        })
+      );
+
+    },
     CLOSE_TAG(state,view){
 
       let tagsList = state.tagsList;
@@ -70,6 +81,21 @@ const tagsView = {
     
       commit('ADD_TAG', view)
     
+    },
+    addExtTag({ commit }, view){
+
+      return new Promise((resolve,reject) => {
+
+          commit('ADD_EXT_TAG', view)
+
+          resolve({
+            path:view.path
+          })
+
+      })
+
+      
+
     },
     closeTag({ state , commit },view) {
 

@@ -18,9 +18,15 @@ const routersConfig=[
 export const mainRouter = {
         
     path: '/',
-    name: '/layout',
+    name: 'layout',
     component:()=>import('@/views/layout'),
     
+}
+
+export const iframeExtRouter = {
+
+    path:'/iframe_ext_router',
+    component:null
 }
 
 

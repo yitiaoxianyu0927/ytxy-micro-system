@@ -9,37 +9,48 @@
                 :name="item.path"
                 
             >
-               
-                <template v-if="!refreshPage || ($route.path != item.path)">
-                    <transition name="main" mode="out-in">
-                        <template v-if="item.meta.type == 'router'">
-                            <keep-alive> 
-                                <router-view />
-                            </keep-alive>
-                        </template>  
-                    </transition>
-                    
-                    <transition name="main" mode="out-in">
-                        <template v-if="item.meta.type == 'iframe'">
-                            <iframe 
-                                ref="iframe"
-                                :src="queryIframeUrl(item)"
-                                v-show="activeTabName == item.path"
-                            ></iframe>
-                        </template>
-                    </transition>
+                <div :class="['tab-'+item.meta.type+'-panel']">
+                    <template v-if="!refreshPage || ($route.path != item.path)">
+                        <transition name="main" mode="out-in">
+                            <template v-if="item.meta.type == 'router'">
+                                <keep-alive> 
+                                    <router-view />
+                                </keep-alive>
+                            </template>  
+                        </transition>
+                        
+                        <transition name="main" mode="out-in">
+                            <template v-if="item.meta.type == 'iframe'">
+                                <iframe 
+                                    ref="iframe"
+                                    :src="queryIframeUrl(item)"
+                                    v-show="activeTabName == item.path"
+                                ></iframe>
+                            </template>
+                        </transition>
 
-                    <transition name="main" mode="out-in">
-                        <template v-if="item.meta.type == 'micro'">
-                            <!-- <div :id="item.meta.id" class="box-100 pad-20">
-                            <h3>微前端施工中。。。</h3>
-                            </div> -->
-                            <div id="micro" class="box-100 pad-20">
+                        <transition name="main" mode="out-in">
+                            <template v-if="item.meta.type == 'iframe_ext'">
+                                <iframe 
+                                    ref="iframe"
+                                    :src="item.meta.url"
+                                    v-show="activeTabName == item.path"
+                                ></iframe>
+                            </template>
+                        </transition>
+
+                        <transition name="main" mode="out-in">
+                            <template v-if="item.meta.type == 'micro'">
+                                <!-- <div :id="item.meta.id" class="box-100 pad-20">
                                 <h3>微前端施工中。。。</h3>
-                            </div> 
-                        </template>
-                    </transition>
-                </template>
+                                </div> -->
+                                <div id="micro" class="box-100 pad-20">
+                                    <h3>微前端施工中。。。</h3>
+                                </div> 
+                            </template>
+                        </transition>
+                    </template>
+                </div>
 
             </el-tab-pane>
         </el-tabs>
@@ -63,6 +74,8 @@
     //import startQiankun from '@/micro/index.js'
     import { loadMicroApp } from 'qiankun';
 
+    import { ListenSharedIframe } from "@/share/iframe"
+
     export default{
  
         data(){
@@ -84,8 +97,6 @@
                "tagsList"     
             ]),
             refreshPage(){
-
-               console.log(12123,this.$store)
 
                 return this.$store.state.tagsView.refreshPage;
             }
@@ -149,12 +160,16 @@
                         this.$store.dispatch("refreshPage",false);
                     })
                 }
-            }
+            },
+
+            
 
         },
         mounted(){
 
             this.queryRouterConfig();
+
+            ListenSharedIframe();
 
             // setTimeout(() => {
             //     this.$nextTick(()=>{
@@ -239,7 +254,23 @@
                 }
 
             }
+              
+            .tab-router-panel,.tab-router-micro{
 
+                width:100%;
+                height: 100%;
+                position:relative;
+                overflow:auto;
+
+            }
+
+            .tab-iframe-panel{
+
+                width:100%;
+                height: 100%;
+                position:relative;
+
+            }  
             
 
             iframe{
