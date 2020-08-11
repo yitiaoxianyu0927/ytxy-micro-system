@@ -76,8 +76,16 @@
 
             <el-submenu :index="toPath(item.id)">
                 
-                <text-over-tip slot="title" :title="item.meta.title" :domName="'.menu-title'" :popperClass="'el-submenu-tooltip'">
-                <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
+                <template slot="title" v-if="isCollapse">
+                    <i 
+                        v-if="item.meta.icon" 
+                        :class="[item.meta.icon]" 
+                    ></i>
+                    <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
+                </template>
+                
+                <text-over-tip slot="title" v-else :title="item.meta.title" :domName="'.menu-title'" :popperClass="'el-submenu-tooltip'">
+                    
                     <template>
                         <span :title="item.meta.title" class="menu-title">
                             <i 
@@ -104,6 +112,9 @@
 
 <script>
 
+    import { mapGetters } from "vuex"
+    
+
     export default{
 
         name:"sider-bar-item", 
@@ -128,6 +139,18 @@
             TextOverTip:()=> import("@/components/TextOverTip")
             
         },
+        computed:{
+
+            ...mapGetters(
+                [
+                    "sidebar"
+                ]
+            ),
+            isCollapse(){
+                 
+                return !this.sidebar.opened  
+            }
+        },
         methods:{
 
             toPath(id){
@@ -148,10 +171,18 @@
 
                 let mode = process.env.NODE_ENV;
                 
-                 
-                return !item.hidden && ((item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) || ( item.env == 'development' && mode == 'development') ); 
-                
-                  
+
+                return  !item.hidden &&   ///是否隐藏
+                            (
+                                (
+                                    item.env == 'development' &&  mode == 'development' ///开发环境菜单
+                                ) ||
+                                (
+                                    item.env != 'development'  &&  ///生产环境菜单
+                                    (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
+                                )
+                            ) 
+                    
 
             }
         }
@@ -173,7 +204,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            width: calc(100% - 24px);
+            width: calc(100% - 34px);
             display: inline-block;
         }
          
@@ -189,6 +220,14 @@
                 width:100%;
             }
         } 
+
+        .el-submenu__title{
+
+            .menu-title{
+
+                width:calc(100% - 24px);
+            }
+        }
 
         i[class^="icon-"]{
             margin-right: 5px;

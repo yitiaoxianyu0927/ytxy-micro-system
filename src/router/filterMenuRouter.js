@@ -105,13 +105,13 @@ function addMainRouter(routers){
 
         let _routers = routers.map(item => {
 
-            item._children = item.children;
+            item._children = item.children || [];
 
             delete item.children;
 
             return item;  
              
-        })
+        }).filter(item => item._children.length == 0)
 
         if(process.env.NODE_ENV == "production"){//生产环境
 

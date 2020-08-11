@@ -17,8 +17,13 @@ import '@/assets/svg/index.js' // svg
 import './router/beforeRouter.js'
 
 // // 微前端
-// import startQiankun from '@/micro/index.js'
-// startQiankun();
+import startQiankun from '@/micro/index.js'
+startQiankun({
+  prefetch:false,
+  sandbox:{
+    strictStyleIsolation: true
+  }
+});
 
 //Vue.prototype.$eventBus = new Vue()
 

@@ -13,9 +13,9 @@ export default [
    * activeRule: 微应用触发的路由规则 - 触发路由规则后将加载该微应用
    */
   {
-    name: 'xianzhi-client',
-    entry: CLIENT_MICRO_APP,
+    name:"vueApp",
+    entry:"//localhost:10100",
     container: '#micro',
-    activeRule: '/client'
+    activeRule: '/#/vue'
   }
 ]

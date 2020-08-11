@@ -49,7 +49,7 @@ const meunConfig = [
      
         type:"micro",  ///类型微前端
         //id:"micro",
-        id:"doc",
+        id:"vue/doc",
         env:"development",
         projectName:"PROJECT_SOTN",
         routerPath:"",
