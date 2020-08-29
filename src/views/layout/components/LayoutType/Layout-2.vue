@@ -1,7 +1,11 @@
 <template>
     <div class="box-100 layout-container">   
 
-      
+        <div class="navbar-container">
+            <nav-bar/>
+        </div>
+        
+
         <div 
             
             class="layout-left-container"
@@ -11,13 +15,12 @@
 
             
         >
-        
+           
             <div class="siderbar-container">
                 <sider-bar/>
             </div>
 
-        </div>   
-
+        </div>    
         <div 
             
             class="layout-right-container"
@@ -26,10 +29,8 @@
                 width: isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 200px)'
             }"    
         >
-        
-            <div class="navbar-container">
-                <nav-bar/>
-            </div>
+          
+            
             <div class="tagview-container">
                 <tag-view/>
             </div>
@@ -37,9 +38,7 @@
                 <app-main/>
             </div>
             
-        </div>  
-
-
+        </div>    
     </div>
 </template>
 
@@ -71,11 +70,10 @@
         },
         components:{
 
-            SiderBar:()=>import("./components/SiderBar"),
-            NavBar:()=>import("./components/NavBar"),
-            TagView:()=>import("./components/TagView"),
-            AppMain:()=>import("./components/AppMain"),
-            SplitPane:()=>import("@/components/SplitPane")
+            SiderBar:()=>import("../SiderBar"),
+            NavBar:()=>import("../NavBar"),
+            TagView:()=>import("../TagView"),
+            AppMain:()=>import("../AppMain"),
             
         },
         methods:{
@@ -83,10 +81,6 @@
             handleDrag(e){
 
                 //console.log(e)  
-
-            },
-            splitPaneResize(){
-
 
             }
 
@@ -109,10 +103,24 @@
 
     .layout-container{
 
+        .navbar-container{
+            
+            height:50px;
+            box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
+            z-index: 900;
+            position: relative;
+            background-color:rgb(1,65,125);
+            color:#fff;
+            /deep/ .user-name{
+
+                color:#fff;
+            }
+        }
+
         .layout-left-container{
 
             width:200px;
-            height:100%;
+            height:calc(100% - 50px);
             // float:left;
             position: fixed;
             transition: all @CollapseTime ease-in-out;
@@ -130,19 +138,13 @@
         .layout-right-container{
 
             // width:calc(100% - 200px);
-            height:100%;
+            height:calc(100% - 50px);
             // float:left;
             position: fixed;
             width: 100%;
             transition: all @CollapseTime ease-in-out;
 
-            .navbar-container{
             
-                height:50px;
-                box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
-                z-index: 900;
-                position: relative;
-            }
             
             .tagview-container{
                 
@@ -155,7 +157,7 @@
             
             .appmain-container{
                 
-                height:calc(100% - 80px);
+                height:calc(100% - 30px);
             }
 
         }

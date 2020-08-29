@@ -154,7 +154,10 @@
 
                 if(this.$route.path == "/" + this.baseMenuId) return;
                 
-                const tags = this.$refs.tag
+                const tags = this.$refs.tag;
+
+                if(!tags) return;
+
                 this.$nextTick(() => {
                     for (const tag of tags) {
                         if (tag.to.path === this.$route.path) {

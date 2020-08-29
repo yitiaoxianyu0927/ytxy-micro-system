@@ -49,9 +49,9 @@ const meunConfig = [
      
         type:"micro",  ///类型微前端
         //id:"micro",
-        id:"vue/doc",
+        id:"doc",
         env:"development",
-        projectName:"PROJECT_SOTN",
+        projectName:"PROJECT_VUEAPP",
         routerPath:"",
         meta:{ icon:"el-icon-s-platform",title:"微前端集成",cache:true },
     },

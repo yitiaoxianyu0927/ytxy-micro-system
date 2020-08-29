@@ -3,7 +3,9 @@ import router,{ mainRouter , iframeExtRouter } from "@/router";
 import { cloneDeep } from "lodash";
 import store from "@/store"
 
-import startQiankun from '@/micro/index.js'
+// import startQiankun from '@/micro/index.js'
+
+import microConfig from '@/micro/apps/config.js'
 
 
 const mainRouterName = "layout";
@@ -72,8 +74,12 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
                 let _v = {...v};    delete _v.meta; 
 
                 let meta =  Object.assign(v.meta,_v);
+                
+                let micro_base_route = microConfig[meta.projectName].BASE_ROUTE;
 
-                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , meta });
+                let path = micro_base_route + "/" + v.id;
+
+                routers.push({  ...v, path , name: v.id , component:null , meta });
             }
              
 
@@ -133,7 +139,7 @@ function addMainRouter(routers){
     
     // 把主体路由过滤出来加进去
 
-    //console.log("mainRouter",mainRouter)
+    console.log("mainRouter",mainRouter)
 
     router.addRoutes([   
         mainRouter
@@ -157,6 +163,26 @@ function filterMenuRouterConfig(menuConfig = []){
 
 
                 v.children ? v.children = fn(v.children) : null;
+
+                v.path = formatPath(v);  
+                
+                ///配置微前端数据
+                if(v.type == "micro"){
+
+                    let { projectName , id } = v;
+
+                    let { DEV_BASE_URL , PRO_BASE_URL , BASE_ROUTE , MICRO_NAME } =  microConfig[projectName];
+
+                    let microName = MICRO_NAME;
+                    let entry = CORE_CONFIG[projectName] + (process.env.NODE_ENV == "production" ? PRO_BASE_URL : DEV_BASE_URL) + "/" ;
+                    let container = "#" + id ;
+                    let activeRule = entry + '#' + BASE_ROUTE;
+                    
+                    v.meta = Object.assign(v.meta,{
+                        microName,entry,container,activeRule
+                    })
+                } 
+
 
                 let contact = dbRouters.filter(item => 
                     (item.right_id.startsWith("/") ? item.right_id.substring(1) : item.right_id ) == (v.id.startsWith("/") ? v.id.substring(1) : v.id )
@@ -196,3 +222,11 @@ function requireComponent(componentUrl){
                 require(`@/views${componentUrl}/index.vue`).default:
                 resolve => require([`@/views${componentUrl}/index.vue`], resolve)
 }
+
+
+function formatPath({ id, type , projectName }){
+
+    return (type == "micro" ? microConfig[projectName].BASE_ROUTE : "" ) + 
+                ( id.substring(0,1) == "/" ? id : "/" + id ); 
+
+};

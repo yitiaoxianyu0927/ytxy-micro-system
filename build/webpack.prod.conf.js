@@ -42,10 +42,10 @@ const prodConfig = {
 
 
     
-
+    
+    devtool:'source-map',
     plugins:[
        
-        
         new CleanWebpackPlugin({
 
             // cleanOnceBeforeBuildPatterns: [
@@ -175,22 +175,22 @@ const prodConfig = {
             }
         },
         //runtimeChunk: 'single',
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    // mangle: {
-                    //     safari10: true
-                    // }
-                    compress: false
-                },
-                //sourceMap: config.build.productionSourceMap,
-                cache: true,
-                parallel: true
-            }),
-            // Compress extracted CSS. We are using this plugin so that possible
-            // duplicated CSS from different components can be deduped.
-            new OptimizeCSSAssetsPlugin()
-        ]
+        // minimizer: [
+        //     new UglifyJsPlugin({
+        //         uglifyOptions: {
+        //             // mangle: {
+        //             //     safari10: true
+        //             // }
+        //             compress: false
+        //         },
+        //         //sourceMap: config.build.productionSourceMap,
+        //         cache: true,
+        //         parallel: true
+        //     }),
+        //     // Compress extracted CSS. We are using this plugin so that possible
+        //     // duplicated CSS from different components can be deduped.
+        //     new OptimizeCSSAssetsPlugin()
+        // ]
     },    
     mode:"production", // production
 

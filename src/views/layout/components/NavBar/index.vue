@@ -1,14 +1,18 @@
 <template>
     <div class="box-100 nav-bar">
+
+        <!-- <div class="hamburger">
+            <Hamburger/>
+        </div> -->
         <div class="refreshPage-container">
            <refresh-page/>
         </div>
         <div class="searchbar-container">
            <search-bar/>
         </div>
-        <div class="guide-container">
+        <!-- <div class="guide-container">
            <guide/>
-        </div>
+        </div> -->
         <div class="dropdown-bar">
             <i class="icon-user"></i> 
             <el-dropdown trigger="click">
@@ -54,13 +58,18 @@
             mode(){
 
                 return process.env.NODE_ENV;
+            },
+            layoutType(){
+                
+                return this.$store.state.app.layoutType
             }
         },
         components:{
 
             SearchBar:()=>import("../SearchBar"),
             RefreshPage:()=>import("../RefreshPage"),
-            Guide:()=>import("../Guide")
+            Guide:()=>import("../Guide"),
+            Hamburger:()=>import("../Hamburger"),
         },
         methods:{
 

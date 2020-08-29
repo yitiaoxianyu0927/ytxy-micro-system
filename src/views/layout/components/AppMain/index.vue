@@ -41,12 +41,12 @@
 
                         <transition name="main" mode="out-in">
                             <template v-if="item.meta.type == 'micro'">
-                                <!-- <div :id="item.meta.id" class="box-100 pad-20">
-                                <h3>微前端施工中。。。</h3>
-                                </div> -->
-                                <div id="micro" class="box-100 pad-20">
+                                <div :id="item.meta.id" class="box-100 pad-20">
+                                    <!-- <h3>微前端施工中。。。</h3> -->
+                                </div>
+                                <!-- <div id="micro" class="box-100 pad-20">
                                     <h3>微前端施工中。。。</h3>
-                                </div> 
+                                </div>  -->
                             </template>
                         </transition>
                     </template>
@@ -123,28 +123,42 @@
 
             queryMicroPro(){
 
+                if(this.$route.meta.type != "micro") return;
+                 
+                let microOption = this.tagsList.filter(item => this.activeTabName == item.path)[0];
 
-                setTimeout(()=>{
+                let { microName,entry,container,activeRule } = microOption.meta;
 
-                    this.$nextTick(() => {
+                loadMicroApp(
+                    { 
+                        name:microName,
+                        entry,
+                        container,
+                        activeRule,
+                        props: { name: 'qiankun' } 
+                    
+                    },
+                    {
+                        sandbox:{ strictStyleIsolation: true }
+                    }
+                );
 
-                        console.log(document.querySelector("#micro"))
+                // loadMicroApp(
+                //     { 
+                //         name:"vueApp",
+                //         entry:"//localhost:10100/qiankun-vue/",
+                //         container: '#micro',
+                //         activeRule: '//localhost:10100/qiankun-vue/#/vue',
+                //         props: { name: 'qiankun' } 
+                    
+                //     },
+                //     {
+                //         sandbox:{ strictStyleIsolation: true }
+                //     }
+                // );
+               
+                
 
-                        this.microApp = loadMicroApp(
-                            { 
-                                name: 'doc', 
-                                entry: '//localhost:10200', 
-                                container: '#micro', 
-                                props: { name: 'qiankun' } 
-                            
-                            },
-                        );
-
-                        
-
-                    })
-
-                },10000)
             },
 
             queryIframeLoad(){
@@ -158,7 +172,14 @@
                     this.$nextTick(()=>{
 
                         this.$store.dispatch("refreshPage",false);
+                        
+                        if(this.$route.meta.type == "micro") {
+
+                            this.queryMicroPro()
+                        }
+                    
                     })
+                    
                 }
             },
 
@@ -167,17 +188,10 @@
         },
         mounted(){
 
-            this.queryRouterConfig();
-
             ListenSharedIframe();
 
-            // setTimeout(() => {
-            //     this.$nextTick(()=>{
-            //          startQiankun();
-            //     }) 
-            // }, 1000);
-
-            //this.queryMicroPro()
+           
+           
 
         },
         update(){
@@ -186,27 +200,33 @@
         },
         watch:{
 
-            $route() {
+            $route: {
+
+                handler(){
          
-                this.queryRouterConfig();
+                    this.queryRouterConfig();
 
 
-                // if(this.$route.meta.type == "micro") {
+                    if(this.$route.meta.type == "micro") {
 
-                //     this.queryMicroPro()
-                // }
+                        this.queryMicroPro()
+                    }
 
-                if(this.$route.meta.type == "iframe") {
+                    if(this.$route.meta.type == "iframe") {
 
-                    this.queryIframeLoad()
-                }
-            
+                        this.queryIframeLoad()
+                    }
+                    
+                },
+                immediate:true
             },
             refreshPage:{
 
                 handler(val,oldVal){
 
                     this.renderCurPage(val);
+
+
                 }
 
                 

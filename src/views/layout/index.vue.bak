@@ -1,0 +1,62 @@
+<template>
+    <div class="box-100">   
+
+        <component
+
+            :is="'Layout-'+layoutType"
+
+        ></component>    
+        
+    </div>
+</template>
+
+
+<script>
+
+   
+    export default{
+
+        data(){
+
+            return {
+
+
+
+            } 
+
+        },
+        computed:{
+
+            layoutType(){
+                
+                return this.$store.state.app.layoutType
+            }
+        },
+        components:{
+
+            "Layout-1":()=>import("./components/LayoutType/Layout-1.vue"),
+            "Layout-2":()=>import("./components/LayoutType/Layout-2.vue")
+            
+            
+        },
+        methods:{
+
+           
+
+        },
+        mounted(){
+
+            
+        }
+
+
+    }
+
+
+</script>
+
+
+<style lang="less">
+
+
+</style>

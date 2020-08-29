@@ -105,8 +105,6 @@
                         }).then(res => {
 
 
-                            console.log(123123)
-
                             this.$router.push({ path: '/' })
 
                         }).catch((res) => {

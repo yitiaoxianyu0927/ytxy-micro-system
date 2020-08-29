@@ -12,8 +12,8 @@
                 <template 
                     v-if="item.type == 'router'"
                 >
-                    <router-link  :to="toPath(item.id)" tag="div">
-                        <el-menu-item :index="toPath(item.id)">
+                    <router-link  :to="item.path" tag="div">
+                        <el-menu-item :index="item.path">
                             <i 
                                 v-if="item.meta.icon" 
                                 :class="[item.meta.icon]" 
@@ -32,10 +32,10 @@
                 <template 
                     v-if="item.type == 'iframe'"
                 >
-                    <router-link  :to="toPath(item.id)" tag="div">
+                    <router-link  :to="item.path" tag="div">
 
                         
-                            <el-menu-item :index="toPath(item.id)">
+                            <el-menu-item :index="item.path">
                                 <i 
                                     v-if="item.meta.icon" 
                                     :class="[item.meta.icon]" 
@@ -55,8 +55,8 @@
                     v-if="item.type == 'micro'"
                 >
                 
-                    <router-link  :to="toPath(item.id)" tag="div">
-                        <el-menu-item :index="toPath(item.id)">
+                    <router-link  :to="item.path" tag="div">
+                        <el-menu-item :index="item.path">
                             <i 
                                 v-if="item.meta.icon" 
                                 :class="[item.meta.icon]" 
@@ -74,7 +74,7 @@
 
         <template v-else>
 
-            <el-submenu :index="toPath(item.id)">
+            <el-submenu :index="item.path">
                 
                 <template slot="title" v-if="isCollapse">
                     <i 
@@ -113,6 +113,8 @@
 <script>
 
     import { mapGetters } from "vuex"
+
+    import microConfig from "@/micro/apps/config.js"
     
 
     export default{
@@ -153,11 +155,7 @@
         },
         methods:{
 
-            toPath(id){
-
-               return  id.substring(0,1) == "/" ? id : "/" + id; 
-
-            },
+            
             isTextOver(title,el){
                 
                 console.log(title,el)
@@ -172,16 +170,19 @@
                 let mode = process.env.NODE_ENV;
                 
 
-                return  !item.hidden &&   ///是否隐藏
-                            (
-                                (
-                                    item.env == 'development' &&  mode == 'development' ///开发环境菜单
-                                ) ||
-                                (
-                                    item.env != 'development'  &&  ///生产环境菜单
-                                    (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
-                                )
-                            ) 
+                // return  !item.hidden &&   ///是否隐藏
+                //             (
+                //                 (
+                //                     item.env == 'development' &&  mode == 'development' ///开发环境菜单
+                //                 ) ||
+                //                 (
+                //                     item.env != 'development'  &&  ///生产环境菜单
+                //                     (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
+                //                 )
+                //             ) 
+
+
+                return true;
                     
 
             }

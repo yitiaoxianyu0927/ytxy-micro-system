@@ -3,6 +3,10 @@
 
 const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //本地mock服务
 
+//const WEB_SERVER_BASE_URL = 'http://localhost:8080';  //本地mock服务
+//const WEB_SERVER_BASE_URL = 'http://10.4.1.77:8080';  //本地mock服务
+
+
 var CORE_CONFIG = { 
   //公共配置项
   PROVINCE:'ln',//省份
@@ -25,7 +29,7 @@ var CORE_CONFIG = {
   FRAME_URL: "https://www.baidu.com/",
 
   ///微前端模块配置 PROJECT_xxx
-  PROJECT_SOTN:"http://10.4.1.26:8085/ui"
+  PROJECT_VUEAPP:"http://localhost:10100"
 }
 
 // function geturl(name) {

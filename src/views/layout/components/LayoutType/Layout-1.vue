@@ -71,10 +71,10 @@
         },
         components:{
 
-            SiderBar:()=>import("./components/SiderBar"),
-            NavBar:()=>import("./components/NavBar"),
-            TagView:()=>import("./components/TagView"),
-            AppMain:()=>import("./components/AppMain"),
+            SiderBar:()=>import("../SiderBar"),
+            NavBar:()=>import("../NavBar"),
+            TagView:()=>import("../TagView"),
+            AppMain:()=>import("../AppMain"),
             SplitPane:()=>import("@/components/SplitPane")
             
         },

@@ -1,44 +1,56 @@
 <template>
     <div class="box-100 layout-container">   
 
-      
-        <div 
-            
-            class="layout-left-container"
-            :style="{
-                width: isCollapse ? '64px' : '200px'
-            }"    
-
-            
+        <split-pane 
+            split="vertical" 
+            @resize="splitPaneResize"
+            :minPercent="14"
+            :defaultPercent="15"
+            :maxPercent="20"
         >
-        
-            <div class="siderbar-container">
-                <sider-bar/>
-            </div>
 
-        </div>   
+            <template slot="paneL">
+                <div 
+                    
+                    class="layout-left-container"
+                    :style="{
+                        //width: isCollapse ? '64px' : '200px'
+                    }"    
 
-        <div 
-            
-            class="layout-right-container"
-            :style="{
-                marginLeft: isCollapse ? '64px' : '200px',
-                width: isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 200px)'
-            }"    
-        >
-        
-            <div class="navbar-container">
-                <nav-bar/>
-            </div>
-            <div class="tagview-container">
-                <tag-view/>
-            </div>
-            <div class="appmain-container">
-                <app-main/>
-            </div>
-            
-        </div>  
+                    
+                >
+                
+                    <div class="siderbar-container">
+                        <sider-bar/>
+                    </div>
 
+                </div>   
+            </template>
+
+
+            <template slot="paneR">
+                <div 
+                    
+                    class="layout-right-container"
+                    :style="{
+                        //marginLeft: isCollapse ? '64px' : '200px',
+                        //width: isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 200px)'
+                    }"    
+                >
+                
+                    <div class="navbar-container">
+                        <nav-bar/>
+                    </div>
+                    <div class="tagview-container">
+                        <tag-view/>
+                    </div>
+                    <div class="appmain-container">
+                        <app-main/>
+                    </div>
+                    
+                </div>  
+            </template>
+        </split-pane>    
 
     </div>
 </template>
@@ -111,10 +123,11 @@
 
         .layout-left-container{
 
-            width:200px;
+            //width:200px;
+            width:100%;
             height:100%;
-            // float:left;
-            position: fixed;
+            float:left;
+            //position: fixed;
             transition: all @CollapseTime ease-in-out;
             
             z-index: 1000;
@@ -131,8 +144,8 @@
 
             // width:calc(100% - 200px);
             height:100%;
-            // float:left;
-            position: fixed;
+            float:left;
+            //position: fixed;
             width: 100%;
             transition: all @CollapseTime ease-in-out;
 

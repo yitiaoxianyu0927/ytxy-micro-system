@@ -5,9 +5,9 @@
     >
        
         <!-- <el-scrollbar> -->
-            <div class="logo-container">
+            <div class="logo-container" v-if="layoutType == '1'">
                 <!-- <transition name="el-fade-in">      -->
-                    <div class="title" v-if="!isCollapse" >ZZNODE-UI</div>
+                    <div class="title" v-if="!isCollapse" >ZZNODE-UI </div>
                 <!-- </transition>     -->
                 <div class="hamburger-container">
                     <Hamburger/>
@@ -16,7 +16,8 @@
             </div>       
             <div class="menu-container">
                 <div class="menu-scroller-container">
-                    <el-scrollbar>
+                    <!-- <el-scrollbar> -->
+                    <div class="menu-display-container">
                         <el-menu
 
                             :default-active="$route.path"
@@ -44,7 +45,8 @@
                             </template> -->
 
                         </el-menu>
-                    </el-scrollbar>
+                    </div>    
+                    <!-- </el-scrollbar> -->
                 </div>    
             </div>
         <!-- </el-scrollbar> -->
@@ -84,6 +86,10 @@
             isCollapse(){
                  
                 return !this.sidebar.opened  
+            },
+            layoutType(){
+                
+                return this.$store.state.app.layoutType
             }
 
         },
@@ -168,10 +174,14 @@
             padding-bottom:20px;
             .menu-scroller-container{
 
-               height:100% ;
-               width:calc(100% + 40px);
-               padding-right:40px;
-            //    overflow:auto;
+                height:100% ;
+                width:calc(100% + 40px);
+                padding-right:40px;
+                overflow:auto;
+                .menu-display-container{
+
+                    width:100%;
+                }
             }
         }
         

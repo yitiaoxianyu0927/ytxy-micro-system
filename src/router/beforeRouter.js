@@ -39,15 +39,27 @@ router.beforeEach((to, from, next) => {
 
                 store.dispatch('GenerateRoutes', { roles , rights}).then(() => { // 根据roles权限生成可访问的路由表
                   
-                  if(to.path.startsWith("/iframe_ext_")){  ///缓存增加的页面刷新页面定位到home页面
+                  if(!CORE_CONFIG.IS_ALWAYS_LOCATE_FIRST_BY_TOKEN){
+                  
+                      if(to.path.startsWith("/iframe_ext_")){  ///缓存增加的页面刷新页面定位到home页面
 
-                    next({ path: '/' })
+                        next({ path: '/' })
+
+                      }else{
+
+                        //next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record 
+                        next();
+                      }
 
                   }else{
 
-                    next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record 
-                 
-                  }
+                      let firstPath = store.getters.allMenuRouter[0].path;
+
+                      next({ path:firstPath })
+
+                  }    
+
+
                   
                   
                 })
