@@ -48,6 +48,19 @@
             
                 </template>
 
+                <template 
+                    v-if="item.type == 'externalLink'"
+                >
+                    <el-menu-item :index="item.path" @click="openExternalPage(item.url)">
+                        <i 
+                            v-if="item.meta.icon" 
+                            :class="[item.meta.icon]" 
+                        ></i>
+                        <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
+                    </el-menu-item>
+            
+                </template>
+
 
                 <!-- 微前端  接入-->
 
@@ -185,7 +198,14 @@
                 return true;
                     
 
+            },
+            openExternalPage(url){
+               
+                window.open(url);
+
             }
+
+
         }
 
 

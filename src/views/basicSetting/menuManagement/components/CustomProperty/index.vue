@@ -159,6 +159,8 @@
                         },{
                             name:"iframe",value:"iframe"
                         },{
+                            name:"外链页面",value:"externalLink"
+                        },{
                             name:"微前端",value:"micro"
                         }]
                     },

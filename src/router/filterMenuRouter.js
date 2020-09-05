@@ -80,6 +80,10 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
                 let path = micro_base_route + "/" + v.id;
 
                 routers.push({  ...v, path , name: v.id , component:null , meta });
+            },
+            externalLink(){
+
+
             }
              
 
@@ -142,7 +146,8 @@ function addMainRouter(routers){
     console.log("mainRouter",mainRouter)
 
     router.addRoutes([   
-        mainRouter
+        mainRouter,
+        { path: '*', redirect: '/404'}
     ])
 
     //startQiankun();
@@ -201,6 +206,8 @@ function filterMenuRouterConfig(menuConfig = []){
 	
 
     store.state.permission.routers = fn(menuConfig);
+
+    console.log("aseqwe",store.state.permission.routers)
 
 
     let routersConfig = [];

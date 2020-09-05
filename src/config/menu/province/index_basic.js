@@ -43,7 +43,13 @@ const meunConfig = [
         id:"faultOriginReason",
         moduleName:"FRAME_HTTP",
         url:"/page/single-spa-vue/index.html",
-        meta:{ icon:"el-icon-s-flag",title:"外链页面",cache:true },
+        meta:{ icon:"el-icon-s-flag",title:"内嵌页面",cache:true },
+    },
+    {
+        type:"externalLink",  ///类型iframe
+        id:"externalLink",
+        url:"https://www.baidu.com/",
+        meta:{ icon:"el-icon-link",title:"外链页面",cache:true },
     },
     {
      
