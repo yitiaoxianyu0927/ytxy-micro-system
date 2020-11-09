@@ -47,7 +47,9 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
 
                             let meta =  Object.assign(v.meta,_v);
 
-                            routers.push({ path:"/"+v.id , name: v.id , component , meta   });
+                            let path = v.id.substring(0,1) == "/" ? v.id : "/" + v.id ;
+
+                            routers.push({ path, name: v.id , component , meta   });
                         
                         }
 
@@ -66,7 +68,9 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
 
                 let meta =  Object.assign(v.meta,_v);
 
-                routers.push({  ...v, path:"/"+v.id , name: v.id , component:null , meta });
+                let path = v.id.substring(0,1) == "/" ? v.id : "/" + v.id ;
+
+                routers.push({  ...v, path, name: v.id , component:null , meta });
 
             },
             micro(){
@@ -77,7 +81,7 @@ function renderRouterConfig(menuConfig = [],routers = []){  ///初始化路由
                 
                 let micro_base_route = microConfig[meta.projectName].BASE_ROUTE;
 
-                let path = micro_base_route + "/" + v.id;
+                let path = micro_base_route +  toPath( v.routerPath );
 
                 routers.push({  ...v, path , name: v.id , component:null , meta });
             },
@@ -207,7 +211,6 @@ function filterMenuRouterConfig(menuConfig = []){
 
     store.state.permission.routers = fn(menuConfig);
 
-    console.log("aseqwe",store.state.permission.routers)
 
 
     let routersConfig = [];
@@ -237,3 +240,9 @@ function formatPath({ id, type , projectName }){
                 ( id.substring(0,1) == "/" ? id : "/" + id ); 
 
 };
+
+
+function toPath(path){
+
+   return path.startsWith("/") ? path : "/" + path       
+}

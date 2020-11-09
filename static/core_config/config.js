@@ -32,21 +32,27 @@ var CORE_CONFIG = {
   PROJECT_VUEAPP:"http://localhost:10100"
 }
 
-// function geturl(name) {
+function geturl(name) {
 
-//   name = name || "x_token"
+  name = name || "x_token"
 
-//   var reg = new RegExp("[^\?&]?" + encodeURI(name) + "=[^&]+");
-//   var arr = window.location.href.match(reg);
-//   if (arr != null) {
-//     return decodeURI(arr[0].substring(arr[0].search("=") + 1));
-//   }
-//   return "";
-// }
+  var reg = new RegExp("[^\?&]?" + encodeURI(name) + "=[^&]+");
+  var arr = window.location.href.match(reg);
+  if (arr != null) {
+    return decodeURI(arr[0].substring(arr[0].search("=") + 1));
+  }
+  return "";
+}
 
-// var token = geturl();
+var token = geturl();
 // if(!token){
 //   token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTAwNDMzNDEsInN1YiI6IntcImF2YWlsX2JlZ2luX2RhdGVcIjpcIjIwMTctMDYtMDEgMDA6MDA6MDBcIixcImF2YWlsX2VuZF9kYXRlXCI6XCIyMDIwLTEyLTAxIDAwOjAwOjAwXCIsXCJjcmVhdGVfZGF0ZVwiOlwiMjAxOS0wMy0yMCAyMDoyMTo1M1wiLFwiZGVsX2ZsYWdcIjpcIjBcIixcImRlcHRfaWRcIjpcIjEwMDBcIixcImRpc3RyaWN0X2xpc3RcIjpbXSxcImdyb3VwX2xpc3RcIjpbXSxcImllcnJvcnRpbWVcIjpcIjEyXCIsXCJtYW5hZ2VfZG9tYWluX2xpc3RcIjpbXSxcIm1vYmlsZVwiOlwiMTU5OTAwNTA3NDVcIixcIm9wZXJhdGVfbGlzdFwiOltdLFwicGFzc3dvcmRcIjpcImQ0ZWMzODhkMDBlOWU2MDZiN2I2ZjI3MjYzYzA4NzU5XCIsXCJyaWdodF9saXN0XCI6W10sXCJyb2xlX2xpc3RcIjpbXSxcInNhbHRcIjpcIk9SSkFVUXFBV2NcIixcInNleFwiOlwiMFwiLFwic3B3ZGFuc3dlclwiOlwiMlwiLFwic3B3ZHF1ZXN0aW9uXCI6XCIyKzE9P1wiLFwic3RhZmZfYWNjb3VudFwiOlwiYWRtaW5pc3RyYXRvclwiLFwic3RhZmZfaWRcIjpcIjEwMDBcIixcInN0YWZmX25hbWVcIjpcIui2hee6p-euoeeQhuWRmFwiLFwic3RhZmZfbm9cIjpcIjEwMDBcIixcInRlbHBob25lXCI6XCIxNTkxMTExMTExMVwiLFwidXBkYXRlX3Bhc3NfdGltZVwiOlwiMjAxOS0wMy0yMCAyMDoyMTo1M1wifSIsImV4cCI6MTYwMDA0MzM0MX0.eJKQU0ED_uuAWKELOZboIBXXwrUkim58syixiAyNpMw';
 // }
 
 // sessionStorage.setItem('Admin-Token',token);
+
+
+if(token){
+
+   sessionStorage.setItem('Admin-Token',token);
+}

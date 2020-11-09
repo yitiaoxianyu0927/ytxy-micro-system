@@ -30,8 +30,8 @@ module.exports = {
         //__dirname当前目录绝对路径
         path:config.build.assetsRoot, // path.resolve( __dirname , 'dist/'+baseUrl )//
         publicPath: process.env.NODE_ENV == 'production' ? 
-                        config.build.assetsPublicPath:  config.dev.assetsPublicPath
-
+                        config.build.assetsPublicPath:  config.dev.assetsPublicPath,
+        //chunkFilename: '[name]_[hash:8].js'        
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],

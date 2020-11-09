@@ -58,7 +58,7 @@ const meunConfig = [
         id:"doc",
         env:"development",
         projectName:"PROJECT_VUEAPP",
-        routerPath:"",
+        routerPath:"doc",
         meta:{ icon:"el-icon-s-platform",title:"微前端集成",cache:true },
     },
 

@@ -128,6 +128,7 @@ const prodConfig = {
                     priority: -10,
                     chunks: 'initial', // 只打包初始时依赖的第三方
                     reuseExistingChunk: true,
+                    enforce: true,
                 },
                 vue: {
                     name: 'chunk-vue', // 单独将 elementUI 拆包

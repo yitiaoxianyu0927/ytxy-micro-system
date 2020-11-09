@@ -12,8 +12,8 @@
                 <template 
                     v-if="item.type == 'router'"
                 >
-                    <router-link  :to="item.path" tag="div">
-                        <el-menu-item :index="item.path">
+                    <router-link  :to="toPath(item.id)" tag="div">
+                        <el-menu-item :index="toPath(item.id)">
                             <i 
                                 v-if="item.meta.icon" 
                                 :class="[item.meta.icon]" 
@@ -32,10 +32,10 @@
                 <template 
                     v-if="item.type == 'iframe'"
                 >
-                    <router-link  :to="item.path" tag="div">
+                    <router-link  :to="toPath(item.id)" tag="div">
 
                         
-                            <el-menu-item :index="item.path">
+                            <el-menu-item :index="toPath(item.id)">
                                 <i 
                                     v-if="item.meta.icon" 
                                     :class="[item.meta.icon]" 
@@ -46,7 +46,9 @@
 
                     </router-link>
             
-                </template>
+                </template> 
+
+                <!-- 外联 接入 -->
 
                 <template 
                     v-if="item.type == 'externalLink'"
@@ -87,7 +89,7 @@
 
         <template v-else>
 
-            <el-submenu :index="item.path">
+            <el-submenu :index="toPath(item.id)">
                 
                 <template slot="title" v-if="isCollapse">
                     <i 
@@ -168,7 +170,11 @@
         },
         methods:{
 
-            
+            toPath(id){
+
+               return  id.substring(0,1) == "/" ? id : "/" + id; 
+
+            },
             isTextOver(title,el){
                 
                 console.log(title,el)
@@ -180,7 +186,9 @@
                 //contact 隐藏
                 //hidden 隐藏
 
-                let mode = process.env.NODE_ENV;
+                //let mode = process.env.NODE_ENV;
+
+                return true;
                 
 
                 // return  !item.hidden &&   ///是否隐藏
@@ -195,7 +203,7 @@
                 //             ) 
 
 
-                return true;
+                
                     
 
             },

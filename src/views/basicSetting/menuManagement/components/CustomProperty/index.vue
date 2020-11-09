@@ -246,7 +246,7 @@
                     //router
                     componentUrl: type == 'router' ? componentUrl : null,
                     //iframe
-                    url: type == 'iframe' ? url : null,
+                    url: type == 'iframe'  || type == 'externalLink' ? url : null,
                     moduleName,
                     //micro
                     routerPath: type == 'micro' ? url : null,

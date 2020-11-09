@@ -4,11 +4,11 @@
         :class="[isCollapse?'close-sidebar':'']"
     >
        
-        <!-- <el-scrollbar> -->
+     
             <div class="logo-container" v-if="layoutType == '1'">
-                <!-- <transition name="el-fade-in">      -->
+            
                     <div class="title" v-if="!isCollapse" >ZZNODE-UI </div>
-                <!-- </transition>     -->
+            
                 <div class="hamburger-container">
                     <Hamburger/>
                 </div>
@@ -16,7 +16,7 @@
             </div>       
             <div class="menu-container">
                 <div class="menu-scroller-container">
-                    <!-- <el-scrollbar> -->
+    
                     <div class="menu-display-container">
                         <el-menu
 
@@ -30,26 +30,11 @@
                             
                         >
                             <sider-bar-item v-for="item in permission_routers" :key="item.id" :item="item"/>
-                            
-                            
-                            <!-- <template
-                                
-                                v-for="item in appsMains"
-                            
-                            > 
-                                <router-link :to="item.path">
-                                    <el-menu-item :index="item.path" >
-                                        {{item.children[0].meta.title}}
-                                    </el-menu-item>
-                                </router-link> 
-                            </template> -->
-
+                        
                         </el-menu>
                     </div>    
-                    <!-- </el-scrollbar> -->
                 </div>    
             </div>
-        <!-- </el-scrollbar> -->
 
     </div>
 </template>
@@ -115,7 +100,7 @@
         },
         mounted(){
 
-            
+            console.log("permission_routers",this.permission_routers)
 
         } 
 

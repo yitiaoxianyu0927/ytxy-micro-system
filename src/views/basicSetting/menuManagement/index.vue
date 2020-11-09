@@ -210,9 +210,11 @@
 
                 let blob = new Blob([`
 
-                   const menuConfig = ${JSON.stringify(_treeData)} ;
+                    const menuConfig = ${
+                       JSON.stringify(_treeData,null,2)
+                    } ;
 
-                   module.exports = menuConfig;
+                    module.exports = menuConfig;
                 
                 `], {type: "text/plain;charset=utf-8"});
                 
