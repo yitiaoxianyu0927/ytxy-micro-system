@@ -318,6 +318,10 @@
 
                 this.$emit("displaySql","")
             },
+            lookConfigFile(){
+                this.$emit("lookConfigFile","")
+            },
+            
             exportConfigFile(){
 
                 this.$emit("exportConfigFile","")

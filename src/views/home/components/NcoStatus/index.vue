@@ -1,6 +1,6 @@
 <template>
     <div class="nco-status box-100 pad-20">
-        <div class="display-title">割接状态占比</div>
+        <div class="display-title">状态占比</div>
         <div class="chart" ref="chart"></div>
     </div>
 </template>
@@ -27,7 +27,7 @@
 
                 let color = ["#95de64","#31a4ff","#ffd666"]
 
-                let data = ["割接中","审批中","已归档"].map((item,index) => {
+                let data = ["进行中","审批中","已完成"].map((item,index) => {
 
                     return {
 

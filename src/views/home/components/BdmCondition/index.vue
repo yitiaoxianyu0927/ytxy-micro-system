@@ -1,6 +1,6 @@
 <template>
     <div class="bdm-condition box-100 pad-20">
-        <div class="display-title">全省故障情况</div>
+        <div class="display-title">全省情况</div>
         <div class="display-container">
             <div class="display-left-container">
                 <div class="period-info">
@@ -8,19 +8,19 @@
                 </div> 
                 <div class="total-info">
                     <div class="total-info-item">
-                        <div class="total-info-name">光缆故障</div>
+                        <div class="total-info-name">一级故障</div>
                         <div class="total-info-num">381</div>
                     </div>
                     <div class="total-info-item">
-                        <div class="total-info-name">系统故障</div>
+                        <div class="total-info-name">二级故障</div>
                         <div class="total-info-num">381</div>
                     </div>
                     <div class="total-info-item">
-                        <div class="total-info-name">电路故障</div>
+                        <div class="total-info-name">三级故障</div>
                         <div class="total-info-num">400</div>
                     </div>
                     <div class="total-info-item">
-                        <div class="total-info-name">设备故障</div>
+                        <div class="total-info-name">四级故障</div>
                         <div class="total-info-num">381</div>
                     </div>
                 </div>    

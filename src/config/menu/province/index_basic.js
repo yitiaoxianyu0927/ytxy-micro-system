@@ -40,9 +40,9 @@ const meunConfig = [
     },
     {
         type:"iframe",  ///类型iframe
-        id:"faultOriginReason",
-        moduleName:"FRAME_HTTP",
-        url:"/page/single-spa-vue/index.html",
+        id:"subPage",
+        moduleName:"FRAME_ANY",
+        url:"/static/page/subPage",
         meta:{ icon:"el-icon-s-flag",title:"内嵌页面",cache:true },
     },
     {

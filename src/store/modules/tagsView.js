@@ -5,7 +5,8 @@ const tagsView = {
     tagsList:[],
     baseMenuId:null,   ///菜单基础Path
     closeAfterPath:"",  ///关闭后路径
-    refreshPage:false
+    refreshPage:false,
+    routeParams:{}  ////路由参数 一般子传父
   },
   mutations: {
 
@@ -63,15 +64,23 @@ const tagsView = {
     OTHER_CLOSE_TAG(state,view){
 
       state.tagsList = state.tagsList.filter(item => item.path == view.path || item.path == "/"+state.baseMenuId);
-
+      state.routeParams = {};
     },
     OTHER_ALL_TAG(state){
 
       state.tagsList = state.tagsList.slice(0,1);
+      state.routeParams = {};
     },
     REFRESH_PAGE(state,view){
 
       state.refreshPage = view;
+      
+    },
+    SET_ROUTER_PARAMS(state,view){
+
+        let { id ,params } = view;
+
+        state.routeParams[id] = params;
     }
 
   },

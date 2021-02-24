@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>子页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+
+
+    </style>    
+    <script src="./index.js" ></script>
+</head>
+<body>
+    
+    <p>当前页面在static文件夹下属于iframe外链页面</p>
+
+    <button onclick="openParentTab()" >打开新页面(未关联)</button>
+    <button onclick="openParentContactTab()" >打开新页面(有关联)</button>
+
+    <script>
+
+        function openParentTab() {
+
+            window.parent.postMessage({
+
+                    type:"iframe", 
+                    id:"other_"+parseInt(Math.random()*100),
+                    title:"子页面新增",
+                    url:"https://www.baidu.com/s?ie=UTF-8&wd=baidu"
+
+            },"*"); 
+            
+        }
+
+        function openParentContactTab(){
+
+            window.parent.postMessage({
+
+                type:"iframe", 
+                id:"menuManagement",
+                //title:"子页面新增",
+                contact:true,
+                params:{
+                    number:parseInt(Math.random()*100)
+                }
+
+            },"*"); 
+
+        }
+
+    </script>
+    
+</body>
+</html>

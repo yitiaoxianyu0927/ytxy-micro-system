@@ -22,6 +22,7 @@
                     :property="nodeProperty" 
                     @save="saveProperty" 
                     @displaySql="displaySql"
+                    @lookConfigFile="lookConfigFile"
                     @exportConfigFile="exportConfigFile"
                 ></custom-property> 
                
@@ -174,7 +175,46 @@
                 //this.$refs["custom-tree"].updateKeyChildren(option.uid,option)
                 
             },
+            lookConfigFile(){
+
+                let _treeData = this.formatConfigData();
+
+                let menuConfig = `
+
+                    const menuConfig = 
+                        
+                        ${JSON.stringify(_treeData,null,2)} ;
+
+                    module.exports = menuConfig;
+                
+                `
+
+
+                this.menuConfig = menuConfig;
+                this.dialogShow = true;
+
+            },
             exportMenuConfig(){
+
+                let _treeData = this.formatConfigData();
+
+                let province = CORE_CONFIG.PROVINCE;
+
+                let blob = new Blob([`
+
+                    const menuConfig = 
+                        
+                        ${JSON.stringify(_treeData,null,2)} ;
+
+                    module.exports = menuConfig;
+                
+                `], {type: "text/plain;charset=utf-8"});
+                
+                FileSaver.saveAs(blob, `index_${province}.js` );
+
+            },
+
+            formatConfigData(){
 
                 let treeData = this.treeData[0].children;
 
@@ -206,19 +246,8 @@
 
                 let _treeData = fn(treeData);
 
-                let province = CORE_CONFIG.PROVINCE;
+                return _treeData;
 
-                let blob = new Blob([`
-
-                    const menuConfig = ${
-                       JSON.stringify(_treeData,null,2)
-                    } ;
-
-                    module.exports = menuConfig;
-                
-                `], {type: "text/plain;charset=utf-8"});
-                
-                FileSaver.saveAs(blob, `index_${province}.js` );
             },
 
             displaySql(){

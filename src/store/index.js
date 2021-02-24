@@ -8,7 +8,7 @@ import menu from './modules/menu.js'
 import permission from './modules/permission.js'
 import tagsView from './modules/tagsView.js'
 import projectConfig from './modules/projectConfig.js'
-
+import share from "./modules/share.js"
 import getters from './getters'
 
 Vue.use(Vuex)
@@ -29,7 +29,8 @@ const store = new Vuex.Store({
        menu,
        permission,
        tagsView,
-       projectConfig 
+       projectConfig,
+       share 
     },
     getters
 

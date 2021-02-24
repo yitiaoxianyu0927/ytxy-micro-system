@@ -33,6 +33,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "vue": "^2.6.11",
+    "vue-lottie": "^0.2.1",
     "vue-router": "^3.3.1",
     "vue-splitpane": "^1.0.6",
     "vuedraggable": "^2.24.0",
@@ -99,5 +100,13 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie < 11",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ]
 }

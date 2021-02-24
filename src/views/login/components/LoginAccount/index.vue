@@ -1,13 +1,28 @@
 <template>
-    <div class="box-100 login-account">
+    <div 
+        class="box-100 login-account" 
+    >
        
         <el-form ref="ListForm" :model="ListForm" :rules="rules" @keyup.enter.native="login">
             
             <el-form-item prop="userName">
-                <el-input v-model="ListForm.userName" placeholder="请输入用户名" clearable></el-input>
+                <el-input 
+                    v-model="ListForm.userName" 
+                    placeholder="请输入用户名" 
+                    clearable 
+                    @focus="HandleFocus('userName')"
+                    @blur="HandleBlur('userName')"
+                ></el-input>
             </el-form-item>
             <el-form-item prop="passWord">
-                <el-input v-model="ListForm.passWord" placeholder="请输入密码" show-password clearable></el-input>
+                <el-input 
+                    v-model="ListForm.passWord" 
+                    placeholder="请输入密码" 
+                    show-password 
+                    clearable
+                    @focus="HandleFocus('passWord')"
+                    @blur="HandleBlur('passWord')"
+                ></el-input>
             </el-form-item>
             <el-form-item prop="checkCode">
                 <div class="check-code">
@@ -105,6 +120,8 @@
                         }).then(res => {
 
 
+                            console.log(123123)
+
                             this.$router.push({ path: '/' })
 
                         }).catch((res) => {
@@ -120,6 +137,17 @@
 
                 })
 
+
+            },
+            HandleFocus(type){
+
+                this.$emit("focus",type)
+            },
+            HandleBlur(type){
+
+                this.$emit("blur",type)
+            },
+            bodyFocus(){
 
             }
 
@@ -181,7 +209,7 @@
         .login-button{
 
             position:absolute;
-            bottom:40px;
+            bottom:16%;
             width:100%;
 
             /deep/.el-button{

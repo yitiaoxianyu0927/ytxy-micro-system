@@ -70,6 +70,7 @@
 
     import { mapGetters } from "vuex";
     import { getToken } from "@/utils/auth.js"
+    import { getUrl , contractUrl } from "@/utils/common.js"
      // 微前端
     //import startQiankun from '@/micro/index.js'
     import { loadMicroApp } from 'qiankun';
@@ -99,6 +100,12 @@
             refreshPage(){
 
                 return this.$store.state.tagsView.refreshPage;
+            },
+            isMicro(){
+
+                let isMicro = getUrl("fromSystem") ? true : false;  ///父级
+
+                return isMicro;
             }
 
         },
@@ -110,8 +117,14 @@
 
                 let { moduleName , url } = item.meta;
 
-                let moduleUrl = CORE_CONFIG[moduleName] + url + "?x_token=" + getToken();
+                let moduleUrl = CORE_CONFIG[moduleName] + url ;
 
+                let { projectName } = this.$store.state.projectConfig;
+
+                moduleUrl = contractUrl(moduleUrl,{
+                    fromSystem: projectName || true,
+                    x_token:getToken()
+                })
 
                 return moduleUrl
             },
@@ -139,7 +152,7 @@
                     
                     },
                     {
-                        sandbox:{ strictStyleIsolation: true }
+                        //sandbox:{ strictStyleIsolation: true }
                     }
                 );
 
@@ -189,9 +202,6 @@
         mounted(){
 
             ListenSharedIframe();
-
-           
-           
 
         },
         update(){
@@ -284,7 +294,7 @@
 
             }
 
-            .tab-iframe-panel{
+            .tab-iframe-panel,.tab-iframe_ext-panel{
 
                 width:100%;
                 height: 100%;

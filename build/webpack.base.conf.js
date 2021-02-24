@@ -7,6 +7,7 @@
 
 const path = require('path');
 const glob = require('glob');
+const utils = require('./utils');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
@@ -30,8 +31,8 @@ module.exports = {
         //__dirname当前目录绝对路径
         path:config.build.assetsRoot, // path.resolve( __dirname , 'dist/'+baseUrl )//
         publicPath: process.env.NODE_ENV == 'production' ? 
-                        config.build.assetsPublicPath:  config.dev.assetsPublicPath,
-        //chunkFilename: '[name]_[hash:8].js'        
+                        config.build.assetsPublicPath:  config.dev.assetsPublicPath
+
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -43,7 +44,7 @@ module.exports = {
 
         rules:[{
                 
-                test:/.js$/,
+                test:/\.js$/,
                 use: [
                     "happypack/loader"
                     //'babel-loader'
@@ -60,9 +61,15 @@ module.exports = {
                     //创建style标签，将js中的样式资源插入进行，添加到head中生效   
                     process.env.NODE_ENV !== 'production'
                     ? 'vue-style-loader':
-                    MiniCssExtractPlugin.loader,
+                    {
+                        loader:MiniCssExtractPlugin.loader,
+                        options:{
+                            publicPath:"../"
+                        }
+                    },
                     //将 css 文件变成common.js 模块加载js中
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader'
                 ]
 
 
@@ -73,11 +80,28 @@ module.exports = {
                     //创建style标签，将js中的样式资源插入进行，添加到head中生效   
                     process.env.NODE_ENV !== 'production'
                     ? 'vue-style-loader':
-                    MiniCssExtractPlugin.loader,
+                    {
+                        loader:MiniCssExtractPlugin.loader,
+                        options:{
+                            publicPath:"../"
+                        }
+                    },
                     //将 css 文件变成common.js 模块加载js中
                     'css-loader',
+                    'postcss-loader',
                     'less-loader',
                     
+                    // {
+                    //     loader:'postcss-loader',
+                    //     options:{
+                    //         plugin:()=>{
+
+                    //             require('autoprefixer')({
+                    //                 browsers:["last 2 version",">1%","iOS 7"]
+                    //             })
+                    //         }
+                    //     }
+                    // }
                     //'postcss-loader',  ///转换px
                 ]
 
@@ -88,15 +112,16 @@ module.exports = {
 
             },{  //loader配置
 
-                test: /\.(jpg|png|gif)$/,
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader:'url-loader',
                 options:{
 
                     limit: 8 * 1024,  ///图片小于8kb，会被base64处理 优点减少服务器压力 缺点图片体积增大
                     esModule: false,   ///url-loader使用es6loader 而html-loader引入图片使用 common.js解析会出问题
-                    name:'assets/images/[name]_[hash:8].[ext]',
-                    publicPath: process.env.NODE_ENV == 'production' ? 
-                                    config.build.assetsPublicPath:  config.dev.assetsPublicPath
+                    // name:'assets/images/[name]_[hash:8].[ext]',
+                    // publicPath: process.env.NODE_ENV == 'production' ? 
+                    //                 config.build.assetsPublicPath:  config.dev.assetsPublicPath
+                    name:utils.assetsPath('assets/images/[name].[hash:8].[ext]')
                     
                 }
 
@@ -122,9 +147,10 @@ module.exports = {
                 exclude: [path.resolve('src/assets/svg')],
                 options: {
                     limit: 10000,
-                    name:'assets/fonts/[name]_[hash:8].[ext]',
-                    publicPath: process.env.NODE_ENV == 'production' ? 
-                                    config.build.assetsPublicPath:  config.dev.assetsPublicPath
+                    // name:'assets/fonts/[name]_[hash:8].[ext]',
+                    // publicPath: process.env.NODE_ENV == 'production' ? 
+                    //                 config.build.assetsPublicPath :  config.dev.assetsPublicPath
+                    name:utils.assetsPath('assets/fonts/[name].[hash:8].[ext]')
                 }
             },
             {  //loader配置
@@ -172,15 +198,11 @@ module.exports = {
             loaders: [ 'babel-loader?cacheDirectory' ]
         }),
         
-        new MiniCssExtractPlugin({
-            filename:'css/index_[hash:8].css',//
-            //chunkFilename: "css/index_[id].css",
-            publicPath:config.build.assetsPublicPath
-        }),
       
         new copyWebpackPlugin([{
             from:path.join(__dirname, '../static'),
-            to:config.build.assetsRoot + '/static'
+            //to:config.build.assetsRoot + '/static'
+            to:config.build.assetsSubDirectory
         }]),
     
     ],

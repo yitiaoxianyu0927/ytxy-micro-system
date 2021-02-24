@@ -6,6 +6,8 @@ const path = require('path');
 
 const buildPackageName = "ytxy-micro-system";
 
+
+
 module.exports = {
   buildPackageName,
   dev: {
@@ -76,7 +78,8 @@ module.exports = {
      * then assetsPublicPath should be set to "/bar/".
      * In most cases please use '/' !!!
      */
-    assetsPublicPath: `/${buildPackageName}/`,
+    //assetsPublicPath: `/${buildPackageName}/`,
+    assetsPublicPath: './',
 
     /**
      * Source Maps

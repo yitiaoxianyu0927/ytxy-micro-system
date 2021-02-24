@@ -4,7 +4,6 @@
 const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //本地mock服务
 
 //const WEB_SERVER_BASE_URL = 'http://localhost:8080';  //本地mock服务
-//const WEB_SERVER_BASE_URL = 'http://10.4.1.77:8080';  //本地mock服务
 
 
 var CORE_CONFIG = { 
@@ -12,7 +11,7 @@ var CORE_CONFIG = {
   PROVINCE:'ln',//省份
   IS_ALWAYS_SERVER:true,  //是否始终从server端上读取数据
   IS_ALWAYS_MOCK:false,  //是否始终从mock上读取数据
-  MOCK_API: 'xxxx',//easy-mock 沈阳公网地址 http://59.46.22.93:47300/ 私网地址：http://10.4.2.8:7300/mock/
+  MOCK_API: 'xxxx',
   BASE_API: WEB_SERVER_BASE_URL + '/tcoamp-web',//web后台服务URL
   
   WS_WEB_SERVER_BASE_API: 'ws://188.103.142.161:9090',//websocket地址
@@ -27,6 +26,7 @@ var CORE_CONFIG = {
   ///iframe模块配置 FRAME_xxx
   FRAME_HTTP:"http://localhost:1234",
   FRAME_URL: "https://www.baidu.com/",
+  FRAME_ANY: "",
 
   ///微前端模块配置 PROJECT_xxx
   PROJECT_VUEAPP:"http://localhost:10100"

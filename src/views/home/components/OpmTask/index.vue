@@ -1,9 +1,9 @@
 <template>
     <div class="box-100 opm-task">
-        <div class="display-title">巡检任务情况</div>
+        <div class="display-title">任务情况</div>
         <div class="display-total">
             <div class="display-total-item">
-                <div class="display-sub-title">巡检对象量</div>
+                <div class="display-sub-title">对象量</div>
                 <div class="display-num">1675</div>
             </div>
             <div class="display-total-item">

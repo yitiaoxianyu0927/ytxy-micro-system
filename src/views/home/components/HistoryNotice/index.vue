@@ -6,19 +6,19 @@
         <div class="display-container">
             <div class="list-item">
                 <div class="tag">更新</div>
-                <div class="content">设备入网验收_设备名称显示不全问题修复补丁</div>
+                <div class="content">辽宁省沈阳市工单名称显示不全问题修复补丁</div>
                 <div class="time">今日</div>
             </div>
 
             <div class="list-item ">
                 <div class="tag tip">提示</div>
-                <div class="content">您有一条设备入网工单即将过期</div>
+                <div class="content">您有一条工程工单即将过期</div>
                 <div class="time">一周前</div>
             </div>
 
             <div class="list-item tip">
                 <div class="tag tip">提示</div>
-                <div class="content">您有一条设备入网工单即将过期</div>
+                <div class="content">您有一条工程工单即将过期</div>
                 <div class="time">三周前</div>
             </div>
 

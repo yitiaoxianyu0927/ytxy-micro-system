@@ -1,6 +1,6 @@
 <template>
     <div class="flow-over box-100 pad-20">
-        <div class="display-title">流量越限情况</div>
+        <div class="display-title">各地市情况</div>
         <div class="chart" ref="chart"></div>
     </div>
 </template>

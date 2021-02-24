@@ -1,9 +1,13 @@
-export function getUrl(name = "x_token") {
+export function getUrl(name = "x_token",complex = false) {
     var reg = new RegExp("[^\?&]?" + encodeURI(name) + "=[^&]+");
     var arr = window.location.href.match(reg);
     if (arr != null) {
-      return decodeURI(arr[0].substring(arr[0].search("=") + 1));
+      return  complex ?
+		decodeURIComponent(arr[0].substring(arr[0].search("=") + 1)) :		
+		decodeURI(arr[0].substring(arr[0].search("=") + 1));
     }
+
+
     return "";
 }
 
@@ -20,6 +24,28 @@ export function getUUID() {
 
 	var uuid = s.join("");
 	return uuid;
+
+}
+
+
+/**
+ * 改变树节点方法
+ * @param complex 是否复杂加密
+
+*/
+
+export function contractUrl(url,params,complex = false){
+
+	let paramUrl = "";
+
+	for (let k in params) {
+        if (params.hasOwnProperty(k)) {
+            let value = params[k] || ''
+            paramUrl = paramUrl + '&' + k + '=' +  (complex ?  encodeURIComponent(value) : encodeURI(value))
+        }
+    }
+	
+    return url + (url.indexOf('?') < 0 ? '?' : '&') + ( paramUrl ? paramUrl.substring(1) : '' )
 
 }
 
