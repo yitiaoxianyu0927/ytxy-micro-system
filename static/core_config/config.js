@@ -27,9 +27,13 @@ var CORE_CONFIG = {
   FRAME_HTTP:"http://localhost:1234",
   FRAME_URL: "https://www.baidu.com/",
   FRAME_ANY: "",
+  FRAME_YTXY_MIRCO: "http://localhost:10200/#",
+
 
   ///微前端模块配置 PROJECT_xxx
-  PROJECT_VUEAPP:"http://localhost:10100"
+  PROJECT_VUEAPP:"http://localhost:10100",
+  PROJECT_YTXY_MIRCO: "http://localhost:10200"
+
 }
 
 function geturl(name) {

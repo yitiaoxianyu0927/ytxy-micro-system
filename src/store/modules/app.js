@@ -5,7 +5,7 @@ const app = {
     sidebar: {
       opened: true
     },
-    layoutType : "1"
+    layoutType : "CommonLayout"   //CommonLayout,HeaderNavLayout
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {

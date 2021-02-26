@@ -61,7 +61,44 @@ const meunConfig = [
         routerPath:"doc",
         meta:{ icon:"el-icon-s-platform",title:"微前端集成",cache:true },
     },
-
+    {
+        uid: "427fe8f5-0501-43a2-b67f-ef8ba7d20c53",
+        type: "router",
+        id: "micro",
+        env: "",
+        icon: "icon-make-group",
+        title: "子应用",
+        meta: {
+            icon: "icon-make-group",
+            title: "子应用"
+        },
+        url: null,
+        routerPath: null,
+        projectName: "",
+        children: [
+        {
+            uid: "50ccf83d-4343-4412-ba26-bd54cd9ba736",
+            type: "iframe",
+            id: "frame_vue",
+            env: "",
+            icon: "",
+            title: "FRAME_VUE",
+            meta: {
+                icon: "",
+                title: "FRAME_VUE"
+            },
+            componentUrl: null,
+            url: "/subApp_frame_vue",
+            moduleName: "FRAME_YTXY_MIRCO",
+            routerPath: null,
+            projectName: "",
+            children: [],
+            hidden: false
+        }
+        ],
+        hidden: false,
+        parentId: ""
+    }
     
 ]
 

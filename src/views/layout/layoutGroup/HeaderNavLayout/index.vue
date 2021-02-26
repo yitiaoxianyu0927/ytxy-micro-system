@@ -8,17 +8,19 @@
         >
             <NavBar/>
         </div>
-        <div class="content"  v-if="!isHome">
-            <div  class="breadcrumb-container" >
-                <breadcrumb class="breadcrumb-container" />
+        <transition name="main" mode="out-in">
+            <div class="content"  v-if="!isHome">
+                <div  class="breadcrumb-container" >
+                    <breadcrumb class="breadcrumb-container" />
+                </div>
+                <div  class="appview-container" >
+                    <app-main/>
+                </div>
             </div>
-            <div  class="appview-container" >
+            <div class="home-content" v-else>
                 <app-main/>
             </div>
-        </div>
-        <div class="home-content" v-else>
-            <app-main/>
-        </div>
+        </transition>
     </div>
 </template>
 
@@ -36,15 +38,15 @@
         },
         computed:{
 
-            // isHome(){
+            isHome(){
 
-            //     return this.$route.path == "/dashboard"
-            // }
+                return this.$route.path == "/home"
+            }
         },
         components:{
 
-            // NavBar:()=>import("../../components/NavBar/index-yn.vue"),
-            // AppMain:()=>import("../../components/AppMain/index-yn.vue"),
+            NavBar:()=>import("../../components/NavBar/index-hnl.vue"),
+            AppMain:()=>import("../../components/AppMain/index-hnl.vue"),
             Breadcrumb:()=>import("../../components/Breadcrumb"),
         }
     }
@@ -97,6 +99,14 @@
             }
             
         }
+    }
+
+     .main-enter,.main-leave-to {
+        opacity: 0;
+        transform: translateX(50px)
+    }
+    .main-enter-active,.main-leave-active {
+        transition: all 0.5s ease
     }
 
 </style>

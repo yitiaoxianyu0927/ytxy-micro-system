@@ -1,0 +1,109 @@
+@bgColor:#282828;
+@themeColor: #409eff;
+@fontColor: #fff;
+
+#app[theme = 'dark']{
+
+    .siderbar-container{
+        
+        background-color:@bgColor; 
+
+        .el-menu-item{
+            
+            
+            background-color:@bgColor;
+            i{
+
+                color:@themeColor;
+            }
+            span{
+                
+                color:@fontColor;
+
+            }
+
+        }
+        
+
+        .el-submenu__title{
+
+            
+            background-color:@bgColor;  
+            i{
+
+                color:@themeColor;
+            }
+            span{
+                
+                color:@fontColor;
+
+            }
+
+        }
+
+        .el-menu-item.is-active{
+
+            span{
+                color:@themeColor;
+            }
+        }
+
+    }
+
+    .navbar-container{
+
+        background-color:@bgColor;
+
+        .refresh-page{
+
+            i{
+                color:#fff;
+            }
+           
+        }
+
+    }
+
+    .search-bar{
+
+        input{
+
+            background-color:rgba(64, 158, 255, 0.5);
+            border: solid 1px @themeColor;
+        }
+    }
+    
+    .tagview-container{
+
+        background-color:@bgColor;
+        .tag-item{
+
+            background-color:@bgColor;
+            color:@fontColor;
+        }
+        .tag-first-item{
+
+            color:@themeColor;
+        }
+
+        .tags-view-wrapper{
+
+            background-color:@bgColor;
+               
+        }
+        .func-tags{
+             
+            border-color:@themeColor;
+            i{
+               color:@fontColor; 
+            }
+        }
+    }
+
+    .dropdown-bar{
+
+        i,span{
+            color:@fontColor;
+        }
+    }
+}
