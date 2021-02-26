@@ -22,7 +22,8 @@ var CORE_CONFIG = {
   PUBLIC_VERSION_ID:'1.0.0.20170101',
 
   IS_FILTER_MENU_BY_DATABASE:false, //是否始终通过数据库关联
-
+  IS_ALWAYS_LOCATE_FIRST_BY_TOKEN:false, //是否始终通过数据库关联
+  
   ///iframe模块配置 FRAME_xxx
   FRAME_HTTP:"http://localhost:1234",
   FRAME_URL: "https://www.baidu.com/",

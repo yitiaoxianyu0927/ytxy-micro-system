@@ -8,7 +8,7 @@ const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //本地mock服务
 
 var CORE_CONFIG = { 
   //公共配置项
-  PROVINCE:'ln',//省份
+  PROVINCE:'basic',//省份
   IS_ALWAYS_SERVER:true,  //是否始终从server端上读取数据
   IS_ALWAYS_MOCK:false,  //是否始终从mock上读取数据
   MOCK_API: 'xxxx',
@@ -22,6 +22,8 @@ var CORE_CONFIG = {
   PUBLIC_VERSION_ID:'1.0.0.20170101',
 
   IS_FILTER_MENU_BY_DATABASE:false, //是否始终通过数据库关联
+  IS_ALWAYS_LOCATE_FIRST_BY_TOKEN:false, //是否始终通过数据库关联
+
 
   ///iframe模块配置 FRAME_xxx
   FRAME_HTTP:"http://localhost:1234",
