@@ -18,7 +18,7 @@
 
         <div class="login-container">
 
-            <div class="login-title">传输集中运维系统</div>
+            <div class="login-title">YTXY-MICRO-SYSTEM</div>
             <!-- <el-tabs v-model="tabIndex" class="tab-container">
                 <el-tab-pane label="账号密码登录" name="1"> -->
                     <login-account @focus="HandleFocus"  @blur="HandleBlur"/>

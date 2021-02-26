@@ -1,16 +1,12 @@
 <template>
     <div class="box-100 layout-container">   
-
-        <div class="navbar-container">
-            <nav-bar/>
-        </div>
-        
-
+   
         <div 
             
             class="layout-left-container"
             :style="{
-                width: isCollapse ? '64px' : '200px'
+                width: isCollapse ? '64px' :
+                    windowSize == '1366' ? '200px' : '260px'
             }"    
 
             
@@ -25,12 +21,17 @@
             
             class="layout-right-container"
             :style="{
-                marginLeft: isCollapse ? '64px' : '200px',
-                width: isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 200px)'
+                marginLeft: isCollapse ? '64px' : 
+                    windowSize == '1366' ? '200px' : '260px',
+
+                width: isCollapse ? 'calc(100% - 64px)' : 
+                     windowSize == '1366' ? 'calc(100% - 200px)' : 'calc(100% - 260px)'
             }"    
         >
           
-            
+            <div class="navbar-container">
+                <nav-bar/>
+            </div>
             <div class="tagview-container">
                 <tag-view/>
             </div>
@@ -53,7 +54,7 @@
 
             return {
 
-
+                windowSize:"1366"
 
             } 
 
@@ -70,10 +71,10 @@
         },
         components:{
 
-            SiderBar:()=>import("../SiderBar"),
-            NavBar:()=>import("../NavBar"),
-            TagView:()=>import("../TagView"),
-            AppMain:()=>import("../AppMain"),
+            SiderBar:()=>import("../../components/SiderBar"),
+            NavBar:()=>import("../../components/NavBar"),
+            TagView:()=>import("../../components/TagView"),
+            AppMain:()=>import("../../components/AppMain"),
             
         },
         methods:{
@@ -82,12 +83,24 @@
 
                 //console.log(e)  
 
+            },
+            windowSizeChange(){
+
+                let windowSize = document.body.clientWidth;
+            
+                this.windowSize  = windowSize >= 1800 ? 1920 : 1366;
             }
 
         },
         mounted(){
 
-            
+            this.windowSizeChange();
+
+            window.addEventListener("resize",()=>{
+
+                this.windowSizeChange();
+                
+            })
         }
 
 
@@ -103,24 +116,10 @@
 
     .layout-container{
 
-        .navbar-container{
-            
-            height:50px;
-            box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
-            z-index: 900;
-            position: relative;
-            background-color:rgb(1,65,125);
-            color:#fff;
-            /deep/ .user-name{
-
-                color:#fff;
-            }
-        }
-
         .layout-left-container{
 
-            width:200px;
-            height:calc(100% - 50px);
+            //width:200px;
+            height:100%;
             // float:left;
             position: fixed;
             transition: all @CollapseTime ease-in-out;
@@ -138,13 +137,19 @@
         .layout-right-container{
 
             // width:calc(100% - 200px);
-            height:calc(100% - 50px);
+            height:100%;
             // float:left;
             position: fixed;
             width: 100%;
             transition: all @CollapseTime ease-in-out;
 
+            .navbar-container{
             
+                height:50px;
+                box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
+                z-index: 900;
+                position: relative;
+            }
             
             .tagview-container{
                 
@@ -157,7 +162,7 @@
             
             .appmain-container{
                 
-                height:calc(100% - 30px);
+                height:calc(100% - 80px);
             }
 
         }

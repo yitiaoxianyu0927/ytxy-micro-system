@@ -179,6 +179,7 @@
 
 <style lang="less" scoped>
 
+
     .home-container{
 
         background-color:#f1f3f9;

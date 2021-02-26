@@ -7,7 +7,7 @@
      
             <div class="logo-container" v-if="layoutType == '1'">
             
-                    <div class="title" v-if="!isCollapse" >YTXY-UI </div>
+                    <div class="title" v-if="!isCollapse" >ZZNODE-UI </div>
             
                 <div class="hamburger-container">
                     <Hamburger/>

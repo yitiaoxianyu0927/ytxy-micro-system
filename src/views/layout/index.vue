@@ -1,52 +1,17 @@
+
+
 <template>
-    <div class="box-100 layout-container">   
-
-      
-        <div 
-            
-            class="layout-left-container"
-            :style="{
-                width: isCollapse ? '64px' : '200px'
-            }"    
-
-            
-        >
+    <div class="box-100">   
+        <component
         
-            <div class="siderbar-container">
-                <sider-bar/>
-            </div>
-
-        </div>   
-
-        <div 
-            
-            class="layout-right-container"
-            :style="{
-                marginLeft: isCollapse ? '64px' : '200px',
-                width: isCollapse ? 'calc(100% - 64px)' : 'calc(100% - 200px)'
-            }"    
+            :is="componentName"
         >
-        
-            <div class="navbar-container">
-                <nav-bar/>
-            </div>
-            <div class="tagview-container">
-                <tag-view/>
-            </div>
-            <div class="appmain-container">
-                <app-main/>
-            </div>
-            
-        </div>  
-
-
+        </component>
     </div>
 </template>
 
 
 <script>
-
-    import { mapGetters } from "vuex" 
    
     export default{
 
@@ -54,118 +19,47 @@
 
             return {
 
-
+               componentName:null
 
             } 
 
         },
-        computed:{
-
-            ...mapGetters([
-                "sidebar"
-            ]),
-            isCollapse(){
-                 
-                return !this.sidebar.opened  
-            }
-        },
         components:{
 
-            SiderBar:()=>import("./components/SiderBar"),
-            NavBar:()=>import("./components/NavBar"),
-            TagView:()=>import("./components/TagView"),
-            AppMain:()=>import("./components/AppMain"),
-            SplitPane:()=>import("@/components/SplitPane")
+            CommonLayout:() => import("./layoutGroup/CommonLayout"),
+            //YnLayout:() => import("./layoutGroup/YnLayout"),
             
         },
         methods:{
 
-            handleDrag(e){
+            renderComponentName(){
 
-                //console.log(e)  
+                let province = CORE_CONFIG.PROVINCE;
 
-            },
-            splitPaneResize(){
+                let option = {
 
+                    "ynyd":"YnLayout"
+                }
+
+                this.componentName = option[province] || "CommonLayout"
 
             }
 
         },
         mounted(){
 
-            
+            this.renderComponentName();
+
         }
 
 
     }
-
 
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
+   
+    
 
-    @CollapseTime : 0.4s;
-
-    .abc{
-
-        color:#fcaf41;
-    }
-
-    .layout-container{
-
-        .layout-left-container{
-
-            width:200px;
-            height:100%;
-            // float:left;
-            position: fixed;
-            transition: all @CollapseTime ease-in-out;
-            
-            z-index: 1000;
-
-            .siderbar-container{
-
-                height:100%;
-
-            }
-
-        }
-
-        .layout-right-container{
-
-            // width:calc(100% - 200px);
-            height:100%;
-            // float:left;
-            position: fixed;
-            width: 100%;
-            transition: all @CollapseTime ease-in-out;
-
-            .navbar-container{
-            
-                height:50px;
-                box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
-                z-index: 900;
-                position: relative;
-            }
-            
-            .tagview-container{
-                
-                height:36px;
-                box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
-                z-index: 800;
-                position: relative;
-                //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            .appmain-container{
-                
-                height:calc(100% - 80px);
-            }
-
-        }
-          
-    }
-
- 
 </style>
