@@ -31,7 +31,14 @@ module.exports = {
         //__dirname当前目录绝对路径
         path:config.build.assetsRoot, // path.resolve( __dirname , 'dist/'+baseUrl )//
         publicPath: process.env.NODE_ENV == 'production' ? 
-                        config.build.assetsPublicPath:  config.dev.assetsPublicPath
+                        config.build.assetsPublicPath:  config.dev.assetsPublicPath,
+
+        // 微应用的包名，这里与主应用中注册的微应用名称一致
+        library: "ytxySubApp",
+        // 将你的 library 暴露为所有的模块定义下都可运行的方式
+        libraryTarget: 'umd',
+        // 按需加载相关，设置为 webpackJsonp_${library} 即可
+        jsonpFunction: `webpackJsonp_ytxySubApp`,                
 
     },
     resolve: {

@@ -55,6 +55,9 @@ const devConfig = {
             pathRewrite: {'^/map' : ''}
           }
         },
+        headers: {   ///子应用跨域
+          'Access-Control-Allow-Origin': '*',
+        },
         // before: (app) => {
 
         //   console.log("app",app);

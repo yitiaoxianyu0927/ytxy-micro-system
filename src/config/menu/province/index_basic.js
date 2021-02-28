@@ -80,7 +80,7 @@ const meunConfig = [
             uid: "50ccf83d-4343-4412-ba26-bd54cd9ba736",
             type: "iframe",
             id: "frame_vue",
-            env: "",
+            env: "development",
             icon: "",
             title: "FRAME_VUE",
             meta: {
@@ -94,6 +94,26 @@ const meunConfig = [
             projectName: "",
             children: [],
             hidden: false
+        }
+        ,
+        {
+            uid: "adc10fb8-b485-48e6-84d9-a8fc15e7ebd9",
+            type: "micro",
+            id: "subApp_micro_vue",
+            env: "development",
+            icon: "",
+            title: "MICRO_VUE",
+            meta: {
+            icon: "",
+            title: "MICRO_VUE"
+            },
+            componentUrl: null,
+            url: null,
+            routerPath: "subApp_micro_vue",
+            projectName: "PROJECT_YTXY_MIRCO",
+            children: [],
+            hidden: false,
+            parentId: "micro"
         }
         ],
         hidden: false,

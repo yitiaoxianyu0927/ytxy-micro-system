@@ -41,7 +41,7 @@
 
                         <transition name="main" mode="out-in">
                             <template v-if="item.meta.type == 'micro'">
-                                <div :id="item.meta.id" class="box-100 pad-20">
+                                <div :id="item.meta.id" class="box-100">
                                     <!-- <h3>微前端施工中。。。</h3> -->
                                 </div>
                                 <!-- <div id="micro" class="box-100 pad-20">
@@ -152,7 +152,7 @@
                     
                     },
                     {
-                        //sandbox:{ strictStyleIsolation: true }
+                        sandbox:{ strictStyleIsolation: true }  ///样式隔离
                     }
                 );
 

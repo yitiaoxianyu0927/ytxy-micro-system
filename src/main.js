@@ -43,10 +43,58 @@ Vue.use(Element, {
 })
 
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+let instance = null;
+
+function render(props = {}){
+
+  console.log("render",props);
+  const { container } = props;
+
+  instance = new Vue({
+
+    router,
+    store,
+    render: h => h(App)
+
+  }).$mount(container ? container.querySelector('#app') : '#app')
+
+}
+
+
+
+if(window.__POWERED_BY_QIANKUN__){
+
+  __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
+}
+
+
+if (!window.__POWERED_BY_QIANKUN__) {
+  render();
+}
+
+
+///子组件协议
+
+export async function  bootstrap(props){
+
+  console.log("bootstrap",props)
+
+};
+
+export async function  mount(props){
+
+  console.log("mount",props)
+  render(props)
+
+};
+
+export async function  unmount(props){
+
+  if(instance){
+  
+    instance.$destory();
+  
+  }
+
+};
 

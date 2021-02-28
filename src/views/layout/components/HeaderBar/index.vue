@@ -39,7 +39,6 @@
 
     import { mapGetters } from "vuex"
 
-    import { appsMains } from '@/micro/apps-menu'
 
     import { getToken } from "@/utils/auth.js"
 
@@ -49,7 +48,6 @@
 
             return {
 
-               appsMains
 
             }
         

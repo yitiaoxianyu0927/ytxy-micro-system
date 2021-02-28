@@ -44,9 +44,7 @@
 
     import { mapGetters } from "vuex"
 
-    import { appsMains } from '@/micro/apps-menu'
-
-   
+  
 
     export default{
  
@@ -54,7 +52,6 @@
 
             return {
 
-               appsMains
 
             }
         
@@ -104,7 +101,7 @@
         },
         mounted(){
 
-            console.log("permission_routers",this.permission_routers)
+            console.log("permission_routers",this.permission_routers,this.$router)
 
         } 
 

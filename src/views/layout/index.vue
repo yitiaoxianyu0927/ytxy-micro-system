@@ -49,7 +49,7 @@
             isMicro(){
 
                 
-                return  getUrl("fromSystem") ? true : false;
+                return  getUrl("fromSystem") || window.__POWERED_BY_QIANKUN__ ? true : false;
 
             }
         },

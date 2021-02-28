@@ -278,12 +278,16 @@
 
 
 
-                this.form.url = type == 'router' ? componentUrl : url;
+                this.form.url = 
+                    type == 'router' ? componentUrl :
+                        type == 'micro' ?  routerPath : url;
+
                 this.form.children = this.property.children;
                 this.form.url = this.form.children.length > 0 ? "" : this.form.url;
                 this.form.env.value = env;
                 this.form.menuId = id;
                 this.form.menuName = title;
+                this.form.project.value = projectName;
                 this.form.module.value = moduleName;
                 this.form.menuType.value = type;
                 this.form.icon = icon;

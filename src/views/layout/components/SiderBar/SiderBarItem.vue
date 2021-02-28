@@ -69,15 +69,16 @@
                 <template 
                     v-if="item.type == 'micro'"
                 >
-                
+                   
                     <router-link  :to="item.path" tag="div">
-                        <el-menu-item :index="item.path">
+                        
+                        <el-menu-item :index="item.id">
                             <i 
                                 v-if="item.meta.icon" 
                                 :class="[item.meta.icon]" 
                             ></i>
                             <span slot="title" :title="item.meta.title" class="menu-title">{{item.meta.title}}</span>
-                            <!-- <item  :icon="item.meta.icon" :title="item.meta.title" /> -->
+                            
                         </el-menu-item>
                     </router-link>
                     
@@ -177,7 +178,7 @@
             },
             isTextOver(title,el){
                 
-                console.log(title,el)
+                //console.log(title,el)
 
             },
             NoHidden(item){
@@ -188,19 +189,19 @@
 
                 //let mode = process.env.NODE_ENV;
 
-                return true;
+                let mode = process.env.NODE_ENV;
                 
 
-                // return  !item.hidden &&   ///是否隐藏
-                //             (
-                //                 (
-                //                     item.env == 'development' &&  mode == 'development' ///开发环境菜单
-                //                 ) ||
-                //                 (
-                //                     item.env != 'development'  &&  ///生产环境菜单
-                //                     (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
-                //                 )
-                //             ) 
+                return  !item.hidden &&   ///是否隐藏
+                            (
+                                (
+                                    item.env == 'development' &&  mode == 'development' ///开发环境菜单
+                                ) ||
+                                (
+                                    item.env != 'development'  &&  ///生产环境菜单
+                                    (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
+                                )
+                            ) 
 
 
                 

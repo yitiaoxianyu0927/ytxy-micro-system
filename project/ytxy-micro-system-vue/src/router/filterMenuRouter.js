@@ -10,6 +10,10 @@ import microConfig from '@/micro/apps/config.js'
 
 const mainRouterName = "layout";
 
+
+let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system-vue" : "";
+
+
 export function formatMenuConfig(){  /// 配置菜单路径
 
     const menuConfig = cloneDeep(require("@/config/menu/index.js"));
@@ -47,7 +51,7 @@ function renderRouterConfig(menuConfig = [],routers = [],breadcrumb = []){  ///�
 
                             let meta =  Object.assign(v.meta,_v);
 
-                            let path = v.id.substring(0,1) == "/" ? v.id : "/" + v.id ;
+                            let path = prefix + ( v.id.substring(0,1) == "/" ? v.id : "/" + v.id );
 
                             routers.push({ path, name: v.id , component , meta   });
                         
@@ -68,7 +72,7 @@ function renderRouterConfig(menuConfig = [],routers = [],breadcrumb = []){  ///�
 
                 let meta =  Object.assign(v.meta,_v);
 
-                let path = v.id.substring(0,1) == "/" ? v.id : "/" + v.id ;
+                let path = prefix + ( v.id.substring(0,1) == "/" ? v.id : "/" + v.id );
 
                 routers.push({  ...v, path, name: v.id , component:null , meta });
 

@@ -172,6 +172,8 @@
         },
         mounted(){
 
+            console.log("tagsList",this.tagsList)
+
             this.addTag();
 
         },
