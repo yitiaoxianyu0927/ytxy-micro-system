@@ -1,9 +1,9 @@
 
 //--------------------------配置文件----------------------------
 
-const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //本地mock服务
+//const WEB_SERVER_BASE_URL = 'http://10.4.1.172:8088';  //本地mock服务
 
-//const WEB_SERVER_BASE_URL = 'http://localhost:8080';  //本地mock服务
+const WEB_SERVER_BASE_URL = 'http://localhost:5000';  //本地mock服务
 
 
 var CORE_CONFIG = { 

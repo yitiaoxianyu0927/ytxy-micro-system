@@ -99,7 +99,7 @@
             $route() {
 
                 // this.queryRouterConfig();
-                console.log(this.$route)
+                //console.log(this.$route)
 
                 // if(this.$route.meta.type == "micro") {
 

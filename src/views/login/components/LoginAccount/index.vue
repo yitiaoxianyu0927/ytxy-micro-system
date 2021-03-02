@@ -97,7 +97,6 @@
                 
                 this.$refs["ListForm"].validate((valid) => {
 
-                    console.log(valid)
                  
                     if(valid){
 
@@ -119,8 +118,6 @@
                             userName,passWord
                         }).then(res => {
 
-
-                            console.log(123123)
 
                             this.$router.push({ path: '/' })
 

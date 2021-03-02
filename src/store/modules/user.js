@@ -98,14 +98,14 @@ const user = {
 
       return new Promise((resolve, reject) => {
         loginByShortMsg(mobile, code).then(result => {
-          console.log('shortcode login result',result)
+          // console.log('shortcode login result',result)
           if(result.success===false){
             alert(result.message)
             //reject(response.message)
           }else{
             const token = result.userdata
-            console.log("------TOKEN-----")
-            console.log(token)
+            // console.log("------TOKEN-----")
+            // console.log(token)
             commit('SET_TOKEN', token)
             setToken(token)
             resolve()
@@ -122,7 +122,7 @@ const user = {
         getUserInfo(state.token).then(result => {
           commit('SET_USERINFO',result.userdata);
           const data = result.userdata
-          console.log('login user_info',data)
+          // console.log('login user_info',data)
           if (data.role_list && data.role_list.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.role_list)
             commit('SET_RIGHTS', data.right_list)

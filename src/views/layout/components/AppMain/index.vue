@@ -140,6 +140,8 @@
                  
                 let microOption = this.tagsList.filter(item => this.activeTabName == item.path)[0];
 
+                if(!microOption) return;
+
                 let { microName,entry,container,activeRule } = microOption.meta;
 
                 loadMicroApp(
@@ -203,6 +205,13 @@
 
             ListenSharedIframe();
 
+            if(this.$route.meta.type == "micro") {
+
+                this.queryMicroPro()
+            }
+
+            
+
         },
         update(){
 
@@ -228,7 +237,7 @@
                     }
                     
                 },
-                immediate:true
+                //immediate:true
             },
             refreshPage:{
 

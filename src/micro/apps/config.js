@@ -12,7 +12,7 @@ let microConfig = {
 
     "PROJECT_YTXY_MIRCO":{    ///project文件夹子应用
 
-        "DEV_BASE_URL":"",   //项目名称 开发模式访问地址 //localhost:10100/qiankun-vue/
+        "DEV_BASE_URL":"",   //项目名称 开发模式访问地址 //localhost:10200/qiankun-vue/
         "PRO_BASE_URL":"/ytxy-micro-system-vue",   //项目名称 生产模式访问地址 //localhost:8080/qiankun-vue/
         "BASE_ROUTE":"/ytxy-micro-system-vue",
         "MICRO_NAME":"ytxySubApp"

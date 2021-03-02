@@ -16,7 +16,7 @@ export default {
     const { icon, title } = context.props
     const vnodes = []
     
-    console.log(context.$parent)
+    // console.log(context.$parent)
 
     const isCollapse = context.parent.$children.length == 0;
 

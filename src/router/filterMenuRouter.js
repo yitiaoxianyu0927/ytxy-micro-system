@@ -7,7 +7,7 @@ import store from "@/store"
 
 import microConfig from '@/micro/apps/config.js'
 
-let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system-vue" : "";  ///子应用时 路由前缀
+let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system" : "";  ///子应用时 路由前缀
 
 const mainRouterName = "layout";
 
@@ -148,13 +148,13 @@ function addMainRouter(routers){
         store.commit("SET_FISRT_TAG",_routers[0]);
         store.commit("SET_ALL_MENU_ROUTER",_routers);
 
-        console.log(_routers)
+        //console.log(_routers)
     }
 
     
     // 把主体路由过滤出来加进去
 
-    console.log("mainRouter",mainRouter)
+    //console.log("mainRouter",mainRouter)
 
     router.addRoutes([   
         mainRouter,
@@ -185,6 +185,8 @@ function filterMenuRouterConfig(menuConfig = []){  ///根据id过滤
                 ///配置微前端数据
                 if(v.type == "micro"){
 
+                    console.log(v.path)
+
                     let { projectName , id } = v;
 
                     let { DEV_BASE_URL , PRO_BASE_URL , BASE_ROUTE , MICRO_NAME } =  microConfig[projectName];
@@ -193,6 +195,7 @@ function filterMenuRouterConfig(menuConfig = []){  ///根据id过滤
                     let entry = CORE_CONFIG[projectName] + (process.env.NODE_ENV == "production" ? PRO_BASE_URL : DEV_BASE_URL) + "/" ;
                     let container = "#" + id ;
                     let activeRule = entry + '#' + BASE_ROUTE;
+
                     
                     v.meta = Object.assign(v.meta,{
                         microName,entry,container,activeRule
@@ -216,7 +219,7 @@ function filterMenuRouterConfig(menuConfig = []){  ///根据id过滤
 
 	
 
-    store.state.permission.routers = fn(menuConfig);
+    store.state.permission.routers = fn(menuConfig);  ////菜单的path
 
 
 
@@ -241,10 +244,12 @@ function requireComponent(componentUrl){
 }
 
 
-function formatPath({ id, type , projectName }){
+function formatPath({ id, type , projectName , routerPath }){
 
-    return (type == "micro" ? microConfig[projectName].BASE_ROUTE : "" ) + 
-                ( id.substring(0,1) == "/" ? id : "/" + id ); 
+
+    return type == "micro" ? 
+                microConfig[projectName].BASE_ROUTE  +  toPath( routerPath ) :  
+                    toPath( id ); 
 
 };
 

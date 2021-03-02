@@ -240,10 +240,11 @@ function requireComponent(componentUrl){
 }
 
 
-function formatPath({ id, type , projectName }){
+function formatPath({ id, type , projectName , routerPath }){
 
-    return (type == "micro" ? microConfig[projectName].BASE_ROUTE : "" ) + 
-                ( id.substring(0,1) == "/" ? id : "/" + id ); 
+    return type == "micro" ? 
+                microConfig[projectName].BASE_ROUTE  +  toPath( routerPath ) :  
+                    toPath( id ); 
 
 };
 

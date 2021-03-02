@@ -87,10 +87,10 @@
         methods:{
 
             handleOpen(key, keyPath) {
-                console.log(key, keyPath);
+                // console.log(key, keyPath);
             },
             handleClose(key, keyPath) {
-                console.log(key, keyPath);
+                // console.log(key, keyPath);
             },
             handleSelect(key,keyPath){
 
@@ -101,7 +101,7 @@
         },
         mounted(){
 
-            console.log("permission_routers",this.permission_routers,this.$router)
+            //console.log("permission_routers",this.permission_routers,this.$router)
 
         } 
 

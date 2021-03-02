@@ -61,7 +61,7 @@ export function ListenSharedIframe(){
 
             let result = allMenuRouter.filter(item => item.id == id || item.meta.id == id);
 
-            console.log("allMenuRouter",allMenuRouter,"result",result)
+            //console.log("allMenuRouter",allMenuRouter,"result",result)
 
             if(result.length > 0){
 
@@ -73,7 +73,6 @@ export function ListenSharedIframe(){
                 store.dispatch("addExtTag",{...result[0]
                 }).then(({path}) => {
 
-                    console.log(123123)
                     router.push({path});
                     
                 })

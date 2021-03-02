@@ -5,53 +5,54 @@
             
             <el-table 
 
-                    :data="!list_table.client?
-                        list_table.data:
-                        list_table.data.slice((list_table.pagination.pageIndex-1)*list_table.pagination.pageRowSize,
-                        list_table.pagination.pageIndex*list_table.pagination.pageRowSize)
+                    :data="!listTable.client?
+                        listTable.data:
+                        listTable.data.slice((listTable.pagination.pageIndex-1)*listTable.pagination.pageRowSize,
+                        listTable.pagination.pageIndex*listTable.pagination.pageRowSize)
                     "      
                     @selection-change="List_handleSelectionChange" 
                     ref="multipleTable" 
                     height="100%" 
                     :span-method="arraySpanMethod"
                     @sort-change="sortchange"
-                    :border="list_table.border"
+                    :border="listTable.border"
             >
                     
                     <!-- 序号列 -->
                     
-                    <el-table-column  v-if="list_table.hasIndex"  label="#" min-width="60" align="center">
+                    <el-table-column  v-if="listTable.hasIndex"  label="#" min-width="60" align="center">
                         <template slot-scope="scope">
-                            {{scope.$index+(list_table.pagination.pageIndex - 1) * list_table.pagination.pageRowSize + 1}}
+                            {{scope.$index+(listTable.pagination.pageIndex - 1) * listTable.pagination.pageRowSize + 1}}
                         </template>
                     </el-table-column>
                     
 
                     <!-- 选择列 -->
 
-                    <el-table-column  v-if="list_table.hasSelect"  width="60" align="center" type="selection"></el-table-column>
+                    <el-table-column  v-if="listTable.hasSelect"  width="60" align="center" type="selection"></el-table-column>
 
 
                     <!-- 普通列,钻取列,自定义列 --> 
 
                     <el-table-column  
-                        v-for="(item, index) in list_table.header"
+                        v-for="(item, index) in listTable.header"
                         :property="item.key" 
                         :label="item.name"  
-                        :key="item.key" :align="item.align?item.align:'center'" 
+                        :key="item.key" 
+                        :align="index == 0 ? 'left' : item.align ? item.align:'center' " 
                         :min-width="item.width?item.width:150" 
                         :fixed="item.fixed?item.fixed:false" 
                         v-if="!item.hidden"
                         show-overflow-tooltip 
                         :sortable="item.sort?'custom':false"
-                        >
+                    >
                         <template slot-scope="scope"  >
                             <template v-if="!item.formatter">
                                 <template v-if="!item.isDrill">
-                                    {{list_table.data[scope.$index][item.key]}}
+                                    {{listTable.data[scope.$index][item.key]}}
                                 </template>
                                 <template  v-else>
-                                    <el-button v-if="!item.text" type="text" size="mini" @click="CellClick(item.key,scope.row)">{{list_table.data[scope.$index][item.key]}}</el-button>
+                                    <el-button v-if="!item.text" type="text" size="mini" @click="CellClick(item.key,scope.row)">{{listTable.data[scope.$index][item.key]}}</el-button>
                                     <el-button v-else type="text" size="mini" @click="CellClick(item.key,scope.row)">{{item.text}}</el-button>
                                 </template>
                             </template>    
@@ -73,20 +74,20 @@
         <el-row class="page-function">
             <el-pagination
                 background
-                v-if="!(list_table.pagination.show == false)"
-                :style="{float:list_table.pagination.position=='right'?'right':'left'}"
+                v-if="!(listTable.pagination.show == false)"
+                :style="{float:listTable.pagination.position=='right'?'right':'left'}"
                 @size-change="List_handleSizeChange"
                 @current-change="List_handleCurrentChange"
-                :current-page="list_table.pagination.pageIndex"
+                :current-page="listTable.pagination.pageIndex"
                 :page-sizes="[5, 10, 20, 30, 50, 100, 200]"
                 :pager-count=5
-                :page-size="list_table.pagination.pageRowSize"
+                :page-size="listTable.pagination.pageRowSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="list_table.pagination.total">
+                :total="listTable.pagination.total">
             </el-pagination> 
             <div class="function-button">
             
-            <el-button v-for="item in list_table.button" :key="item.id" type="primary" size="mini" @click="ButtonFunc(item.id,item.export)">{{item.name}}</el-button>
+            <el-button v-for="item in listTable.button" :key="item.id" type="primary" size="mini" @click="ButtonFunc(item.id,item.export)">{{item.name}}</el-button>
 
             </div>
         </el-row>
@@ -102,6 +103,7 @@
 
 <script>
 
+import { cloneDeep } from "lodash"
 
 export default {
  
@@ -110,13 +112,13 @@ export default {
         let data = {
 
 
-            list_table:{
+            listTable:{
                    
                    cellSpan:false,
                    client:false,
                    hasIndex:false,
                    hasSelect:false,
-                   border:false,
+                   border:true,
                    header:[
                     //    {
                     //         name:"",        表头显示值
@@ -150,7 +152,7 @@ export default {
                     //    }
                     //   }
                    ],
-                   selectOption:"",
+                   selectOption:[],
             }, 
 
         }
@@ -172,6 +174,7 @@ export default {
                 hasSelect:false,
                 header:[],
                 data:[],
+                border:true,
                 pagination:{
                     
                     pageIndex:1,
@@ -190,19 +193,19 @@ export default {
     
         List_handleSelectionChange(val){
             
-            this.list_table.selectOption = val;
+            this.listTable.selectOption = val;
             this.HandleFunc("handleSelectionChange",val);
 
         },
         List_handleSizeChange(val){
             
-            this.list_table.pagination.pageRowSize = val; 
+            this.listTable.pagination.pageRowSize = val; 
             this.HandleFunc("handleSizeChange",val); 
 
         },  
         List_handleCurrentChange(val){
 
-            this.list_table.pagination.pageIndex = val;
+            this.listTable.pagination.pageIndex = val;
             this.HandleFunc("handleCurrentChange",val);
 
         },
@@ -229,8 +232,8 @@ export default {
 
             if(isexport){
             
-                let ExportOption = this.list_table.button.filter(params=>params.export&&params.id==id);
-                let exp_columnnamesanddisplaynames  = this.list_table.header.filter(params => !params.hidden&&!params.exporthidden).map(params=>`${params.key}&${params.name}`).join(",");
+                let ExportOption = this.listTable.button.filter(params=>params.export&&params.id==id);
+                let exp_columnnamesanddisplaynames  = this.listTable.header.filter(params => !params.hidden&&!params.exporthidden).map(params=>`${params.key}&${params.name}`).join(",");
                 
                 ComApi.exportAllData(ExportOption[0].option.url,ExportOption[0].option.params,ExportOption[0].option.fileName,exp_columnnamesanddisplaynames)
                 
@@ -239,11 +242,15 @@ export default {
         },
         doLayout(){
 
-            this.$refs["multipleTable"].doLayout();
+            this.$nextTick(()=>{
+
+                this.$refs["multipleTable"].doLayout();
+
+            })
         },
         ModelValue(){
 
-            this.$emit("ModelValue",this.list_table);  
+            this.$emit("ModelValue",this.listTable);  
 
         },
         sortchange({ column, prop, order }){
@@ -256,19 +263,19 @@ export default {
         },
         arraySpanMethod({ row, column, rowIndex, columnIndex }){  /////合并单元格
                 
-            if(!this.list_table.cellspan)  return "";
+            if(!this.listTable.cellspan)  return "";
             ///////////
             else{
 
-                let total = this.list_table.data.length;
+                let total = this.listTable.data.length;
                 
-                let row_total =  new Set(this.list_table.data.map(param => param.ROWNUM))
+                let row_total =  new Set(this.listTable.data.map(param => param.ROWNUM))
 
                 let row_index = [];
                 
                 row_total.forEach(elem=>{
 
-                    row_index.push({"number":this.list_table.data.filter(param => param.ROWNUM ==elem ).length})
+                    row_index.push({"number":this.listTable.data.filter(param => param.ROWNUM ==elem ).length})
                 })
                 
                 
@@ -310,20 +317,24 @@ export default {
     },
     mounted(){
 
-        this.list_table = this.options
+        this.listTable = cloneDeep(this.options);
+
+        
+
+        this.doLayout();
     },
     watch:{
 
         options:{
 　　　　　　　　
-　　　　　　handler(val,oldVal){
+　　　　　　 handler(val,oldVal){
             
-             this.list_table = this.options
+                this.listTable = cloneDeep(this.options)
 
-             this.$refs["multipleTable"].doLayout();
-             　　　　　　　　
-           },
-　　　　　　deep:true
+                this.doLayout();
+                　　　　　　　　
+            },
+　　　　　　 deep:true
 
 　　    }
 
@@ -355,10 +366,44 @@ export default {
             }
         }
 
-        .el-table{
+        /deep/ .el-table{
 
             height:100% !important;
+            .el-table__header{
+
+                th{
+                    background-color:#f4f5f8;
+                }
+            }
+
+
+            .el-table__body-wrapper{
+
+                tr:nth-child(2n){
+                   background-color: #f8f9fa;
+                }
+                
+            }
+
+            .el-table__fixed-body-wrapper{
+
+                tr:nth-child(2n){
+                    background-color: #f8f9fa;
+                }
+            }
+
+            th{
+                color: rgba(0, 0, 0, 0.7);
+                //font-weight:normal;
+            }
+
+            tr{
+                color: rgba(0, 0, 0, 0.7);
+                font-weight:normal;
+            }
         }
+
+        
     }
     
 </style>

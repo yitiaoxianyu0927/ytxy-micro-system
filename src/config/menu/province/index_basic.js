@@ -36,6 +36,14 @@ const meunConfig = [
             componentUrl:"/basicSetting/iconsGroup",
             meta:{ title:"图标库",cache:true },
 
+        },{
+
+            type:"router",
+            id:"componentsGroup",
+            env:"development",
+            componentUrl:"/basicSetting/componentsGroup",
+            meta:{ title:"组件库",cache:true },
+
         }]
     },
     {
@@ -99,7 +107,7 @@ const meunConfig = [
         {
             uid: "adc10fb8-b485-48e6-84d9-a8fc15e7ebd9",
             type: "micro",
-            id: "subApp_micro_vue",
+            id: "micro_vue",
             env: "development",
             icon: "",
             title: "MICRO_VUE",

@@ -172,7 +172,7 @@
         },
         mounted(){
 
-            console.log("tagsList",this.tagsList)
+            //console.log("tagsList",this.tagsList)
 
             this.addTag();
 
