@@ -7,12 +7,9 @@ import store from "@/store"
 
 import microConfig from '@/micro/apps/config.js'
 
+let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system-vue" : "";  ///子应用时 路由前缀  umi子应用头
 
 const mainRouterName = "layout";
-
-
-let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system-vue" : "";
-
 
 export function formatMenuConfig(){  /// 配置菜单路径
 
@@ -51,7 +48,7 @@ function renderRouterConfig(menuConfig = [],routers = [],breadcrumb = []){  ///�
 
                             let meta =  Object.assign(v.meta,_v);
 
-                            let path = prefix + ( v.id.substring(0,1) == "/" ? v.id : "/" + v.id );
+                            let path = prefix + toPath(v.id) ;
 
                             routers.push({ path, name: v.id , component , meta   });
                         
@@ -78,6 +75,8 @@ function renderRouterConfig(menuConfig = [],routers = [],breadcrumb = []){  ///�
 
             },
             micro(){
+
+                if(window.__POWERED_BY_QIANKUN__ ) return;  ///如果是子应用不使用微前端 
 
                 let _v = {...v};    delete _v.meta; 
 
@@ -148,12 +147,14 @@ function addMainRouter(routers){
 
         store.commit("SET_FISRT_TAG",_routers[0]);
         store.commit("SET_ALL_MENU_ROUTER",_routers);
+
+        //console.log(_routers)
     }
 
     
     // 把主体路由过滤出来加进去
 
-    console.log("mainRouter",mainRouter)
+    //console.log("mainRouter",mainRouter)
 
     router.addRoutes([   
         mainRouter,
@@ -165,7 +166,7 @@ function addMainRouter(routers){
     
 }
 
-function filterMenuRouterConfig(menuConfig = []){
+function filterMenuRouterConfig(menuConfig = []){  ///根据id过滤
 
    
     let  dbRouters = store.getters.permission_dbRouters; ///数据库菜单信息
@@ -184,6 +185,7 @@ function filterMenuRouterConfig(menuConfig = []){
                 ///配置微前端数据
                 if(v.type == "micro"){
 
+
                     let { projectName , id } = v;
 
                     let { DEV_BASE_URL , PRO_BASE_URL , BASE_ROUTE , MICRO_NAME } =  microConfig[projectName];
@@ -192,6 +194,7 @@ function filterMenuRouterConfig(menuConfig = []){
                     let entry = CORE_CONFIG[projectName] + (process.env.NODE_ENV == "production" ? PRO_BASE_URL : DEV_BASE_URL) + "/" ;
                     let container = "#" + id ;
                     let activeRule = entry + '#' + BASE_ROUTE;
+
                     
                     v.meta = Object.assign(v.meta,{
                         microName,entry,container,activeRule
@@ -215,7 +218,7 @@ function filterMenuRouterConfig(menuConfig = []){
 
 	
 
-    store.state.permission.routers = fn(menuConfig);
+    store.state.permission.routers = fn(menuConfig);  ////菜单的path
 
 
 
@@ -251,5 +254,5 @@ function formatPath({ id, type , projectName , routerPath }){
 
 function toPath(path){
 
-   return path.startsWith("/") ? path : "/" + path       
+   return path.startsWith("/") ? path : "/" + path;      
 }
