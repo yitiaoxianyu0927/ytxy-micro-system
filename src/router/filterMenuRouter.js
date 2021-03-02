@@ -48,7 +48,7 @@ function renderRouterConfig(menuConfig = [],routers = [],breadcrumb = []){  ///å
 
                             let meta =  Object.assign(v.meta,_v);
 
-                            let path = prefix + ( v.id.substring(0,1) == "/" ? v.id : "/" + v.id ) ;
+                            let path = prefix + toPath(v.id) ;
 
                             routers.push({ path, name: v.id , component , meta   });
                         
@@ -245,7 +245,6 @@ function requireComponent(componentUrl){
 
 function formatPath({ id, type , projectName , routerPath }){
 
-
     return type == "micro" ? 
                 microConfig[projectName].BASE_ROUTE  +  toPath( routerPath ) :  
                     toPath( id ); 
@@ -255,5 +254,5 @@ function formatPath({ id, type , projectName , routerPath }){
 
 function toPath(path){
 
-   return path.startsWith("/") ? path : "/" + path       
+   return path.startsWith("/") ? path : "/" + path;      
 }
