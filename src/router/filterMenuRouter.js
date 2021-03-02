@@ -7,7 +7,7 @@ import store from "@/store"
 
 import microConfig from '@/micro/apps/config.js'
 
-let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system" : "";  ///子应用时 路由前缀
+let prefix = window.__POWERED_BY_QIANKUN__ ? "/ytxy-micro-system" : "";  ///子应用时 路由前缀  umi子应用头
 
 const mainRouterName = "layout";
 
@@ -185,7 +185,6 @@ function filterMenuRouterConfig(menuConfig = []){  ///根据id过滤
                 ///配置微前端数据
                 if(v.type == "micro"){
 
-                    console.log(v.path)
 
                     let { projectName , id } = v;
 
