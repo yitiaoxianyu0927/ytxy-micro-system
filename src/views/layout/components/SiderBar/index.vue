@@ -3,8 +3,8 @@
         class="box-100 sider-bar"
         :class="[isCollapse?'close-sidebar':'']"
     >
-       
-     
+         
+            
             <div class="logo-container" >
             
                 <div class="title" v-if="!isCollapse" >{{projectName}}</div>

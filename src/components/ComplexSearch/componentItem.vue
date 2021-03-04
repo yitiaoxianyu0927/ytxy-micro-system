@@ -13,8 +13,7 @@
         :placeholder="item.placeholder||('请输入'+item.name)"
         clearable
         :size="item.size||common.size"
-        @change="val => ChangeElem(item.id,val,item)" 
-
+        @change="ChangeElem(item)" 
     ></el-input>
     <!-- input 输入框 -->
 
@@ -32,8 +31,9 @@
         clearable
         collapse-tags
         :size="item.size||common.size"
-        @change="val => ChangeElem(item.id,val,item)" 
-
+        @change="ChangeElem(item)" 
+        @keydown.native.prevent="active"
+        
     > 
     <!-- :filterable="item.filterable" -->
         <el-option
@@ -42,7 +42,9 @@
             :key="selectItem.value"
             :label="selectItem.name"
             :value="selectItem.value"
-        
+            @keydown.native.prevent="active"
+            @keyup.native.prevent="active"
+          
         ></el-option>
     </el-select>
     <!-- select 输入框 -->
@@ -63,7 +65,10 @@
         :end-placeholder="item.endPlaceholder||'结束时间'"
         clearable
         :size="item.size||common.size"
-        @change="val => ChangeElem(item.id,val,item)" 
+        @change="ChangeElem(item)" 
+        @blur="datePickerFocus"
+
+        
 
     ></el-date-picker>
     <!-- date-picker 输入框 -->
@@ -74,6 +79,8 @@
 
 
 <script>
+
+    import { cloneDeep } from "lodash"
 
     export default {
 
@@ -109,9 +116,8 @@
         },
         methods:{
 
-            ChangeElem(id,val,item){
+            ChangeElem(item){
 
-                console.log("item",item)
 
                 let displayVal = "";
 
@@ -119,38 +125,61 @@
 
                     "input":()=>{
 
-                        displayVal = this.value;
+                        displayVal = item.value;
 
                     },
                     "select":()=>{
 
-                        displayVal = this.value;
+                        displayVal = item.option.filter(v => {   ///获取显示值
+
+
+                           return  typeof item.value == "string" ? 
+                                v.value == item.value : item.value.indexOf(v.value) >=0
+                            
+                        }).map(v => v.name).join("|");
                         
                     },
                     "datePicker":()=>{
 
-
+                        displayVal = typeof item.value == "string" ? 
+                                item.value : Array.from(item.value || []).join("|") ;
                     }    
 
 
                 };
 
+                option[item.elem]();
+
+
+                item = Object.assign(item,{  displayVal })
 
                 this.$emit("ModelValue",item);
+
+                this.$emit("change",{
+                    elem:item.elem , item
+                })
+
+                //this.$emit("submit",{});
 
             },
             focus(){
 
-                console.log(13212);
-
                 this.$refs["componentSubItem"].focus();
+            },
+            datePickerFocus(){
+
+                //alert(1);
+            },
+            active(){
+
+                alert(1);
             }
 
 
         },
         created(){
 
-            this.item = Object.assign({},{...this.option})
+            this.item = cloneDeep(this.option);
         },
         mounted(){
 

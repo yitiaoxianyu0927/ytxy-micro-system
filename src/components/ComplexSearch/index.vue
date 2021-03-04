@@ -1,44 +1,9 @@
 <template>
     <div class="complex-search">
-        
+       
         <div class="complex-container">
-
-            <div class="complex-searchbar" @click="HandleClickSearchBar">
-
-                <!--选择筛选条件 -->
-                    <el-select 
-                        class="search-type-select"  
-                        ref="search-type-select"
-                        v-model="searchType.value" 
-                        filterable 
-                        size="mini"
-                        placeholder=""
-                        v-if="!editOption.name"
-                        @change="HandleSelectSearchType"
-                    >
-                        <el-option :key="'default'" :label="'选择资源属性进行过滤'" :value="'default'" disabled ></el-option>
-                        <el-option
-                            v-for="item in searchType.option"
-                            :key="item.value"
-                            :label="item.name"
-                            :value="item.value"
-                        ></el-option>
-                    </el-select>
-                <!--选择筛选条件 -->
-
-                
-                <!--编辑筛选条件-->
-                    <div
-                        class="search-edit-panel"  
-                        v-if="editOption.name"
-                    >
-                        <span class="edit-name">{{editOption.name}}：</span>
-
-                        <componentItem v-model="editOption" :option="{
-                            ...editOption
-                        }" ref="search-edit-select"/>
-                    </div>
-                <!--编辑筛选条件-->
+        
+            <div class="complex-searchbar" @click.stop.prevent="HandleClickSearchBar">
 
                 <!--编辑的标签项-->
 
@@ -47,9 +12,53 @@
                         v-for="item in tagList"
                     >
                         <span class="item-name">{{item.name}}:</span>
-                        <span class="item-value">{{item.value}}</span>
+                        <span class="item-value">{{item.displayVal}}</span>
                     </div>
                 <!--编辑的标签项 -->
+
+
+                <!--编辑筛选条件-->
+                    <div
+                        class="search-edit-panel"  
+                        v-if="editOption.name"
+                    >
+                        <span class="edit-name">{{editOption.name}}：</span>
+
+                        <el-form ref="editForm" :model="editOption"  
+                            @submit.native.prevent="submit"
+                            @keyup.enter.native="addTagItem"
+                        >
+                            <componentItem v-model="editOption" :option="{
+                                ...editOption
+                            }" ref="search-edit-select"
+                                @change="componentItemChange"
+                            />
+                        </el-form>
+                    </div>
+                <!--编辑筛选条件-->
+
+               
+
+                <!--选择筛选条件 -->
+                    <el-select 
+                        class="search-type-select"  
+                        ref="search-type-select"
+                        v-model="searchType.value" 
+                        filterable 
+                        size="mini"
+                        :placeholder="''"
+                        v-if="!editOption.name"
+                        @change="HandleSelectSearchType"
+                    >
+                        <el-option :key="'default'" :label="'选择资源属性进行过滤'" :value="'default'" disabled ></el-option>
+                        <el-option
+                            v-for="item in filterSearchTypeOption"
+                            :key="item.value"
+                            :label="item.name"
+                            :value="item.value"
+                        ></el-option>
+                    </el-select>
+                <!--选择筛选条件 -->
 
             </div>
 
@@ -137,6 +146,14 @@
             }
 
         },
+        computed:{
+
+            filterSearchTypeOption(){
+
+
+                return this.searchType.option.filter(item => !item.selected);
+            }
+        },
         components:{
 
             componentItem:()=>import("./componentItem")
@@ -170,7 +187,11 @@
             },
             HandleClickSearchBar(){
 
-                this.$refs["search-type-select"].focus();
+                this.$nextTick(()=>{
+
+                    this.$refs["search-type-select"].focus();
+                });
+
             },
             HandleSelectSearchType(){
 
@@ -190,32 +211,48 @@
             },
             addTagItem(){
 
-                const { id , name , value , displayName } = this.editOption;
+                //console.log("editOption",this.editOption)
+
+                const { id , name , value , displayVal } = this.editOption;
 
                 this.tagList.push({
-                    id,name,value
+                    id,name,value,displayVal
                 })
                
                 this.editOption = {};
-                this.searchType.value = "";
+                
 
                 this.searchType.option = this.searchType.option.map(item => {
 
-                    item.id == id ? item.selected = false : null;
+                    item.id == id ? item.selected = true : null;
 
                     return item;
-                })
+                });
+
+            
+                this.searchType = Object.assign({},this.searchType,{ value:"" })
+
+                this.HandleClickSearchBar();
+
 
 
             },
-            ListenerKeyUp(){
+            componentItemChange({elem,item}){
 
-                document.onkeydown =  (event) => {
-                    var e = event || window.event;
-                    if (e && e.keyCode == 13) { //回车键的键值为13
-                       this.addTagItem();
+                if(elem == "datePicker" ){
+
+                    window.onkeyup = null;
+                
+                    window.onkeyup = (event) => {
+                        if (event.keyCode == "13" ) {
+                            //回车执行查询
+
+                            this.addTagItem();
+                            window.onkeyup = null;
+                        }
                     }
-                };
+
+                }
 
             }
 
@@ -223,15 +260,11 @@
         mounted(){
 
             this.renderSelectType();
-            this.ListenerKeyUp();
 
         },
         beforeDestory(){
 
-            if(document.onkeydown){
-
-                document.onkeydown = null;
-            }
+            window.onkeyup = null;
 
         }
 
@@ -313,6 +346,11 @@
                     border:none;
                 }
 
+                .el-form{
+
+                    display:inline-block;
+                }
+
             }
 
             .tag-item{
@@ -323,10 +361,13 @@
                 height:20px;
                 line-height:20px;
                 font-size:12px;
+                margin:0 2px;
+                vertical-align: middle;
+                 padding:0 5px;
                 &>span{
                     height:20px;
                     line-height:20px;
-                    padding:0 10px;
+                    cursor:pointer;
                 }
                 .item-name{
                     color: rgba(0,0,0,.4);

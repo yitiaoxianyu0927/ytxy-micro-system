@@ -16,6 +16,8 @@ import '@/assets/svg/index.js' // svg
 //路由
 import './router/beforeRouter.js'
 
+import actions from "@/share/micro/action"
+
 // // 微前端
 import startQiankun from '@/micro/index.js'
 // startQiankun({
@@ -58,6 +60,8 @@ function render(props = {}){
   console.log("render",props);
   const { container } = props;
 
+  actions.setActions(props);
+
   instance = new Vue({
 
     router,
@@ -92,6 +96,12 @@ export async function  bootstrap(props){
 export async function  mount(props){
 
   console.log("mount",props)
+
+  props.onGlobalStateChange((state, prev) => {
+    // state: 变更后的状态; prev 变更前的状态
+    console.log(state, prev);
+  });
+
   render(props)
 
 };

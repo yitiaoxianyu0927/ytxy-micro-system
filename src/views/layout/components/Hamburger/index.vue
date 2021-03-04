@@ -13,6 +13,8 @@
 
     import { mapGetters } from "vuex"
 
+    import actions from "@/share/micro/action"
+
     export default{
 
         data(){
@@ -52,6 +54,10 @@
             toggleSideBar(){
 
                 this.$store.dispatch("toggleSideBar");
+
+                actions.setGlobalState({
+                    num:Math.random()*100
+                })
             }
         }
 

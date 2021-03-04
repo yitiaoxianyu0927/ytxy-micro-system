@@ -154,13 +154,13 @@ const prodConfig = {
                 chunks: 'all',
                 test: /[\\/]src[\\/]utils[\\/]/
             },
-            commons: {
-                name: 'chunk-commons',
-                test: resolve('src/components'), // 可自定义拓展你的规则
-                minChunks: 1, // 最小公用次数
-                priority: 5,
-                reuseExistingChunk: true
-            },
+            // commons: {
+            //     name: 'chunk-commons',
+            //     test: resolve('src/components'), // 可自定义拓展你的规则
+            //     minChunks: 1, // 最小公用次数
+            //     priority: 5,
+            //     reuseExistingChunk: true
+            // },
             layout: {
                 name: 'chunk-layout',
                 test: resolve('src/views/layout'), // 可自定义拓展你的规则

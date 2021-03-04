@@ -49,10 +49,6 @@ service.interceptors.request.use(
         }
 
     }
-
-
-
-
     //分页查询总数不加载蒙版
     // if(config.url.indexOf("/totalcount")<0 && config.is_show_loading === true){
     

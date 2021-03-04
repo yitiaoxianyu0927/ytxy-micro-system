@@ -154,7 +154,7 @@
                     
                     },
                     {
-                        sandbox:{ strictStyleIsolation: true }  ///样式隔离
+                        sandbox:{ strictStyleIsolation: false }  ///样式隔离
                     }
                 );
 
@@ -333,4 +333,16 @@
     }
 
 
+    
+
+
 </style>
+
+<style>
+
+    .subPage-font-color{
+
+        color:red !important;
+    }
+
+</style>    
