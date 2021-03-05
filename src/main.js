@@ -18,6 +18,9 @@ import './router/beforeRouter.js'
 
 // // 微前端
 import startQiankun from '@/micro/index.js'
+///   微前端通信
+import actions from "@/share/micro/action"
+
 // startQiankun({
 //   prefetch:false,
 //   sandbox:{
@@ -49,6 +52,8 @@ function render(props = {}){
 
   console.log("render",props);
   const { container } = props;
+
+  actions.setActions(props);
 
   instance = new Vue({
 

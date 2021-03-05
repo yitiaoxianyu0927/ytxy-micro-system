@@ -84,6 +84,24 @@ const meunConfig = [
         routerPath: null,
         projectName: "",
         children: [
+        { 
+            uid: "d4a9d1cf-6a63-4278-836d-d3e448768b91", 
+            type: "router", 
+            id: "shared", 
+            env: "", 
+            icon: "", 
+            title: "主应用父子通信", 
+            meta: { 
+                icon: "", 
+                title: "主应用父子通信" 
+            }, 
+            componentUrl: "/subApp/shared", 
+            url: null, 
+            routerPath: null, 
+            children: [], 
+            hidden: false 
+            
+        },
         {
             uid: "50ccf83d-4343-4412-ba26-bd54cd9ba736",
             type: "iframe",
@@ -122,7 +140,8 @@ const meunConfig = [
             children: [],
             hidden: false,
             parentId: "micro"
-        }
+        },
+        
         ],
         hidden: false,
         parentId: ""

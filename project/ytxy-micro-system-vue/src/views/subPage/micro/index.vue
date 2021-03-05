@@ -5,7 +5,9 @@
 
         <div class="subPage-font-color">子应用字体为黄色颜色</div>
 
-        <div> 主应用侧边栏是否展开 {{sidebar.opened}} </div>
+        <div> 子应用获取 -- 主应用父子通信 发过来的信息 -- 
+           <span style="color:#ff0000"> {{parentMsg}} </span> 
+        </div>
 
     </div>
 </template> 
@@ -22,7 +24,7 @@
 
             return{
 
-
+                parentMsg:""
             }
 
 
@@ -40,10 +42,10 @@
         },
         mounted(){
 
-            console.log(this.$store)
-
+         
             actions.onGlobalStateChange((state) => { //监听全局状态
                 console.log("子应用",state)
+                this.parentMsg = state.parentInputMsg;
             }, true);
         }
 
