@@ -1,9 +1,19 @@
+
 <template>
     <div class="complex-search">
-       
+     
         <div class="complex-container">
         
-            <div class="complex-searchbar" @click.stop.prevent="HandleClickSearchBar">
+            <div 
+            
+                class="complex-searchbar" 
+                @click.stop.prevent="HandleClickSearchBar"
+                :style="{
+                    overflow:editFocus || editOption.name ? 'auto' : 'hidden',
+                    height:editFocus || editOption.name ? 'auto' : '30px'
+                }"
+            
+            >
 
                 <!--编辑的标签项-->
 
@@ -13,6 +23,7 @@
                     >
                         <span class="item-name">{{item.name}}:</span>
                         <span class="item-value">{{item.displayVal}}</span>
+                        <i class="el-icon-circle-close" @click="removeTagItem(item)"></i>
                     </div>
                 <!--编辑的标签项 -->
 
@@ -21,12 +32,14 @@
                     <div
                         class="search-edit-panel"  
                         v-if="editOption.name"
+                        
                     >
                         <span class="edit-name">{{editOption.name}}：</span>
 
                         <el-form ref="editForm" :model="editOption"  
-                            @submit.native.prevent="submit"
+                            @submit.native.prevent
                             @keyup.enter.native="addTagItem"
+                            
                         >
                             <componentItem v-model="editOption" :option="{
                                 ...editOption
@@ -49,72 +62,45 @@
                         :placeholder="''"
                         v-if="!editOption.name"
                         @change="HandleSelectSearchType"
+                        @keyup.native.delete.stop.capture="removeTagItem"
+                        @focus="editFocus = true"
+                        @blur="editFocus = false"
                     >
                         <el-option :key="'default'" :label="'选择资源属性进行过滤'" :value="'default'" disabled ></el-option>
                         <el-option
                             v-for="item in filterSearchTypeOption"
-                            :key="item.value"
+                            :key="item.id"
                             :label="item.name"
-                            :value="item.value"
+                            :value="item.id"
                         ></el-option>
                     </el-select>
                 <!--选择筛选条件 -->
 
+
+                <div class="complex-placeholder">多个关键字用"|"分隔，多个过滤标签用回车键分隔</div>
+
             </div>
 
-            <div class="complex-expand" @click="expand = !expand">
+            <div class="complex-expand" @click="HandleExpand">
                 <span>高级搜索</span> <i :class="[expand ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"> </i>
             </div>
 
-
-        </div>
-
-        <div class="complex-panel">
-
-            <el-form 
-
-                ref="complexSearchForm"
-                class="demo-form-inline complex-form-container"  
-                :label-width="ListForm.option.labelWidth + 'px'" 
-                :label-position="ListForm.option.labelPosition" 
-                size="small"
-                :inline="true"
-                :model="ListModelForm"
-        
-            >
-                <el-row 
-            
-                    v-for="(rowItem,rowIndex) in ListForm.row" 
-                    :key="rowIndex"
-
-                >
-                    <el-col 
-
-                        v-for="item in rowItem" 
-                        :span="item.col"
-                        :key="item.id"
-                        :offset="item.offset"
-                        
-                    >
-                        <el-form-item 
-                        
-                            :label="item.name" 
-                            v-if="!(item.elem == 'button' || (item.elem == 'custom' && item.labelhidden ))" 
-                            :label-width="(item.labelWidth||ListForm.option.labelWidth) + 'px'"
-                            :prop="item.id"
-                        >
-                            
-                            <componentItem :option="item" :common="ListForm.option"/>
-
-                        </el-form-item>
-
-                    </el-col>
-
-                </el-row>
-
-            </el-form>
             
         </div>
+
+        <el-collapse-transition>
+            <div  class="complex-panel"  v-if="expand">
+                
+                    <ElementForm
+
+                    
+                        :option="ListForm"
+                        @ChangeElem="ChangeElem"
+
+                    ></ElementForm>
+                
+            </div>
+        </el-collapse-transition>
 
         <div class="complex-expand"></div>
 
@@ -125,24 +111,34 @@
 
 <script>
 
-    import { ListForm }  from "./config.js"
+    /** 只支持 输入框 选择框 日期框 */
+
+    import { ListForm }  from "./config.js";
+
+    import { cloneDeep } from "lodash";
+
+    import tagListMix from "./taglist"
+
 
     export default{
 
+        mixins:[tagListMix],
         data(){
 
             return {
 
-                ListForm,
+                ListForm:{},
                 ListModelForm:{},
                 expand:false,
                 searchType:{
                     value:"",
                     option:[]
                 },
-                tagList:[],
+                
                 editOption:{
-                }
+                },
+
+                editFocus:false
             }
 
         },
@@ -156,19 +152,21 @@
         },
         components:{
 
-            componentItem:()=>import("./componentItem")
+            componentItem:()=>import("./componentItem"),
+            ElementForm:()=>import("@/components/ElementForm")
         },
         methods:{
 
-            ChangeElem(id,val,item){
+            ChangeElem(...args){
 
 
+                this.updateTagItem(...args);
             },
             renderSelectType(){
 
                 let list = [];
 
-                let { row } = ListForm;
+                let { row } = this.ListForm;
 
                 row.forEach((item,index) => {
                     
@@ -182,6 +180,7 @@
 
                 });
 
+
                 this.searchType.option = list;
 
             },
@@ -190,6 +189,8 @@
                 this.$nextTick(()=>{
 
                     this.$refs["search-type-select"].focus();
+
+                    this.searchType.value = "";
                 });
 
             },
@@ -203,40 +204,10 @@
                     size:'mini',value:""
                 });
 
-                this.$nextTick(()=>{
-
-                    this.$refs["search-edit-select"].focus();
-                })
-                
-            },
-            addTagItem(){
-
-                //console.log("editOption",this.editOption)
-
-                const { id , name , value , displayVal } = this.editOption;
-
-                this.tagList.push({
-                    id,name,value,displayVal
-                })
-               
-                this.editOption = {};
-                
-
-                this.searchType.option = this.searchType.option.map(item => {
-
-                    item.id == id ? item.selected = true : null;
-
-                    return item;
-                });
-
             
-                this.searchType = Object.assign({},this.searchType,{ value:"" })
-
-                this.HandleClickSearchBar();
-
-
-
+                
             },
+            
             componentItemChange({elem,item}){
 
                 if(elem == "datePicker" ){
@@ -254,8 +225,19 @@
 
                 }
 
+            },
+            
+            HandleExpand(){
+
+                this.expand = !this.expand;
+
+
             }
 
+        },
+        created(){
+
+            this.$set(this,"ListForm",cloneDeep(ListForm));
         },
         mounted(){
 
@@ -303,9 +285,10 @@
             .complex-searchbar{
 
                 width:600px;
-                height:30px;
+                // height:auto;
+                overflow-y:hidden;
                 border:1px solid #cfd5de;
-                padding:0px 10px;
+                padding:1px 10px;
 
                 .search-tag{
 
@@ -325,7 +308,19 @@
 
                     
                 }
-                
+
+                // /deep/.el-input__inner{
+
+                //     color:rgba(0,0,0,0)
+                // }
+                .complex-placeholder{
+
+                    color:rgba(0,0,0,.25);
+                    display:inline-block;
+                    font-size: 12px;
+                    height:20px;
+                    line-height:20px;
+                }
 
             }
 
@@ -371,6 +366,17 @@
                 }
                 .item-name{
                     color: rgba(0,0,0,.4);
+                }
+
+                i{
+
+                    color:#666;
+                    cursor:pointer;
+                }
+
+                i:hover{
+
+                    color:#fcaf41;
                 }
             }
 

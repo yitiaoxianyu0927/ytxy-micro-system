@@ -75,9 +75,11 @@
                            v-model="item.value"
                            :style="{ width:item.width ? (item.width + 'px') : '100%' }"
                            :disabled="item.disabled||ListForm.option.disabled"
+                           :multiple="item.multiple"
                            :filterable="item.filterable"
                            :placeholder="item.placeholder||('请输入'+item.name)"
                            @change="val => ChangeElem(item.id,val,item)" 
+                           collapse-tags
 
                         >
                         <!-- :filterable="item.filterable" -->
@@ -102,8 +104,8 @@
                            :disabled="item.disabled||ListForm.option.disabled"
                            :placeholder="item.placeholder||'请选择日期'"
                            :value-format="item.valueFormat||'yyyy-MM-dd'"
-                           :start-placeholder="item.startPlaceholder"
-                           :end-placeholder="item.endPlaceholder"
+                           :start-placeholder="item.startPlaceholder||'开始时间'"
+                           :end-placeholder="item.endPlaceholder||'结束时间'"
                            clearable
                            @change="val => ChangeElem(item.id,val,item)" 
 
@@ -197,6 +199,8 @@
 
 <script>
 
+    import { cloneDeep } from "lodash"
+
     export default {
 
         data(){
@@ -255,11 +259,11 @@
 
             formatOption(){
 
-                this.ListForm = {...this.option};
+                this.ListForm = cloneDeep(this.option);
 
                 this.renderFormModel();
  
-                this.$emit("RenderEnd",true);
+                // this.$emit("RenderEnd",true);
 
             },
             ChangeElem(id,val,elemOption,other){
@@ -288,6 +292,7 @@
                 let option = {};
 
                 this.ListForm.row.forEach((row,index) => {
+
 
                     row.forEach((item,i) => {
 
@@ -323,8 +328,11 @@
             renderFormModel(){
 
                 let model = {}
+
+
+                let row = Array.from(this.ListForm.row);
               
-                this.ListForm.row.forEach((item,index) => {
+                row.forEach((item,index) => {
 
                     item.forEach((v,i) => {
 
@@ -334,7 +342,7 @@
                 
                 });
 
-                this.ListModelForm = {...model};
+                this.ListModelForm = model;
 
             },
             setFormOption(option){ ///[{id:id,value:value}] 异步
@@ -473,7 +481,7 @@
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
     
     .ElementForm{
        

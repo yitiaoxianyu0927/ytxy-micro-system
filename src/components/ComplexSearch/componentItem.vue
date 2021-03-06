@@ -31,10 +31,12 @@
         clearable
         collapse-tags
         :size="item.size||common.size"
+        popper-append-to-body
         @change="ChangeElem(item)" 
-        @keydown.native.prevent="active"
+        @keydown.native.stop.capture
         
     > 
+    <!-- @keydown.native.prevent="active" -->
     <!-- :filterable="item.filterable" -->
         <el-option
             
@@ -42,8 +44,6 @@
             :key="selectItem.value"
             :label="selectItem.name"
             :value="selectItem.value"
-            @keydown.native.prevent="active"
-            @keyup.native.prevent="active"
           
         ></el-option>
     </el-select>
@@ -66,10 +66,7 @@
         clearable
         :size="item.size||common.size"
         @change="ChangeElem(item)" 
-        @blur="datePickerFocus"
-
-        
-
+  
     ></el-date-picker>
     <!-- date-picker 输入框 -->
 
@@ -82,13 +79,16 @@
 
     import { cloneDeep } from "lodash"
 
+    import { queryDisplayVal } from "./utils"
+
     export default {
 
         data(){
 
             return {
 
-                item:{}
+                item:{},
+                visible:false
 
             }
 
@@ -116,40 +116,11 @@
         },
         methods:{
 
-            ChangeElem(item){
+            ChangeElem(){
 
+                let item = this.item;
 
-                let displayVal = "";
-
-                let option = {
-
-                    "input":()=>{
-
-                        displayVal = item.value;
-
-                    },
-                    "select":()=>{
-
-                        displayVal = item.option.filter(v => {   ///获取显示值
-
-
-                           return  typeof item.value == "string" ? 
-                                v.value == item.value : item.value.indexOf(v.value) >=0
-                            
-                        }).map(v => v.name).join("|");
-                        
-                    },
-                    "datePicker":()=>{
-
-                        displayVal = typeof item.value == "string" ? 
-                                item.value : Array.from(item.value || []).join("|") ;
-                    }    
-
-
-                };
-
-                option[item.elem]();
-
+                let displayVal = queryDisplayVal(item);
 
                 item = Object.assign(item,{  displayVal })
 
@@ -159,31 +130,28 @@
                     elem:item.elem , item
                 })
 
-                //this.$emit("submit",{});
 
             },
             focus(){
 
                 this.$refs["componentSubItem"].focus();
             },
-            datePickerFocus(){
-
-                //alert(1);
-            },
-            active(){
-
-                alert(1);
-            }
+           
+            
 
 
         },
         created(){
 
             this.item = cloneDeep(this.option);
+            
         },
         mounted(){
 
+            this.ChangeElem(this.item);
 
+            this.$refs["componentSubItem"].focus();
+            
         }
 
 
