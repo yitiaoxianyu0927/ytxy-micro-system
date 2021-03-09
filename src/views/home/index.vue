@@ -135,7 +135,6 @@
                     this.funcRight > 37 ? this.funcRight = 37 : this.funcRight;
 
 
-                    console.log(this.funcRight)
                 })
 
             },

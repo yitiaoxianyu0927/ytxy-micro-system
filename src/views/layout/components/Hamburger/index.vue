@@ -4,9 +4,21 @@
         :style="{width:width+'px',height:height+'px'}"
         :class="[!isCollapse?'collapse':'']"
         @click="toggleSideBar"
+        v-if="openIcon == ''"
     >
        <div v-for="i in [1,2,3]" ></div>
     </div>
+
+    <div 
+        v-else 
+        class="box-100  ham-icon" 
+        :style="{width:width+'px',height:height+'px',lineHeight:height+'px'}"
+        :class="[!isCollapse? openIcon : closeIcon ]"    
+        @click="toggleSideBar" 
+    >
+
+    </div>
+
 </template>
 
 <script>
@@ -45,6 +57,16 @@
 
                 type:Number,
                 default:14
+            },
+            openIcon:{
+
+                type:String,
+                default:""
+            },
+            closeIcon:{
+
+                type:String,
+                default:""
             }
         },
         methods:{
@@ -72,6 +94,7 @@
         justify-content:space-between;
         align-items:flex-end;
         position:relative;
+        cursor:pointer;
         &>div{
              
             width:100%; 
@@ -81,6 +104,12 @@
             transition: all 0.2s ease-in-out;
         } 
        
+    }
+
+    .ham-icon{
+
+        cursor:pointer;
+        text-align:center;
     }
 
     .collapse{

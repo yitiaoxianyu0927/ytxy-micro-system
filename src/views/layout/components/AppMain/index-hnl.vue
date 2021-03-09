@@ -1,5 +1,5 @@
 <template>
-    <div class="box-100 app-main">
+    <div class="box-100 app-main" layout="hnl-layout" >
      
         <template>
             <transition name="main" mode="out-in">
@@ -131,7 +131,7 @@
 
 <style lang="less" scoped>
 
-    .app-main{
+    .app-main[layout='hnl-layout']{
 
         //background-color:#f1f3f9;
        

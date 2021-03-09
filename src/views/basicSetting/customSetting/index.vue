@@ -30,6 +30,9 @@
                 },{
                     id:"HeaderNavLayout",
                     icon:require("@/assets/image/layout/layout-2.png"),
+                },{
+                    id:"SiderDarkLayout",
+                    icon:require("@/assets/image/layout/layout-3.png"),
                 }]
 
             }

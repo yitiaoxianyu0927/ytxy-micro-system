@@ -1,7 +1,8 @@
+/* SiderDarkLayout 标签栏*/
 
 
 <template>
-    <div class="box-100 tag-view " layout="common-layout">
+    <div class="box-100 tag-view " layout="bdl-layout" >
         <router-link
 
             class="icon-home3 tag-item tag-first-item" 
@@ -199,16 +200,31 @@
 
     @firstTagWidth:40px;
     @endTagWidth:40px;
+    @color:#409eff;
     
-    .tag-view[layout="common-layout"]{
+    .tag-view[layout='bdl-layout']{
 
         //padding:3px 20px; 
         font-size: 0px;
         overflow: hidden;
+        padding:0 20px;
+        position:relative;
+
+        &::after{
+           content:"";
+           background-color: rgba(112, 112, 112, 0.2);
+           height:1px;
+           position:absolute;
+           bottom:0px;
+           left: 20px;
+           width: calc(100% - 40px);
+           z-index: -1
+        }
+
 
         .tags-view-wrapper {
 
-            background: #fff;
+         
             height: 36px;
         }
       
@@ -216,8 +232,8 @@
 
             height: 36px;
             line-height: 36px;
-            background: #fff;
-            color: #666;
+          
+            color: rgba(0,0,0,0.65);
             padding: 0 15px;
             cursor: pointer;
             display: inline-block;
@@ -279,12 +295,14 @@
 
         .active{
 
-            background: rgb(243,243,243);
-            color:#247fff;
-            border-bottom: 2px solid #247fff;
+            // background: rgb(243,243,243);
+            color:@color;
+            border-bottom: 2px solid @color;
         }
 
     }
+
+    
 
 
 </style>

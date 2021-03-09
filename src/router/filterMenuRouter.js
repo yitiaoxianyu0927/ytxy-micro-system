@@ -132,10 +132,10 @@ function addMainRouter(routers){
              
         }).filter(item => item._children.length == 0)
 
-        if(process.env.NODE_ENV == "production"){//生产环境
+        // if(process.env.NODE_ENV == "production"){//生产环境
 
-           _routers = _routers.filter(item => item.env != 'development' && item.meta.env != 'development');
-        }
+        //    _routers = _routers.filter(item => item.env != 'development' && item.meta.env != 'development');
+        // }
 
         mainRouter.children = [ ..._routers];
 

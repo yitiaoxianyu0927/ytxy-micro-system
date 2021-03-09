@@ -1,4 +1,4 @@
-export const ListForm = {
+export const ComplexSearchForm = {
 
     option:{
 
@@ -81,6 +81,64 @@ export const ListForm = {
 
     ]
 
-
-
 }
+
+
+export const ListTable = {
+
+    cellSpan:false,
+    client:false,   ///前端分页
+    hasIndex:false,
+    hasSelect:true,
+    border:true,
+    header:[
+        {
+            name:"地市",
+            key:"city"
+        },
+        {
+            name:"区县",
+            key:"region"
+        },
+        {
+            name:"名称",
+            key:"name"
+        },
+        {
+            name:"评级",
+            key:"rank",
+            formatter:true
+        },
+        {
+            name:"销售额",
+            key:"price"
+        },
+        {
+            name:"邮箱",
+            key:"email"
+        },
+        {
+            name:"地址",
+            key:"adress"
+        },
+        {
+            name:"操作",
+            key:"operation",
+            fixed:"right",
+            formatter:true
+        },
+    ],
+    data:[],
+    pagination:{
+        
+        position:"right",
+        pageIndex:1,
+        pageRowSize:10,
+        total:0
+    },
+    button:[
+        
+        
+    ],
+    selectOption:[],
+}  

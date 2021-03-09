@@ -1,5 +1,5 @@
 <template>
-    <div class="box-100 nav-bar">
+    <div class="box-100 nav-bar" layoutType="hnl-layout">
 
         <div class="logo-container"></div>
         
@@ -169,7 +169,7 @@
 
 <style lang="less" scoped>
 
-    .nav-bar{
+    .nav-bar[layoutType='hnl-layout']{
 
         //box-shadow: 0px 3px 6px 0px  rgba(0, 0, 0, 0.1);
         background-color:rgb(37,181,205);

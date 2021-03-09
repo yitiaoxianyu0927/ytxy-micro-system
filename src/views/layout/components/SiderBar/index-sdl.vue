@@ -8,11 +8,8 @@
             <div class="logo-container" >
             
                 <div class="title" v-if="!isCollapse" >{{projectName}}</div>
+                <div class="logo icon-github box" v-else></div>
             
-                <div class="hamburger-container">
-                    <Hamburger/>
-                </div>
-                
             </div>       
             <div class="menu-container">
                 <!-- <div class="menu-scroller-container"> -->
@@ -39,6 +36,17 @@
                 </el-scrollbar>
 
                 <!-- </div>     -->
+            </div>
+
+            <div class="bottom-container">
+               
+                <Hamburger 
+                    :height="40" 
+                    :width="40" 
+                    :openIcon="'el-icon-s-fold'" 
+                    :closeIcon="'el-icon-s-unfold'"
+                />
+              
             </div>
 
     </div>
@@ -121,12 +129,13 @@
     .sider-bar{
 
         box-shadow: 0px 5px 10px 0px  rgba(0, 0, 0, 0.16);
-        padding:0 10px;
-        color: #409eff; 
+        padding:0px;
+        background-color: #002140;
         .logo-container{
 
             height:50px;
             position: relative;
+            color: #ffffff;
             .title{
 
                 height:50px;
@@ -156,24 +165,47 @@
                     position:absolute;
                 }
             }
+
+            .logo{
+
+                height:50px;
+                line-height:50px;
+                text-align:center;
+                font-size:24px;
+            }
         }
 
         .menu-container{
 
-            height:calc(100% - 50px);
+            height:calc(100% - 90px);
             overflow:hidden; 
-            padding-bottom:20px;
-            .menu-scroller-container{
+            background-color: #001529;
+            // .menu-scroller-container{
 
-                height:100% ;
-                width:calc(100% + 40px);
-                padding-right:40px;
-                overflow:auto;
+            //     height:100% ;
+            //     width:calc(100% + 40px);
+            //     padding-right:40px;
+            //     overflow:auto;
                 .menu-display-container{
 
                     width:100%;
                 }
-            }
+            // }
+        }
+
+        .bottom-container{
+
+            position:absolute;
+            height:40px;
+            bottom:0px;
+            background-color: #002140;
+            color:#fff;
+            font-size:26px;
+            text-align:center;
+            width:100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
         }
         
         /deep/.el-menu{
@@ -202,6 +234,49 @@
             }
         }
 
+        /////子集菜单层级/////
+
+        /deep/ .el-menu{
+
+            background-color: #001529;
+
+            .el-menu-item,.el-submenu__title{
+
+                background-color: #001529;
+                color:#fff;
+
+                i{
+
+                    color:#fff;
+                }
+            }
+
+            &>.menu-wrapper{
+
+                .el-menu{
+
+                    &>.menu-wrapper{
+
+                        .el-menu-item,.el-submenu__title{
+
+                            background-color: #000d1a;
+                        }
+
+                    }
+
+                }
+
+            }
+
+            
+
+
+        }
+        
+
+
+
+
     }
 
 
@@ -228,7 +303,19 @@
             display: none;
         }
          
-         
+        .menu-container{
+
+            background-color: #002140;
+            /deep/ .el-menu{
+
+                background-color: #002140;
+
+                .el-menu-item,.el-submenu__title{
+                
+                    background-color: #002140;
+                }
+            }
+        } 
 
     }
     

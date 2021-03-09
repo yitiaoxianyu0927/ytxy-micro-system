@@ -44,7 +44,43 @@ const meunConfig = [
             componentUrl:"/basicSetting/componentsGroup",
             meta:{ title:"组件库",cache:true },
 
-        }]
+        },
+        { 
+            uid: "ee761905-5c2b-426a-8a84-f07392420a1a", 
+            type: "router", 
+            id: "displayPage", 
+            env: "development", 
+            icon: "", 
+            title: "展示页面", 
+            meta: { 
+                icon: "", 
+                title: "展示页面" 
+            }, 
+            url: null, 
+            routerPath: null, 
+            children: [ 
+                { 
+                    uid: "e6198330-0d93-42bf-8d53-a8c077dc6a99", 
+                    type: "router", 
+                    id: "displayTablePage", 
+                    env: "development", 
+                    icon: "", 
+                    title: "展示表格", 
+                    meta: { 
+                        icon: "", 
+                        title: "展示表格" 
+                    }, 
+                    componentUrl: "/basicSetting/displayPage/displayTablePage", 
+                    url: null, 
+                    routerPath: null, 
+                    children: [], 
+                    hidden: false 
+                } 
+            ], 
+            hidden: false, 
+            parentId: "basicSetting" 
+        }    
+        ]
     },
     {
         type:"iframe",  ///类型iframe

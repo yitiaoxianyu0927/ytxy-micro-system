@@ -5,11 +5,7 @@
             
             <el-table 
 
-                    :data="!listTable.client?
-                        listTable.data:
-                        listTable.data.slice((listTable.pagination.pageIndex-1)*listTable.pagination.pageRowSize,
-                        listTable.pagination.pageIndex*listTable.pagination.pageRowSize)
-                    "      
+                    :data="tableData"      
                     @selection-change="List_handleSelectionChange" 
                     ref="multipleTable" 
                     height="100%" 
@@ -49,7 +45,8 @@
                         <template slot-scope="scope"  >
                             <template v-if="!item.formatter">
                                 <template v-if="!item.isDrill">
-                                    {{listTable.data[scope.$index][item.key]}}
+                                    <!-- {{listTable.data[scope.$index][item.key]}} -->
+                                    {{tableData[scope.$index][item.key]}}
                                 </template>
                                 <template  v-else>
                                     <el-button v-if="!item.text" type="text" size="mini" @click="CellClick(item.key,scope.row)">{{listTable.data[scope.$index][item.key]}}</el-button>
@@ -155,6 +152,7 @@ export default {
                    selectOption:[],
             }, 
 
+
         }
         
         return data;
@@ -189,13 +187,29 @@ export default {
         value:""
 
     },
-    methods:{
-    
-        List_handleSelectionChange(val){
+    computed:{
+
+        tableData(){
+
+            let { data , client , pagination } = this.listTable;
+
+            let { pageIndex , pageRowSize } = pagination;
+
+            let tableData =  !client ? data : 
+                                data.slice(  (pageIndex-1) * pageRowSize, pageIndex * pageRowSize);
             
+            console.log("tableData", tableData);
+
+            return tableData;
+        }
+    },
+    methods:{
+
+        List_handleSelectionChange(val){
+
             this.listTable.selectOption = val;
             this.HandleFunc("handleSelectionChange",val);
-
+            
         },
         List_handleSizeChange(val){
             
@@ -283,8 +297,6 @@ export default {
                 ///row_index [10, 3, 11, 13]
                 row_index = row_index.map(param =>{ 
                 
-        
-
                     param.index = row_total_index; 
                     row_total_index += param.number ; 
                 
@@ -312,31 +324,31 @@ export default {
                 
                 
                 ////////
-        }
+        },
+        
 
     },
     mounted(){
 
         this.listTable = cloneDeep(this.options);
 
-        
+        this.doLayout();  
 
-        this.doLayout();
     },
     watch:{
 
-        options:{
-　　　　　　　　
-　　　　　　 handler(val,oldVal){
+//         options:{
+// 　　　　　　　　
+// 　　　　　　 handler(val,oldVal){
             
-                this.listTable = cloneDeep(this.options)
+//                 this.listTable = cloneDeep(this.options)
 
-                this.doLayout();
-                　　　　　　　　
-            },
-　　　　　　 deep:true
+//                 this.doLayout();
+//                 　　　　　　　　
+//             },
+// 　　　　　　 deep:true
 
-　　    }
+// 　　    }
 
     }
 
@@ -350,14 +362,14 @@ export default {
 
         .page-table{
 
-            height: calc(100% - 60px);
+            height: calc(100% - 40px);
 
         }
         .page-function{
 
-            height: 50px;
+            height: 40px;
             margin-top:10px;
-            padding: 10px 0px;
+            padding:10px 0;
 
             .function-button{
     

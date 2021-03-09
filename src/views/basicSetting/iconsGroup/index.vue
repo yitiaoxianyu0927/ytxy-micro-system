@@ -3,6 +3,7 @@
 
         <div class="search-bar">
            <el-input v-model="iconName" placeholder="请输入图标名称" prefix-icon="el-icon-search"/>
+           <el-input-number size="medium" v-model="limitNum"></el-input-number>
         </div>
         
         <div class="tab-container">
@@ -91,7 +92,8 @@
                 icomoonIcons,
                 elementIcons,
                 svgIcons,
-                iconName:""
+                iconName:"",
+                limitNum:50
 
             }
 
@@ -118,17 +120,17 @@
 
             icomoonGroup(){
                 
-                return icomoonIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 100);
+                return icomoonIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < this.limitNum);
 
             },
             svgGroup(){
                 
-                return svgIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 100);
+                return svgIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < this.limitNum);
 
             },
             elementGroup(){
                 
-                return elementIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < 100);
+                return elementIcons.filter(item => item.indexOf(this.iconName) >= 0).filter((item,index) => index < this.limitNum);
 
             }
         },

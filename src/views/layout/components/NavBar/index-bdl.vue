@@ -1,6 +1,6 @@
 <template>
-    <div class="box-100 nav-bar" layoutType="common-layout">
- 
+    <div class="box-100 nav-bar" layoutType="bdl-layout">
+
         <!-- <div class="hamburger">
             <Hamburger/>
         </div> -->
@@ -105,7 +105,7 @@
 
 <style lang="less" scoped>
 
-    .nav-bar[layoutType='common-layout']{
+    .nav-bar[layoutType='bdl-layout']{
 
         //box-shadow: 0px 3px 6px 0px  rgba(0, 0, 0, 0.1);
         

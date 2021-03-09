@@ -8,10 +8,8 @@
             
                 class="complex-searchbar" 
                 @click.stop.prevent="HandleClickSearchBar"
-                :style="{
-                    overflow:editFocus || editOption.name ? 'auto' : 'hidden',
-                    height:editFocus || editOption.name ? 'auto' : '30px'
-                }"
+                :class="[editFocus || editOption.name ? 'isfocus': '' ]"
+               
             
             >
 
@@ -23,7 +21,7 @@
                     >
                         <span class="item-name">{{item.name}}:</span>
                         <span class="item-value">{{item.displayVal}}</span>
-                        <i class="el-icon-circle-close" @click="removeTagItem(item)"></i>
+                        <i class="el-icon-error" @click="removeTagItem(item)"></i>
                     </div>
                 <!--编辑的标签项 -->
 
@@ -85,7 +83,10 @@
                 <span>高级搜索</span> <i :class="[expand ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"> </i>
             </div>
 
-            
+            <div class="button-group">
+                <slot/>
+            </div>
+        
         </div>
 
         <el-collapse-transition>
@@ -102,7 +103,6 @@
             </div>
         </el-collapse-transition>
 
-        <div class="complex-expand"></div>
 
     </div>
 </template>
@@ -113,7 +113,7 @@
 
     /** 只支持 输入框 选择框 日期框 */
 
-    import { ListForm }  from "./config.js";
+    // import { ListForm }  from "./config.js";
 
     import { cloneDeep } from "lodash";
 
@@ -139,6 +139,16 @@
                 },
 
                 editFocus:false
+            }
+
+        },
+        props:{
+
+            option:{
+
+                type:Object,
+                default:()=>({})
+
             }
 
         },
@@ -237,7 +247,7 @@
         },
         created(){
 
-            this.$set(this,"ListForm",cloneDeep(ListForm));
+            this.$set(this,"ListForm",cloneDeep(this.option));
         },
         mounted(){
 
@@ -285,12 +295,19 @@
             .complex-searchbar{
 
                 width:600px;
-                // height:auto;
-                overflow-y:hidden;
+                height:30px;
+                overflow:hidden;
                 border:1px solid #cfd5de;
-                padding:1px 10px;
+                padding:0px 6px;
+
+                // /deep/ .el-input__inner{
+
+                //     height:27px;
+                //     line-height:27px;
+                // }
 
                 .search-tag{
+
 
                     &>span{
 
@@ -313,14 +330,24 @@
 
                 //     color:rgba(0,0,0,0)
                 // }
+
+                .search-type-select{
+
+                    vertical-align: middle;
+                }
+
                 .complex-placeholder{
 
                     color:rgba(0,0,0,.25);
                     display:inline-block;
+                    vertical-align: middle;
                     font-size: 12px;
                     height:20px;
                     line-height:20px;
                 }
+                
+
+                
 
             }
 
@@ -358,7 +385,8 @@
                 font-size:12px;
                 margin:0 2px;
                 vertical-align: middle;
-                 padding:0 5px;
+                padding:0 5px;
+                 
                 &>span{
                     height:20px;
                     line-height:20px;
@@ -370,14 +398,39 @@
 
                 i{
 
-                    color:#666;
+                    color:#bbb;
                     cursor:pointer;
                 }
 
                 i:hover{
 
-                    color:#fcaf41;
+                    color:#333;
                 }
+            }
+
+            .button-group{
+
+                float:right;
+                display:inline-block;
+                height:30px;
+                line-height:30px;
+            }
+
+            .isfocus{
+
+                height:auto;
+                overflow:visible;
+
+                // .tag-item{
+
+                //     margin-top:4px;
+                // }
+
+                .complex-placeholder{
+
+                    margin:4px 0;
+                }
+
             }
 
         }

@@ -37,6 +37,7 @@
 
             CommonLayout:() => import("./layoutGroup/CommonLayout"),
             HeaderNavLayout:() => import("./layoutGroup/HeaderNavLayout"),
+            SiderDarkLayout:() => import("./layoutGroup/SiderDarkLayout"),
             AppMain:()=>import("./components/AppMain"),
             
         },

@@ -1,5 +1,5 @@
 <template>
-    <div ref='layout-container'  class="box-100 layout-container">
+    <div ref='layout-container'  class="box-100 layout-container"  layout="hnl-layout">
         <div 
             class="navbar-container"
             :style="{
@@ -56,7 +56,7 @@
 
 <style lang="less" scoped>
 
-    .layout-container{
+    .layout-container[layout="hnl-layout"]{
 
         overflow:auto;
         background-color:rgb(232,235,240);

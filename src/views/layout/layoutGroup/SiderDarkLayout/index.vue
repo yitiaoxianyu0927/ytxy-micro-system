@@ -1,5 +1,5 @@
 <template>
-    <div class="box-100 layout-container" layout="common-layout">   
+    <div class="box-100 layout-container"  layout="sdl-layout">   
    
         <div 
             
@@ -71,10 +71,10 @@
         },
         components:{
 
-            SiderBar:()=>import("../../components/SiderBar"),
-            NavBar:()=>import("../../components/NavBar"),
-            TagView:()=>import("../../components/TagView"),
-            AppMain:()=>import("../../components/AppMain"),
+            SiderBar:()=>import("../../components/SiderBar/index-sdl"),
+            NavBar:()=>import("../../components/NavBar/index-bdl"),
+            TagView:()=>import("../../components/TagView/index-bdl"),
+            AppMain:()=>import("../../components/AppMain/index-bdl"),
             
         },
         methods:{
@@ -142,20 +142,22 @@
             position: fixed;
             width: 100%;
             transition: all @CollapseTime ease-in-out;
+            background-color:#f1f3f9;
 
             .navbar-container{
             
                 height:50px;
-                box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
-                z-index: 900;
+                // box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
+                // z-index: 900;
                 position: relative;
+                background-color:#fff;
             }
             
             .tagview-container{
                 
                 height:36px;
-                box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
-                z-index: 800;
+                // box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.1);
+                // z-index: 800;
                 position: relative;
                 //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             }
