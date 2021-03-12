@@ -191,17 +191,17 @@
 
                 let mode = process.env.NODE_ENV;
                 
-                return true;
-                // return  !item.hidden &&   ///是否隐藏
-                //             (
-                //                 (
-                //                     item.env == 'development' &&  mode == 'development' ///开发环境菜单
-                //                 ) ||
-                //                 (
-                //                     item.env != 'development'  &&  ///生产环境菜单
-                //                     (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
-                //                 )
-                //             ) 
+                //return true;
+                return  !item.hidden &&   ///是否隐藏
+                            (
+                                (
+                                    item.env == 'development' &&  mode == 'development' ///开发环境菜单
+                                ) ||
+                                (
+                                    item.env != 'development'  &&  ///生产环境菜单
+                                    (item.contact || !CORE_CONFIG.IS_FILTER_MENU_BY_DATABASE) //是否过滤数据库
+                                )
+                            ) 
 
 
                 

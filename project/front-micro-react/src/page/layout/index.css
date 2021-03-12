@@ -1,0 +1,18 @@
+#root{
+
+    height:100%;
+
+}
+
+.layout-container{
+
+    height:100%;
+
+}
+
+.content{
+
+    height:calc(100% - 64px);
+    background-color:rgb(240,243,249);
+
+}

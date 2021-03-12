@@ -4,13 +4,21 @@
         <div class="title-container">
             <div class="title-name">表格页面</div>
             <div class="button-group">
-                <div class="el-icon-refresh" ></div>
-                <div class="icon-sort-amount-desc" ></div>
-                <div class="icon-download" ></div>
+                <div class="iconfont iconfont-icon-shuaxin" ></div>
+                <div 
+                
+                    class="iconfont " 
+                    :class="[ 
+                        ListTable.option && ListTable.option.rowExpand ? 
+                            'iconfont-icon-zhediexiaoguo' : 'iconfont-icon-zhediexiaoguo1' 
+                    ]"
+                    @click="HandleClickRowExpand"
+
+                ></div>
+                <div class="iconfont iconfont-icon-download" ></div>
                 <div class="">自定义列</div>
             </div>
         </div>
-
         <div class="searchbar">
             <ComplexSearch 
                 :option="ComplexSearchForm"
@@ -78,7 +86,7 @@
             return {
 
                 ComplexSearchForm,
-                ListTable
+                ListTable,
 
             }
 
@@ -120,6 +128,14 @@
 
             },
 
+            HandleClickRowExpand(){
+
+                console.log(this.ListTable)
+
+                this.ListTable.option.rowExpand = !this.ListTable.option.rowExpand;
+
+            },
+
             HandleFunc(type,val){},
             CellClick(type,val){},
             ButtonFunc(type,val){}
@@ -128,6 +144,7 @@
         mounted(){
 
             this.queryListTableData();
+
         }
 
 
@@ -165,6 +182,14 @@
                     background-color: #eaf6fe;
                     color:#006eff;
                     cursor:pointer;
+                    vertical-align: middle;
+                    min-width:38px;
+                    text-align: center;
+                }
+
+                .active{
+
+                    background:#fcaf41;
                 }
             }
 

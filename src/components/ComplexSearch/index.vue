@@ -299,6 +299,8 @@
                 overflow:hidden;
                 border:1px solid #cfd5de;
                 padding:0px 6px;
+                position:absolute;
+                background-color:#fff;
 
                 // /deep/ .el-input__inner{
 
@@ -383,7 +385,7 @@
                 height:20px;
                 line-height:20px;
                 font-size:12px;
-                margin:0 2px;
+                margin:2px;
                 vertical-align: middle;
                 padding:0 5px;
                  
@@ -420,6 +422,7 @@
 
                 height:auto;
                 overflow:visible;
+                border:1px solid #409EFF;
 
                 // .tag-item{
 

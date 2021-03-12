@@ -2,16 +2,22 @@
    <div class="component-ElementTable" style="width:100%;height:100%">
  
         <el-row class="page-table" >
-            
+     
             <el-table 
 
-                    :data="tableData"      
-                    @selection-change="List_handleSelectionChange" 
-                    ref="multipleTable" 
-                    height="100%" 
-                    :span-method="arraySpanMethod"
-                    @sort-change="sortchange"
-                    :border="listTable.border"
+                :data="tableData"      
+                @selection-change="List_handleSelectionChange" 
+                ref="multipleTable" 
+                height="100%" 
+                :span-method="arraySpanMethod"
+                @sort-change="sortchange"
+                :border="listTable.border"
+                :row-style="listTable.style.rowStyle||{}"
+                :cell-style="listTable.style.cellStyle||{}"
+                :class="[
+                    listTable.option && listTable.option.rowExpand ? 'row-expand': 'row-expand-close'
+                ]"
+                
             >
                     
                     <!-- 序号列 -->
@@ -61,9 +67,6 @@
                     </el-table-column>
 
 
-                    
-
-
             </el-table>
 
 
@@ -100,7 +103,7 @@
 
 <script>
 
-import { cloneDeep } from "lodash"
+import { cloneDeep , defaultsDeep } from "lodash"
 
 export default {
  
@@ -150,6 +153,11 @@ export default {
                     //   }
                    ],
                    selectOption:[],
+                   style:{
+
+                       rowStyle:null,
+                       cellStyle:null
+                   }
             }, 
 
 
@@ -181,6 +189,9 @@ export default {
                 },
                 button:[],
                 selectOption:"",
+                option:{
+
+                }
             })
 
         },
@@ -198,12 +209,92 @@ export default {
             let tableData =  !client ? data : 
                                 data.slice(  (pageIndex-1) * pageRowSize, pageIndex * pageRowSize);
             
-            console.log("tableData", tableData);
-
             return tableData;
-        }
+        },
+
+   
     },
     methods:{
+
+        formatTableData(){
+
+            let cw = document.body.clientWidth;
+
+
+            let _listTable = cloneDeep(this.options);
+
+            let listTable = {};
+
+            let defaultOption = {
+                
+                    cellSpan:false,
+                    client:false,
+                    hasIndex:false,
+                    hasSelect:false,
+                    border:true,
+                    header:[],
+                    data:[],
+                    pagination:{
+                        
+                        pageIndex:1,
+                        pageRowSize:10,
+                        total:0
+                    },
+                    button:[],
+                    selectOption:[],
+                    style:{
+
+                        rowStyle:null,
+                        cellStyle:null
+                    },
+                    option:{
+                        rowExpand: cw < 1400 ? false : true
+                    }
+
+            }
+
+            Reflect.ownKeys(defaultOption).forEach((item => {
+
+                let data = defaultOption[item];
+
+                if(typeof data == "boolean"  ){
+                    listTable[item] = !!_listTable[item] 
+                }
+
+                if(typeof data == "string" ){
+                    listTable[item] = _listTable[item] || "";
+                }
+
+                if(typeof data == "object" ){
+                    listTable[item] = Object.assign(data,_listTable[item]);
+                }
+
+                if(data instanceof Array ){
+                    listTable[item] = _listTable[item] || [];
+                }
+
+            }))
+
+
+            
+            this.listTable = listTable;
+
+
+            this.ModelValue();
+            
+            this.doLayout();  
+
+        },
+        updateTableOption(){
+
+            let cw = document.body.clientWidth;
+
+            this.listTable.option = Object.assign({
+                rowExpand: cw < 1400 ? false : true
+            },{...this.options.option||{}});
+
+            this.doLayout(); 
+        },
 
         List_handleSelectionChange(val){
 
@@ -258,13 +349,17 @@ export default {
 
             this.$nextTick(()=>{
 
-                this.$refs["multipleTable"].doLayout();
+                if(this.$refs["multipleTable"]){
+                    
+                    this.$refs["multipleTable"].doLayout();
+
+                }
 
             })
         },
         ModelValue(){
 
-            this.$emit("ModelValue",this.listTable);  
+            this.$emit("ModelValue",cloneDeep(this.listTable));  
 
         },
         sortchange({ column, prop, order }){
@@ -330,25 +425,29 @@ export default {
     },
     mounted(){
 
-        this.listTable = cloneDeep(this.options);
+        this.formatTableData();
 
-        this.doLayout();  
+        
+        window.addEventListener("resize",()=>{
 
+            this.formatTableData();
+
+            this.doLayout();
+        })
     },
     watch:{
 
-//         options:{
-// 　　　　　　　　
-// 　　　　　　 handler(val,oldVal){
+        options:{
+　　　　　　　　
+　　　　　　 handler(val,oldVal){
+
             
-//                 this.listTable = cloneDeep(this.options)
+                this.updateTableOption();
+                　　　　　　　　
+            },
+　　　　　　 deep:true
 
-//                 this.doLayout();
-//                 　　　　　　　　
-//             },
-// 　　　　　　 deep:true
-
-// 　　    }
+　　    }
 
     }
 
@@ -415,7 +514,20 @@ export default {
             }
         }
 
-        
+        /deep/ .row-expand{
+
+            td,th{
+                padding:8px 0px;
+            }
+        }
+
+
+        /deep/ .row-expand-close{
+
+            td,th{
+                padding:4px 0px;
+            }
+        }
     }
     
 </style>
