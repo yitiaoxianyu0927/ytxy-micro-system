@@ -19,13 +19,13 @@ export function queryDisplayVal(obj) {
                 return  typeof obj.value == "string" ? 
                     v.value == obj.value : obj.value.indexOf(v.value) >=0
                 
-            }).map(v => v.name).join("|");
+            }).map(v => v.name).join(" | ");
             
         },
         "datePicker":()=>{
 
             displayVal = typeof obj.value == "string" ? 
-                    obj.value : Array.from(obj.value || []).join("|") ;
+                    obj.value : Array.from(obj.value || []).join(" | ") ;
         }    
 
 

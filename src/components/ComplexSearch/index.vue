@@ -12,70 +12,73 @@
                
             
             >
+                <div class="complex-searchbar-inner">
+                    <!--编辑的标签项-->
 
-                <!--编辑的标签项-->
-
-                    <div 
-                        class="tag-item"
-                        v-for="item in tagList"
-                    >
-                        <span class="item-name">{{item.name}}:</span>
-                        <span class="item-value">{{item.displayVal}}</span>
-                        <i class="el-icon-error" @click="removeTagItem(item)"></i>
-                    </div>
-                <!--编辑的标签项 -->
+                        <div 
+                            class="tag-item"
+                            v-for="item in tagList"
+                        >
+                            <span class="item-name">{{item.name}}:</span>
+                            <span class="item-value">{{item.displayVal}}</span>
+                            <i class="el-icon-error" @click="removeTagItem(item)"></i>
+                        </div>
+                    <!--编辑的标签项 -->
 
 
-                <!--编辑筛选条件-->
-                    <div
-                        class="search-edit-panel"  
-                        v-if="editOption.name"
-                        
-                    >
-                        <span class="edit-name">{{editOption.name}}：</span>
-
-                        <el-form ref="editForm" :model="editOption"  
-                            @submit.native.prevent
-                            @keyup.enter.native="addTagItem"
+                    <!--编辑筛选条件-->
+                        <div
+                            class="search-edit-panel"  
+                            v-if="editOption.name"
                             
                         >
-                            <componentItem v-model="editOption" :option="{
-                                ...editOption
-                            }" ref="search-edit-select"
-                                @change="componentItemChange"
-                            />
-                        </el-form>
-                    </div>
-                <!--编辑筛选条件-->
+                            <span class="edit-name">{{editOption.name}}：</span>
 
-               
+                            <el-form ref="editForm" :model="editOption"  
+                                @submit.native.prevent
+                                @keyup.enter.native="addTagItem"
+                                
+                            >
+                                <componentItem v-model="editOption" :option="{
+                                    ...editOption
+                                }" ref="search-edit-select"
+                                    @change="componentItemChange"
+                                />
+                            </el-form>
+                        </div>
+                    <!--编辑筛选条件-->
 
-                <!--选择筛选条件 -->
-                    <el-select 
-                        class="search-type-select"  
-                        ref="search-type-select"
-                        v-model="searchType.value" 
-                        filterable 
-                        size="mini"
-                        :placeholder="''"
-                        v-if="!editOption.name"
-                        @change="HandleSelectSearchType"
-                        @keyup.native.delete.stop.capture="removeTagItem"
-                        @focus="editFocus = true"
-                        @blur="editFocus = false"
-                    >
-                        <el-option :key="'default'" :label="'选择资源属性进行过滤'" :value="'default'" disabled ></el-option>
-                        <el-option
-                            v-for="item in filterSearchTypeOption"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                        ></el-option>
-                    </el-select>
-                <!--选择筛选条件 -->
+                
+
+                    <!--选择筛选条件 -->
+                        <el-select 
+                            class="search-type-select"  
+                            ref="search-type-select"
+                            v-model="searchType.value" 
+                            filterable 
+                            size="mini"
+                            :placeholder="''"
+                            v-if="!editOption.name"
+                            @change="HandleSelectSearchType"
+                            @keyup.native.delete.stop.capture="removeTagItem"
+                            @focus="editFocus = true"
+                            @blur="editFocus = false"
+                        >
+                            <el-option :key="'default'" :label="'选择资源属性进行过滤'" :value="'default'" disabled ></el-option>
+                            <el-option
+                                v-for="item in filterSearchTypeOption"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    <!--选择筛选条件 -->
 
 
-                <div class="complex-placeholder">多个关键字用"|"分隔，多个过滤标签用回车键分隔</div>
+                    <div class="complex-placeholder">多个关键字用"|"分隔，多个过滤标签用回车键分隔</div>
+
+                </div>
+
 
             </div>
 
@@ -274,6 +277,9 @@
 
         .complex-container{
 
+            height: 30px;
+            line-height: 30px;
+
             &>div{
 
                 display:inline-block;
@@ -282,7 +288,7 @@
 
             .complex-expand{
 
-                margin-left:20px;
+                margin-left:620px;
                 cursor:pointer;
                 transition:all 0.2s ease-in-out;
                 &:hover{

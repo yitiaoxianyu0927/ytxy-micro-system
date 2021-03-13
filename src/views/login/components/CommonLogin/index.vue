@@ -165,9 +165,8 @@
            transform:translate(-50%,-50%);
            background-color:#fff;
            box-shadow: 0px 3px 20px 0px rgba(0, 0, 0, 0.3);
-           padding:20px 30px;
+           padding:30px 30px;
            
-           padding-top:40px;
 
            .login-title{
 
@@ -202,11 +201,8 @@
 
         @media screen and (min-width: 1800px) {
             .login-container{
-
-                width:480px;
-                height:540px;
-             
-            } 
+                transform:scale(1.2) translate(-50%, -40%)
+            }  
         }
 
 

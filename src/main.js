@@ -32,7 +32,7 @@ import actions from "@/share/micro/action"
 
 // 接口
 import RequestUtils from "@/utils/request.js";
-Vue.prototype.$http = RequestUtils;
+Vue.prototype.$https = RequestUtils;
 
 // 加密
 import md5 from 'js-md5'

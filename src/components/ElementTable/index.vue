@@ -12,14 +12,15 @@
                 :span-method="arraySpanMethod"
                 @sort-change="sortchange"
                 :border="listTable.border"
-                :row-style="listTable.style.rowStyle||{}"
-                :cell-style="listTable.style.cellStyle||{}"
+                :row-style="listTable.style&&listTable.style.rowStyle||{}"
+                :cell-style="listTable.style&&listTable.style.cellStyle||{}"
                 :class="[
                     listTable.option && listTable.option.rowExpand ? 'row-expand': 'row-expand-close'
                 ]"
                 
             >
-                    
+                       <!-- :row-style="listTable.style.rowStyle||{}"
+                :cell-style="listTable.style.cellStyle||{}" -->
                     <!-- 序号列 -->
                     
                     <el-table-column  v-if="listTable.hasIndex"  label="#" min-width="60" align="center">
@@ -167,13 +168,14 @@ export default {
     },
     model:{
 
-        prop:"value",
+        prop:"options",
         event:"ModelValue"
 
     },
     props:{
         options:{
 
+            type:Object,
             default:() => ({
 
                 hasIndex:false,
@@ -188,7 +190,7 @@ export default {
                     total:0
                 },
                 button:[],
-                selectOption:"",
+                selectOption:[],
                 option:{
 
                 }
@@ -218,70 +220,9 @@ export default {
 
         formatTableData(){
 
-            let cw = document.body.clientWidth;
+            console.log(cloneDeep(this.options))
+            this.listTable = cloneDeep(this.options);
 
-
-            let _listTable = cloneDeep(this.options);
-
-            let listTable = {};
-
-            let defaultOption = {
-                
-                    cellSpan:false,
-                    client:false,
-                    hasIndex:false,
-                    hasSelect:false,
-                    border:true,
-                    header:[],
-                    data:[],
-                    pagination:{
-                        
-                        pageIndex:1,
-                        pageRowSize:10,
-                        total:0
-                    },
-                    button:[],
-                    selectOption:[],
-                    style:{
-
-                        rowStyle:null,
-                        cellStyle:null
-                    },
-                    option:{
-                        rowExpand: cw < 1400 ? false : true
-                    }
-
-            }
-
-            Reflect.ownKeys(defaultOption).forEach((item => {
-
-                let data = defaultOption[item];
-
-                if(typeof data == "boolean"  ){
-                    listTable[item] = !!_listTable[item] 
-                }
-
-                if(typeof data == "string" ){
-                    listTable[item] = _listTable[item] || "";
-                }
-
-                if(typeof data == "object" ){
-                    listTable[item] = Object.assign(data,_listTable[item]);
-                }
-
-                if(data instanceof Array ){
-                    listTable[item] = _listTable[item] || [];
-                }
-
-            }))
-
-
-            
-            this.listTable = listTable;
-
-
-            this.ModelValue();
-            
             this.doLayout();  
 
         },
@@ -289,16 +230,26 @@ export default {
 
             let cw = document.body.clientWidth;
 
-            this.listTable.option = Object.assign({
-                rowExpand: cw < 1400 ? false : true
-            },{...this.options.option||{}});
+            // this.listTable.option = Object.assign({
+            //     rowExpand: cw < 1400 ? false : true
+            // },{...this.options.option||{}});
+
+            if(this.options.option && this.options.option.rowExpand ){
+
+                this.listTable.option = Object.assign({
+                    rowExpand: cw < 1400 ? false : true
+                },{...this.options.option});
+            }else{
+
+                this.listTable.option.rowExpand = cw < 1400 ? false : true;
+            }
 
             this.doLayout(); 
         },
 
         List_handleSelectionChange(val){
 
-            this.listTable.selectOption = val;
+            this.listTable.selectOption = val ;
             this.HandleFunc("handleSelectionChange",val);
             
         },
@@ -320,20 +271,20 @@ export default {
         },
         HandleFunc(type,val){
             
-            this.ModelValue(); 
-            this.$emit("handle-func",type,val)
+            this.ModelValue();
+            this.$emit("HandleFunc",type,val)
             
         },
         CellClick(type,val){
             
             this.ModelValue();
-            this.$emit("cell-click",type,val)
+            this.$emit("CellClick",type,val)
 
         },
         ButtonFunc(id,isexport = false){
 
             this.ModelValue();
-            this.$emit("button-func",id,isexport)
+            this.$emit("ButtonFunc",id,isexport)
 
             if(isexport){
             
@@ -427,6 +378,8 @@ export default {
 
         this.formatTableData();
 
+        this.updateTableOption();
+
         
         window.addEventListener("resize",()=>{
 
@@ -437,17 +390,27 @@ export default {
     },
     watch:{
 
-        options:{
+        "options.data":{
 　　　　　　　　
 　　　　　　 handler(val,oldVal){
 
-            
-                this.updateTableOption();
+                if(JSON.stringify(val) == JSON.stringify(oldVal)) return;
+
+                this.formatTableData();
                 　　　　　　　　
             },
 　　　　　　 deep:true
 
-　　    }
+　　    },
+        "options.option":{
+
+            handler(val,oldVal){
+
+                this.formatTableData();
+                　　　　　　　　
+            },
+　　　　　　 deep:true
+        }
 
     }
 
