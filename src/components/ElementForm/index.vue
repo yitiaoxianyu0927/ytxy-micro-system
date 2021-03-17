@@ -77,11 +77,14 @@
                            :disabled="item.disabled||ListForm.option.disabled"
                            :multiple="item.multiple"
                            :filterable="item.filterable"
+                           :remote="item.remote"
                            :placeholder="item.placeholder||('请输入'+item.name)"
+                           :remote-method="query => ChangeElem(item.id,query,item,'remote')"
                            @change="val => ChangeElem(item.id,val,item)" 
                            collapse-tags
 
                         >
+                        <!-- :remote-method="item.remote ? query => ChangeElem(item.id,val,item,'remote') : null " -->
                         <!-- :filterable="item.filterable" -->
                             <el-option
                                 
@@ -325,12 +328,33 @@
                 //this.$emit("QueryFormData",option);
 
             },
+            querySelectOption(id){
+
+                let obj = [];
+
+                this.ListForm.row.forEach((row,index) => {
+
+                    row.forEach((item,i) => {
+
+                        if(item.elem == "select" && item.id == id ){
+
+                            obj = item.option.filter(v => v.value == item.value);
+
+                        }
+
+                    })
+
+                })
+                
+                return obj;
+            },
             renderFormModel(){
 
                 let model = {}
 
+                //if(!this.ListForm.row) return;
 
-                let row = Array.from(this.ListForm.row);
+                let row = Array.from(this.ListForm.row||[]);
               
                 row.forEach((item,index) => {
 
@@ -462,16 +486,16 @@
                 },
     　　　　　　 deep:true
 　　　　　  },
-//            ListForm:{
+           ListForm:{
 
-//             　　 handler(val,oldVal){
+            　　 handler(val,oldVal){
                     
-//                     this.renderFormModel();
+                    this.renderFormModel();
                
-//                 },
-//     　　　　　　 deep:true
-// 　　　　　     
-//            }
+                },
+    　　　　　　 deep:true
+　　　　　     
+           }
 
         } 
 

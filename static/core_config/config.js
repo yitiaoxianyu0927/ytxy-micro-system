@@ -34,7 +34,8 @@ var CORE_CONFIG = {
 
   ///微前端模块配置 PROJECT_xxx
   PROJECT_VUEAPP:"http://localhost:10100",
-  PROJECT_YTXY_MIRCO: "http://localhost:10200"
+  PROJECT_YTXY_MIRCO: "http://localhost:10200",
+  PROJECT_REACTAPP:"http://localhost:10300",
 
 }
 

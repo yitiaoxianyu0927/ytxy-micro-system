@@ -228,6 +228,13 @@ module.exports = function (webpackEnv) {
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
       globalObject: 'this',
+
+
+      //配置微前端
+      library:`reactApp`, //name为package.json中的name
+      libraryTarget:'umd',
+      jsonpFunction:`webpackJsonp_reactApp`
+    
     },
     optimization: {
       minimize: isEnvProduction,

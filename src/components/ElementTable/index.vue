@@ -2,7 +2,7 @@
    <div class="component-ElementTable" style="width:100%;height:100%">
  
         <el-row class="page-table" >
-     
+
             <el-table 
 
                 :data="tableData"      
@@ -17,7 +17,8 @@
                 :class="[
                     listTable.option && listTable.option.rowExpand ? 'row-expand': 'row-expand-close'
                 ]"
-                
+                :row-key="null || options.rowKey"
+                :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             >
                        <!-- :row-style="listTable.style.rowStyle||{}"
                 :cell-style="listTable.style.cellStyle||{}" -->
@@ -40,6 +41,7 @@
                     <el-table-column  
                         v-for="(item, index) in listTable.header"
                         :property="item.key" 
+                        :prop="item.key" 
                         :label="item.name"  
                         :key="item.key" 
                         :align="index == 0 ? 'left' : item.align ? item.align:'center' " 
@@ -48,12 +50,27 @@
                         v-if="!item.hidden"
                         show-overflow-tooltip 
                         :sortable="item.sort?'custom':false"
+
                     >
-                        <template slot-scope="scope"  >
+
+                        <template
+                            v-if="item.headerformatter"
+                            :slot="item.headerformatter ? 'header' : ''"
+                            slot-scope="scope"
+                        >
+                            <slot
+                                :name="'header-' + item.key"
+                                :scope="scope"
+                                :row="scope.row"
+                            ></slot>
+                        </template>
+
+
+                        <template slot-scope="scope">
+                            
                             <template v-if="!item.formatter">
                                 <template v-if="!item.isDrill">
-                                    <!-- {{listTable.data[scope.$index][item.key]}} -->
-                                    {{tableData[scope.$index][item.key]}}
+                                   {{scope.row[item.key]}}
                                 </template>
                                 <template  v-else>
                                     <el-button v-if="!item.text" type="text" size="mini" @click="CellClick(item.key,scope.row)">{{listTable.data[scope.$index][item.key]}}</el-button>
@@ -120,6 +137,7 @@ export default {
                    hasIndex:false,
                    hasSelect:false,
                    border:true,
+                   rowKey:null,
                    header:[
                     //    {
                     //         name:"",        表头显示值
@@ -183,6 +201,7 @@ export default {
                 header:[],
                 data:[],
                 border:true,
+                rowKey:null,
                 pagination:{
                     
                     pageIndex:1,
@@ -212,15 +231,13 @@ export default {
                                 data.slice(  (pageIndex-1) * pageRowSize, pageIndex * pageRowSize);
             
             return tableData;
-        },
-
+        }
    
     },
     methods:{
 
         formatTableData(){
 
-            console.log(cloneDeep(this.options))
             this.listTable = cloneDeep(this.options);
 
             this.doLayout();  
@@ -406,7 +423,9 @@ export default {
 
             handler(val,oldVal){
 
-                this.formatTableData();
+                this.listTable.option = Object.assign(this.listTable.option , this.options.option);
+
+                this.doLayout();
                 　　　　　　　　
             },
 　　　　　　 deep:true

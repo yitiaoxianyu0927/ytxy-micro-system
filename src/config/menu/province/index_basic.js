@@ -177,7 +177,25 @@ const meunConfig = [
             hidden: false,
             parentId: "micro"
         },
-        
+        { 
+            uid: "d52d420e-f2e0-43a7-8fa5-e817fc2da49c", 
+            type: "micro", 
+            id: "micro_react", 
+            env: "", 
+            icon: "", 
+            title: "MICRO_REACT", 
+            meta: { 
+                "icon": "", 
+                "title": "MICRO_REACT" 
+            }, 
+            componentUrl: null, 
+            url: null, 
+            routerPath: "home", 
+            projectName: "PROJECT_REACTAPP", 
+            children: [], 
+            hidden: false 
+             
+        }  
         ],
         hidden: false,
         parentId: ""

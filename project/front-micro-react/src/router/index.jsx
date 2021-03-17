@@ -15,7 +15,7 @@ export default class Routers extends Component{
     render(){
         return (
             <Router>
-                <Route path="/layout" component={layout}>
+                <Route path="/" component={layout}>
                     
                 </Route>
             </Router>

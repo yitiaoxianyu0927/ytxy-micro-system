@@ -187,7 +187,7 @@
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 
     .login-tel{
 
